@@ -1,0 +1,1723 @@
+{
+  "$schema": "./schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": true,
+      "overview": false,
+      "itinerary": true,
+      "todo": true,
+      "driving": false,
+      "ledger": true
+    },
+    "language": "zh-CN",
+    "persistence": {
+      "mode": "local"
+    }
+  },
+  "ledgerSeed": {
+    "version": 1,
+    "settings": {
+      "baseCurrency": "CNY",
+      "commonCurrencies": [
+        "JPY",
+        "USD"
+      ],
+      "lastCurrency": "CNY"
+    },
+    "travelers": [
+      {
+        "id": "chen-feng",
+        "name": "CHEN FENG",
+        "color": "#D96C42"
+      },
+      {
+        "id": "yu-jin",
+        "name": "YU JIN",
+        "color": "#217D91"
+      },
+      {
+        "id": "huang-xian",
+        "name": "HUANG XIAN",
+        "color": "#5C8E62"
+      }
+    ],
+    "bills": [
+      {
+        "id": "fixed-cruise-order",
+        "originalAmountCents": 1293600,
+        "baseAmountCents": 1293600,
+        "currency": "CNY",
+        "category": "交通",
+        "note": "MSC地中海邮轮·荣耀号",
+        "orderedAt": "",
+        "payerId": "yu-jin",
+        "participantIds": [
+          "chen-feng",
+          "yu-jin",
+          "huang-xian"
+        ],
+        "createdAt": "2026-09-14T12:00:00+08:00",
+        "updatedAt": "2026-09-14T12:00:00+08:00"
+      },
+      {
+        "id": "fixed-kyoto-hotel",
+        "originalAmountCents": 1188648,
+        "baseAmountCents": 1188648,
+        "currency": "CNY",
+        "category": "住宿",
+        "note": "京都日航公主酒店",
+        "orderedAt": "",
+        "payerId": "yu-jin",
+        "participantIds": [
+          "chen-feng",
+          "yu-jin",
+          "huang-xian"
+        ],
+        "createdAt": "2026-09-14T12:01:00+08:00",
+        "updatedAt": "2026-09-14T12:01:00+08:00"
+      },
+      {
+        "id": "fixed-osaka-hotel",
+        "originalAmountCents": 901101,
+        "baseAmountCents": 901101,
+        "currency": "CNY",
+        "category": "住宿",
+        "note": "大阪东急卓越酒店",
+        "orderedAt": "",
+        "payerId": "yu-jin",
+        "participantIds": [
+          "chen-feng",
+          "yu-jin",
+          "huang-xian"
+        ],
+        "createdAt": "2026-09-14T12:02:00+08:00",
+        "updatedAt": "2026-09-14T12:02:00+08:00"
+      },
+      {
+        "id": "fixed-flight-order",
+        "originalAmountCents": 844800,
+        "baseAmountCents": 844800,
+        "currency": "CNY",
+        "category": "交通",
+        "note": "中国国航 CA858",
+        "orderedAt": "",
+        "payerId": "yu-jin",
+        "participantIds": [
+          "chen-feng",
+          "yu-jin",
+          "huang-xian"
+        ],
+        "createdAt": "2026-09-14T12:03:00+08:00",
+        "updatedAt": "2026-09-14T12:03:00+08:00"
+      }
+    ],
+    "updatedAt": "2026-09-14T12:03:00+08:00"
+  },
+  "metadata": {
+    "tripId": "shanghai-japan-2026",
+    "title": "上海、日本旅行计划",
+    "language": "zh-CN",
+    "timeZone": "Asia/Shanghai",
+    "dataVersion": "2026-09-14-ledger-1",
+    "assets": {}
+  },
+  "trip": {
+    "status": "confirmed-with-gaps",
+    "startDate": "2026-10-04",
+    "endDate": "2026-10-13",
+    "dayCount": 10,
+    "nightCountAway": 9,
+    "countries": [
+      {
+        "code": "CN",
+        "name": "China",
+        "nameZh": "中国",
+        "nameEn": "CHINA"
+      },
+      {
+        "code": "JP",
+        "name": "Japan",
+        "nameZh": "日本",
+        "nameEn": "JAPAN"
+      }
+    ],
+    "primaryDestinationCountries": [
+      "CN",
+      "JP"
+    ],
+    "citiesAndAreas": [
+      "上海",
+      "东京",
+      "京都",
+      "神户",
+      "大阪"
+    ],
+    "routeSummary": "上海 → 东京 → 京都 → 神户 → 大阪 → 上海",
+    "heroTitle": "上海 → 东京 → 京都 → 大阪",
+    "heroEyebrow": "CRUISE OUT · FLY HOME",
+    "groupSize": 6,
+    "groupComposition": {
+      "adultCount": 6,
+      "coupleCount": 3,
+      "description": "6人同行，共3对夫妻"
+    }
+  },
+  "nextItem": {
+    "id": "cruise-board",
+    "dateLabel": "10月4日",
+    "time": "12:00–13:00",
+    "title": "上海登船",
+    "detail": "MSC地中海邮轮·荣耀号。登船办理地点：上海吴淞口国际邮轮码头 T1/T2，上海市宝山区宝杨路1号。",
+    "placeId": "wusong-cruise-terminal"
+  },
+  "flightJourneys": [
+    {
+      "id": "return-flight",
+      "title": "大阪 → 上海"
+    }
+  ],
+  "flights": [
+    {
+      "id": "ca858-20261013",
+      "journeyId": "return-flight",
+      "sequence": 1,
+      "carrierId": "air-china",
+      "flightNumber": "CA858",
+      "airline": {
+        "name": "Air China",
+        "nameZh": "中国国航"
+      },
+      "departure": {
+        "date": "2026-10-13",
+        "time": "16:45",
+        "utcOffset": "+09:00",
+        "airportCode": "KIX",
+        "city": "大阪 T1"
+      },
+      "arrival": {
+        "date": "2026-10-13",
+        "time": "18:30",
+        "utcOffset": "+08:00",
+        "airportCode": "PVG",
+        "city": "上海 T2"
+      },
+      "cabin": "经济舱",
+      "meal": "有餐食",
+      "aircraft": "空客330（大）",
+      "duration": "2小时45分",
+      "bookingStatus": "出票中"
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "msc-bellissima-stay",
+      "name": "MSC地中海邮轮·荣耀号",
+      "type": "cruise",
+      "cityOrArea": "海上",
+      "checkInDate": "2026-10-04",
+      "checkOutDate": "2026-10-07",
+      "status": "confirmed"
+    },
+    {
+      "id": "kyoto-stay",
+      "name": "京都日航公主酒店",
+      "nameEn": "Hotel Nikko Princess Kyoto",
+      "nameJa": "ホテル日航プリンセス京都",
+      "type": "hotel",
+      "cityOrArea": "京都",
+      "checkInDate": "2026-10-07",
+      "checkOutDate": "2026-10-10",
+      "status": "hotel-confirmed",
+      "addressZh": "日本京都府京都市下京区乌丸高辻东入高桥町630番地",
+      "addressJa": "〒600-8096 京都市下京区烏丸高辻東入高橋町630番地",
+      "locationZh": "地铁乌丸线四条站5号出口步行约3分钟",
+      "locationJa": "地下鉄烏丸線「四条駅」5番出口より徒歩約3分",
+      "otaUrl": "https://hotels.ctrip.com/hotels/704875.html",
+      "officialUrl": "https://www.princess-kyoto.co.jp/access/",
+      "totalPrice": {
+        "amount": 11886.48,
+        "currency": "CNY"
+      }
+    },
+    {
+      "id": "osaka-stay",
+      "name": "大阪东急卓越酒店",
+      "nameEn": "Osaka Excel Hotel Tokyu",
+      "nameJa": "大阪エクセルホテル東急",
+      "type": "hotel",
+      "cityOrArea": "大阪",
+      "checkInDate": "2026-10-10",
+      "checkOutDate": "2026-10-13",
+      "status": "hotel-confirmed",
+      "addressZh": "日本大阪府大阪市中央区久太郎町4-1-15（南御堂境内）",
+      "addressJa": "〒541-0056 大阪府大阪市中央区久太郎町4-1-15（南御堂境内）",
+      "locationZh": "大阪地铁本町站13号出口步行约2分钟",
+      "locationJa": "地下鉄「本町駅」13番出口より徒歩約2分",
+      "otaUrl": "https://hotels.ctrip.com/hotels/39031025.html",
+      "officialUrl": "https://www.tokyuhotels.co.jp/osaka-e/access/index.html",
+      "totalPrice": {
+        "amount": 9011.01,
+        "currency": "CNY"
+      }
+    }
+  ],
+  "groundTransport": {
+    "rentalCar": null,
+    "rentalChecklist": [],
+    "drivingNotes": [],
+    "drivingReferenceLinks": [],
+    "plannedRoadLegs": [],
+    "publicTransitAndRail": [],
+    "carTransfers": [
+      {
+        "id": "kyoto-kobe-osaka-car",
+        "date": "2026-10-10",
+        "time": null,
+        "provider": null,
+        "origin": "京都（具体上车地点待补充）",
+        "via": [
+          "神户（具体地点待补充）"
+        ],
+        "destination": "大阪（具体下车地点待补充）",
+        "status": "details-pending",
+        "note": "用车信息已确认需要安排，时间、服务商、车型、上下车地点及订单信息待补充。"
+      },
+      {
+        "id": "osaka-hotel-kix-car",
+        "date": "2026-10-13",
+        "time": "13:00",
+        "provider": "携程专车",
+        "origin": "大阪东急卓越酒店（Osaka Excel Hotel Tokyu）",
+        "destination": "关西国际机场 T1",
+        "destinationPlaceId": "kix",
+        "status": "details-pending",
+        "note": "具体车型、司机、车牌、订单号及上车说明待补充。"
+      }
+    ]
+  },
+  "days": [
+    {
+      "id": "day-1",
+      "day": 1,
+      "date": "2026-10-04",
+      "title": "上海登船",
+      "locations": [
+        "上海",
+        "荣耀号"
+      ],
+      "schedule": [
+        {
+          "id": "cruise-board",
+          "time": "12:00–13:00",
+          "text": "在上海吴淞口国际邮轮码头 T1/T2 办理登船，登上 MSC地中海邮轮·荣耀号。地址：上海市宝山区宝杨路1号。",
+          "type": "boat",
+          "placeId": "wusong-cruise-terminal"
+        },
+        {
+          "id": "welcome-lunch",
+          "time": "登船后",
+          "text": "前往市集自助餐厅享用“欢迎登船”午餐，地点在15层甲板船尾。",
+          "type": "restaurant"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "邮轮订单总额",
+          "currency": "CNY",
+          "amount": 12936
+        }
+      ],
+      "notes": [
+        "截图中的时间均按当地时间显示。",
+        "护照、签证、登船凭证、电子设备、贵重物品和随时需要服用的药物必须随身携带，切勿托运。"
+      ]
+    },
+    {
+      "id": "day-2",
+      "day": 2,
+      "date": "2026-10-05",
+      "title": "海上巡游",
+      "locations": [
+        "荣耀号"
+      ],
+      "schedule": [
+        {
+          "id": "day-2-pending",
+          "time": "待补充",
+          "text": "当天安排待补充。",
+          "type": "note"
+        }
+      ]
+    },
+    {
+      "id": "day-3",
+      "day": 3,
+      "date": "2026-10-06",
+      "title": "海上巡游",
+      "locations": [
+        "荣耀号"
+      ],
+      "schedule": [
+        {
+          "id": "day-3-pending",
+          "time": "待补充",
+          "text": "当天安排待补充。",
+          "type": "note"
+        }
+      ]
+    },
+    {
+      "id": "day-4",
+      "day": 4,
+      "date": "2026-10-07",
+      "title": "东京离船，前往京都",
+      "locations": [
+        "东京",
+        "京都"
+      ],
+      "schedule": [
+        {
+          "id": "cruise-arrive",
+          "time": "待补充",
+          "text": "荣耀号抵达东京并离船；离船时间和码头待补充。",
+          "type": "boat",
+          "placeId": "tokyo"
+        },
+        {
+          "id": "shinkansen-tokyo-kyoto",
+          "time": "待补充",
+          "text": "离船后乘新干线前往京都；车站、班次和时间待补充。",
+          "type": "train",
+          "placeIds": [
+            "tokyo",
+            "kyoto"
+          ]
+        },
+        {
+          "id": "visit-gion-shijo",
+          "time": "待安排",
+          "text": "祇园四条",
+          "type": "attraction",
+          "placeId": "gion-shijo"
+        },
+        {
+          "id": "visit-hanamikoji",
+          "time": "待安排",
+          "text": "花见小路",
+          "type": "attraction",
+          "placeId": "hanamikoji"
+        },
+        {
+          "id": "visit-yasaka-shrine",
+          "time": "待安排",
+          "text": "八坂神社",
+          "type": "attraction",
+          "placeId": "yasaka-shrine"
+        },
+        {
+          "id": "visit-nishiki-market",
+          "time": "待安排",
+          "text": "锦市场",
+          "type": "attraction",
+          "placeId": "nishiki-market"
+        }
+      ],
+      "notes": [
+        "入住京都日航公主酒店（Hotel Nikko Princess Kyoto）。地址：日本京都府京都市下京区乌丸高辻东入高桥町630番地；房型和入住要求待补充。"
+      ]
+    },
+    {
+      "id": "day-5",
+      "day": 5,
+      "date": "2026-10-08",
+      "title": "京都景点（初版）",
+      "locations": [
+        "京都"
+      ],
+      "schedule": [
+        {
+          "id": "visit-arashiyama",
+          "time": "待安排",
+          "text": "岚山",
+          "type": "attraction",
+          "placeId": "arashiyama"
+        },
+        {
+          "id": "visit-jojakkoji",
+          "time": "待安排",
+          "text": "常寂光寺",
+          "type": "attraction",
+          "placeId": "jojakkoji"
+        },
+        {
+          "id": "visit-kinkakuji",
+          "time": "待安排",
+          "text": "金阁寺",
+          "type": "attraction",
+          "placeId": "kinkakuji"
+        },
+        {
+          "id": "visit-sanjusangendo",
+          "time": "待安排",
+          "text": "三十三间堂",
+          "type": "attraction",
+          "placeId": "sanjusangendo"
+        },
+        {
+          "id": "visit-kifune-shrine",
+          "time": "待安排",
+          "text": "贵船神社",
+          "type": "attraction",
+          "placeId": "kifune-shrine"
+        },
+        {
+          "id": "visit-rurikoin",
+          "time": "待安排",
+          "text": "琉璃光院",
+          "type": "attraction",
+          "placeId": "rurikoin"
+        },
+        {
+          "id": "visit-tofukuji",
+          "time": "待安排",
+          "text": "东福寺",
+          "type": "attraction",
+          "placeId": "tofukuji"
+        },
+        {
+          "id": "visit-fushimi-inari",
+          "time": "待安排",
+          "text": "伏见稻荷大社",
+          "type": "attraction",
+          "placeId": "fushimi-inari"
+        }
+      ],
+      "notes": [
+        "景点多且外围分散，公共交通不便，初版建议包车。具体游览顺序和时间待安排。",
+        "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
+      ]
+    },
+    {
+      "id": "day-6",
+      "day": 6,
+      "date": "2026-10-09",
+      "title": "京都景点（初版）",
+      "locations": [
+        "京都"
+      ],
+      "schedule": [
+        {
+          "id": "visit-kiyomizu-dera",
+          "time": "待安排",
+          "text": "清水寺",
+          "type": "attraction",
+          "placeId": "kiyomizu-dera"
+        },
+        {
+          "id": "visit-heian-shrine",
+          "time": "待安排",
+          "text": "平安神宫",
+          "type": "attraction",
+          "placeId": "heian-shrine"
+        },
+        {
+          "id": "visit-kyoto-imperial-palace",
+          "time": "待安排",
+          "text": "京都御所",
+          "type": "attraction",
+          "placeId": "kyoto-imperial-palace"
+        }
+      ],
+      "notes": [
+        "具体游览顺序和时间待安排。",
+        "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
+      ]
+    },
+    {
+      "id": "day-7",
+      "day": 7,
+      "date": "2026-10-10",
+      "title": "京都经神户前往大阪",
+      "locations": [
+        "京都",
+        "神户",
+        "大阪"
+      ],
+      "schedule": [
+        {
+          "id": "kyoto-kobe-osaka",
+          "time": "待补充",
+          "text": "安排用车从京都出发，经神户前往大阪；具体时间、服务商、车型、上下车地点及订单信息待补充。",
+          "type": "transfer",
+          "placeIds": [
+            "kyoto",
+            "kobe-sanda-outlets",
+            "osaka"
+          ]
+        },
+        {
+          "id": "visit-kobe-sanda-outlets",
+          "time": "待安排",
+          "text": "神户三田奥特莱斯",
+          "type": "attraction",
+          "placeId": "kobe-sanda-outlets"
+        },
+        {
+          "id": "arrive-osaka",
+          "time": "待补充",
+          "text": "抵达大阪，入住大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。地址：日本大阪府大阪市中央区久太郎町4-1-15（南御堂境内）；房型和入住要求待补充。",
+          "type": "check-in",
+          "placeId": "osaka"
+        }
+      ],
+      "notes": [
+        "需要携带行李转移，且奥特莱斯购物可能增加行李，初版建议包车。"
+      ]
+    },
+    {
+      "id": "day-8",
+      "day": 8,
+      "date": "2026-10-11",
+      "title": "大阪市区（初版）",
+      "locations": [
+        "大阪"
+      ],
+      "schedule": [
+        {
+          "id": "visit-umeda",
+          "time": "待安排",
+          "text": "梅田",
+          "type": "attraction",
+          "placeId": "umeda"
+        },
+        {
+          "id": "visit-shinsaibashi",
+          "time": "待安排",
+          "text": "心斋桥",
+          "type": "attraction",
+          "placeId": "shinsaibashi"
+        }
+      ],
+      "notes": [
+        "具体游览顺序和时间待安排。",
+        "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
+      ]
+    },
+    {
+      "id": "day-9",
+      "day": 9,
+      "date": "2026-10-12",
+      "title": "大阪市区（初版）",
+      "locations": [
+        "大阪"
+      ],
+      "schedule": [
+        {
+          "id": "visit-umeda",
+          "time": "待安排",
+          "text": "梅田",
+          "type": "attraction",
+          "placeId": "umeda"
+        },
+        {
+          "id": "visit-shinsaibashi",
+          "time": "待安排",
+          "text": "心斋桥",
+          "type": "attraction",
+          "placeId": "shinsaibashi"
+        }
+      ],
+      "notes": [
+        "具体游览顺序和时间待安排。",
+        "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
+      ]
+    },
+    {
+      "id": "day-10",
+      "day": 10,
+      "date": "2026-10-13",
+      "title": "大阪返回上海",
+      "locations": [
+        "大阪东急卓越酒店",
+        "关西机场 T1",
+        "浦东机场 T2"
+      ],
+      "schedule": [
+        {
+          "id": "osaka-hotel-kix-car",
+          "time": "13:00",
+          "text": "乘坐携程专车从大阪东急卓越酒店前往关西国际机场 T1；具体车辆和订单信息待补充。",
+          "type": "transfer",
+          "placeId": "kix"
+        },
+        {
+          "id": "flight-depart",
+          "time": "16:45",
+          "text": "中国国航 CA858 从关西机场 T1 起飞。",
+          "type": "flight",
+          "placeId": "kix"
+        },
+        {
+          "id": "flight-arrive",
+          "time": "18:30",
+          "text": "抵达上海浦东机场 T2。",
+          "type": "flight",
+          "placeId": "pvg"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "返程机票订单总额",
+          "currency": "CNY",
+          "amount": 8448
+        }
+      ],
+      "notes": [
+        "航班状态为“出票中”。"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "wusong-cruise-terminal",
+      "name": "Wusongkou Cruise Terminal",
+      "nameZh": "上海吴淞口国际邮轮码头 T1/T2",
+      "countryCode": "CN",
+      "cityOrArea": "上海",
+      "geo": {
+        "lat": 31.409585,
+        "lng": 121.508681
+      },
+      "navigation": {
+        "query": "上海吴淞口国际邮轮码头 上海市宝山区宝杨路1号",
+        "url": "https://www.amap.com/place/B00156EFOR"
+      }
+    },
+    {
+      "id": "tokyo",
+      "name": "Tokyo",
+      "nameZh": "东京",
+      "countryCode": "JP",
+      "cityOrArea": "东京",
+      "geo": {
+        "lat": 35.6762,
+        "lng": 139.6503
+      },
+      "navigation": {
+        "query": "东京"
+      }
+    },
+    {
+      "id": "osaka",
+      "name": "Osaka",
+      "nameZh": "大阪",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "geo": {
+        "lat": 34.6937,
+        "lng": 135.5023
+      },
+      "navigation": {
+        "query": "大阪"
+      }
+    },
+    {
+      "id": "kix",
+      "name": "Kansai Airport T1",
+      "nameZh": "关西机场 T1",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "geo": {
+        "lat": 34.4347,
+        "lng": 135.2441
+      },
+      "navigation": {
+        "query": "关西国际机场 T1"
+      }
+    },
+    {
+      "id": "pvg",
+      "name": "Pudong Airport T2",
+      "nameZh": "浦东机场 T2",
+      "countryCode": "CN",
+      "cityOrArea": "上海",
+      "geo": {
+        "lat": 31.1443,
+        "lng": 121.8083
+      },
+      "navigation": {
+        "query": "上海浦东国际机场 T2"
+      }
+    },
+    {
+      "id": "kyoto",
+      "nameZh": "京都",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0116,
+        "lng": 135.7681
+      },
+      "navigation": {
+        "query": "京都 京都"
+      }
+    },
+    {
+      "id": "gion-shijo",
+      "nameZh": "祇园四条",
+      "nameJa": "祇園四条",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "祇园四条 京都"
+      }
+    },
+    {
+      "id": "hanamikoji",
+      "nameZh": "花见小路",
+      "nameJa": "花見小路通",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "花见小路 京都"
+      }
+    },
+    {
+      "id": "yasaka-shrine",
+      "nameZh": "八坂神社",
+      "nameJa": "八坂神社",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "八坂神社 京都"
+      }
+    },
+    {
+      "id": "nishiki-market",
+      "nameZh": "锦市场",
+      "nameJa": "錦市場",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "锦市场 京都"
+      }
+    },
+    {
+      "id": "arashiyama",
+      "nameZh": "岚山",
+      "nameJa": "嵐山",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "岚山 京都"
+      }
+    },
+    {
+      "id": "jojakkoji",
+      "nameZh": "常寂光寺",
+      "nameJa": "常寂光寺",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "常寂光寺 京都"
+      }
+    },
+    {
+      "id": "kinkakuji",
+      "nameZh": "金阁寺",
+      "nameJa": "金閣寺（鹿苑寺）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "金阁寺 京都"
+      }
+    },
+    {
+      "id": "sanjusangendo",
+      "nameZh": "三十三间堂",
+      "nameJa": "三十三間堂（蓮華王院）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "三十三间堂 京都"
+      }
+    },
+    {
+      "id": "kifune-shrine",
+      "nameZh": "贵船神社",
+      "nameJa": "貴船神社",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "贵船神社 京都"
+      }
+    },
+    {
+      "id": "rurikoin",
+      "nameZh": "琉璃光院",
+      "nameJa": "瑠璃光院",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "琉璃光院 京都"
+      }
+    },
+    {
+      "id": "tofukuji",
+      "nameZh": "东福寺",
+      "nameJa": "東福寺",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "东福寺 京都"
+      }
+    },
+    {
+      "id": "fushimi-inari",
+      "nameZh": "伏见稻荷大社",
+      "nameJa": "伏見稲荷大社",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "伏见稻荷大社 京都"
+      }
+    },
+    {
+      "id": "kiyomizu-dera",
+      "nameZh": "清水寺",
+      "nameJa": "清水寺",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "清水寺 京都"
+      }
+    },
+    {
+      "id": "heian-shrine",
+      "nameZh": "平安神宫",
+      "nameJa": "平安神宮",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "平安神宫 京都"
+      }
+    },
+    {
+      "id": "kyoto-imperial-palace",
+      "nameZh": "京都御所",
+      "nameJa": "京都御所",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "京都御所 京都"
+      }
+    },
+    {
+      "id": "kobe-sanda-outlets",
+      "nameZh": "神户三田奥特莱斯",
+      "nameJa": "神戸三田プレミアム・アウトレット",
+      "countryCode": "JP",
+      "cityOrArea": "神户",
+      "geo": {
+        "lat": 34.860167,
+        "lng": 135.191778
+      },
+      "navigation": {
+        "query": "神户三田奥特莱斯 神户"
+      }
+    },
+    {
+      "id": "umeda",
+      "nameZh": "梅田",
+      "nameJa": "梅田",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "navigation": {
+        "query": "梅田 大阪"
+      }
+    },
+    {
+      "id": "shinsaibashi",
+      "nameZh": "心斋桥",
+      "nameJa": "心斎橋",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "navigation": {
+        "query": "心斋桥 大阪"
+      }
+    }
+  ],
+  "restaurants": [],
+  "attractions": [
+    {
+      "id": "attraction-gion-shijo",
+      "placeId": "gion-shijo",
+      "name": "祇园四条",
+      "nameJa": "祇園四条",
+      "dates": [
+        "2026-10-07"
+      ],
+      "detail": "京阪祇园四条站及四条大桥周边是进入祇园的主要入口，可步行串联花见小路、八坂神社等地点。"
+    },
+    {
+      "id": "attraction-hanamikoji",
+      "placeId": "hanamikoji",
+      "name": "花见小路",
+      "nameJa": "花見小路通",
+      "dates": [
+        "2026-10-07"
+      ],
+      "detail": "祇园代表性的传统街道，两侧可见町家与茶屋建筑。这里同时是居民和商户的日常空间，拍照时请留意现场提示。"
+    },
+    {
+      "id": "attraction-yasaka-shrine",
+      "placeId": "yasaka-shrine",
+      "name": "八坂神社",
+      "nameJa": "八坂神社",
+      "dates": [
+        "2026-10-07"
+      ],
+      "detail": "位于祇园东端，是祇园地区的重要神社，也与祇园祭关系密切。西楼门是从四条通进入神社时醒目的地标。"
+    },
+    {
+      "id": "attraction-nishiki-market",
+      "placeId": "nishiki-market",
+      "name": "锦市场",
+      "nameJa": "錦市場",
+      "dates": [
+        "2026-10-07"
+      ],
+      "detail": "狭长的食品市场，被称为“京都的厨房”，店铺以京都食材、熟食和传统食品为主。通道较窄，宜在店前用完食物再前行。"
+    },
+    {
+      "id": "attraction-arashiyama",
+      "placeId": "arashiyama",
+      "name": "岚山",
+      "nameJa": "嵐山",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "京都西部的山水观光区，渡月桥、竹林小径和嵯峨野一带是主要看点。景区范围较大，步行距离需按体力安排。"
+    },
+    {
+      "id": "attraction-jojakkoji",
+      "placeId": "jojakkoji",
+      "name": "常寂光寺",
+      "nameJa": "常寂光寺",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "位于嵯峨小仓山山腰，以安静的山寺环境、苔景和秋叶闻名。寺内有坡道和台阶，登高后可俯瞰嵯峨野。"
+    },
+    {
+      "id": "attraction-kinkakuji",
+      "placeId": "kinkakuji",
+      "name": "金阁寺",
+      "nameJa": "金閣寺（鹿苑寺）",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "正式寺名为鹿苑寺，核心看点是贴有金箔的舍利殿及其在镜湖池中的倒影。参观通常沿规定的单向路线步行。"
+    },
+    {
+      "id": "attraction-sanjusangendo",
+      "placeId": "sanjusangendo",
+      "name": "三十三间堂",
+      "nameJa": "三十三間堂（蓮華王院）",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "正式名称为莲华王院，以约120米长的本堂和堂内千手观音像群著称，是以室内造像参观为主的寺院。"
+    },
+    {
+      "id": "attraction-kifune-shrine",
+      "placeId": "kifune-shrine",
+      "name": "贵船神社",
+      "nameJa": "貴船神社",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "位于京都北部山间，供奉水神，石阶与红灯笼参道是代表景观。与市中心距离较远，现场步行包含坡道和台阶。"
+    },
+    {
+      "id": "attraction-rurikoin",
+      "placeId": "rurikoin",
+      "name": "琉璃光院",
+      "nameJa": "瑠璃光院",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "位于八濑，以庭园绿意与室内漆桌映照出的景色闻名。通常在特定季节开放，出发前需要再确认当期开放和预约办法。"
+    },
+    {
+      "id": "attraction-tofukuji",
+      "placeId": "tofukuji",
+      "name": "东福寺",
+      "nameJa": "東福寺",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "京都大型禅寺，以横跨溪谷的通天桥、山谷景观和方丈庭园闻名。寺域较大，游览时会有较长步行。"
+    },
+    {
+      "id": "attraction-fushimi-inari",
+      "placeId": "fushimi-inari",
+      "name": "伏见稻荷大社",
+      "nameJa": "伏見稲荷大社",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "全国稻荷神社的总本宫，最具代表性的景观是沿稻荷山延伸的千本鸟居。若继续登山会有连续坡道和台阶，可按体力折返。"
+    },
+    {
+      "id": "attraction-kiyomizu-dera",
+      "placeId": "kiyomizu-dera",
+      "name": "清水寺",
+      "nameJa": "清水寺",
+      "dates": [
+        "2026-10-09"
+      ],
+      "detail": "京都东山代表性寺院，主要看点包括本堂木构舞台、音羽瀑布和俯瞰京都的视野。周边参道多坡路，宜穿防滑好走的鞋。"
+    },
+    {
+      "id": "attraction-heian-shrine",
+      "placeId": "heian-shrine",
+      "name": "平安神宫",
+      "nameJa": "平安神宮",
+      "dates": [
+        "2026-10-09"
+      ],
+      "detail": "以大鸟居和朱红色社殿为鲜明标志，建筑再现平安京宫殿风格。神苑环绕社殿，是否入园可按当天时间和体力决定。"
+    },
+    {
+      "id": "attraction-kyoto-imperial-palace",
+      "placeId": "kyoto-imperial-palace",
+      "name": "京都御所",
+      "nameJa": "京都御所",
+      "dates": [
+        "2026-10-09"
+      ],
+      "detail": "位于京都御苑内，是明治维新前历代天皇居住和举行仪式的重要宫殿。御苑范围宽广，砂石路较多，建议预留步行时间。"
+    },
+    {
+      "id": "attraction-kobe-sanda-outlets",
+      "placeId": "kobe-sanda-outlets",
+      "name": "神户三田奥特莱斯",
+      "nameJa": "神戸三田プレミアム・アウトレット",
+      "dates": [
+        "2026-10-10"
+      ],
+      "detail": "位于神户市北区的大型开放式奥特莱斯，汇集服饰、运动和生活方式品牌。当天还需转移到大阪，购物后请统一清点随身物品和行李。"
+    },
+    {
+      "id": "attraction-umeda",
+      "placeId": "umeda",
+      "name": "梅田",
+      "nameJa": "梅田",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "大阪站与梅田站周边的大型交通和商业中心，百货店、地下街及大型复合设施集中。车站结构复杂，集合时最好约定明确出口或地标。"
+    },
+    {
+      "id": "attraction-shinsaibashi",
+      "placeId": "shinsaibashi",
+      "name": "心斋桥",
+      "nameJa": "心斎橋",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "以心斋桥筋商店街为中心的大阪购物区，可步行连接道顿堀一带。主街人流较密集，六人同行宜提前约好走散后的会合点。"
+    }
+  ],
+  "bookingsAndTickets": [
+    {
+      "id": "cruise-order",
+      "date": "2026-10-04",
+      "title": "MSC地中海邮轮·荣耀号",
+      "detail": "上海 → 海上巡游 → 东京 · 4天3晚",
+      "schedule": "10月4日 12:00–13:00 上海吴淞口国际邮轮码头 T1/T2 登船 · 10月7日东京离船",
+      "orderNo": "1128148367650783",
+      "amount": 12936,
+      "currency": "CNY",
+      "bookedAt": "7月27日预订",
+      "status": "已确认"
+    },
+    {
+      "id": "flight-order",
+      "date": "2026-10-13",
+      "title": "中国国航 CA858",
+      "detail": "10月13日 大阪 → 上海 · 经济舱",
+      "schedule": "16:45 KIX T1 → 18:30 PVG T2 · 2小时45分",
+      "orderNo": "1128149760536905",
+      "amount": 8448,
+      "currency": "CNY",
+      "bookedAt": "",
+      "status": "出票中"
+    },
+    {
+      "id": "kyoto-hotel",
+      "date": "2026-10-07",
+      "title": "京都日航公主酒店",
+      "titleEn": "Hotel Nikko Princess Kyoto",
+      "detail": "京都住宿 · 3晚",
+      "schedule": "10月7日入住 · 10月10日退房",
+      "orderNo": "",
+      "amount": 11886.48,
+      "currency": "CNY",
+      "bookedAt": "",
+      "status": "酒店已确定"
+    },
+    {
+      "id": "osaka-hotel",
+      "date": "2026-10-10",
+      "title": "大阪东急卓越酒店",
+      "titleEn": "Osaka Excel Hotel Tokyu",
+      "detail": "大阪住宿 · 3晚",
+      "schedule": "10月10日入住 · 10月13日退房",
+      "orderNo": "",
+      "amount": 9011.01,
+      "currency": "CNY",
+      "bookedAt": "",
+      "status": "酒店已确定"
+    }
+  ],
+  "feesAndTaxes": [
+    {
+      "id": "cruise-service-charge",
+      "title": "邮轮服务费",
+      "type": "service-charge",
+      "referencePrice": {
+        "amount": 18,
+        "currency": "USD",
+        "unit": "每人每晚"
+      },
+      "appliesTo": "内舱房、海景房、阳台房和套房，年龄满2周岁的宾客",
+      "collection": "登船后根据航程天数自动计算，以美元计入宾客的房卡服务费账单。",
+      "paymentTiming": "航程结束前",
+      "paymentPlace": "宾客服务台",
+      "paymentMethods": [
+        "信用卡",
+        "借记卡",
+        "支付宝",
+        "美元现金"
+      ]
+    },
+    {
+      "id": "japan-international-tourist-tax",
+      "title": "日本国际观光旅客税",
+      "type": "departure-tax",
+      "referencePrice": {
+        "amount": 3000,
+        "currency": "JPY",
+        "unit": "每人每次从日本出境"
+      },
+      "exemption": "2周岁以下婴儿免收",
+      "collection": "离船前从旅客的船上消费账户扣除，并按登船当日船上使用的外汇汇率折算为等值美元。",
+      "acceptedPaymentMethods": [
+        "银联借记卡",
+        "支付宝",
+        "Visa debit",
+        "Visa Electron",
+        "MasterCard debit"
+      ]
+    },
+    {
+      "id": "cabin-smoking-charge",
+      "title": "客舱或阳台吸烟费用",
+      "type": "possible-charge",
+      "referencePrice": {
+        "amount": 250,
+        "currency": "USD",
+        "unit": "发生违规吸烟时"
+      },
+      "appliesTo": "在客舱或客舱阳台区域吸烟",
+      "collection": "相关费用将自动计入宾客账单。"
+    }
+  ],
+  "onboardLife": [
+    {
+      "id": "welcome-lunch",
+      "title": "“欢迎登船”午餐",
+      "paragraphs": [
+        "登船后前往市集自助餐厅用餐，地点在15层甲板船尾。"
+      ],
+      "items": []
+    },
+    {
+      "id": "daily-program",
+      "title": "邮轮日报",
+      "paragraphs": [
+        "客舱内每天会收到当日计划，其中包括日常活动、商店和办公室的运营时间、所有表演和活动的日程，以及享受邮轮生活所需的其他重要内容。"
+      ],
+      "items": []
+    },
+    {
+      "id": "chinese-service",
+      "title": "船上中文服务",
+      "paragraphs": [
+        "船上服务语言包括中文和英语。在华运营航次的船上餐厅提供中文菜单和中文服务。"
+      ],
+      "items": [
+        "宾客服务台配有中文船员",
+        "主餐厅配有中文服务",
+        "免税店等公共区域配有中文船员"
+      ]
+    },
+    {
+      "id": "cabin-water",
+      "title": "客舱饮用水、热水和冰箱",
+      "paragraphs": [
+        "中国出发的母港航线在登船首日赠送2瓶矿泉水。客舱配有电热水壶、茶包和咖啡，可在客舱烧热水饮用。"
+      ],
+      "items": [
+        "客舱冰箱内的饮料和零食需要收费",
+        "自助餐厅提供免费的咖啡、茶水和冰块"
+      ]
+    },
+    {
+      "id": "smoking-policy",
+      "title": "禁烟规定和指定吸烟区",
+      "paragraphs": [
+        "所有客舱和客舱阳台禁止吸烟，并配置烟雾报警器。在客舱或阳台吸烟，相关费用将自动记入宾客账单。"
+      ],
+      "items": [],
+      "sections": [
+        {
+          "title": "指定吸烟区",
+          "items": [
+            "帝国娱乐场：右舷，7层甲板船尾",
+            "氛围泳池：右舷，15层甲板中部",
+            "天际酒吧：右舷，18层甲板船尾",
+            "吸烟室：右舷，18层甲板中部，仅限成人"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "medicine-storage",
+      "title": "需冷冻药品的存放",
+      "paragraphs": [
+        "客舱小冰箱只适合存放饮料和小零食，不适合存放需要冰冻的药品。携带此类药品时，建议提前向预订渠道提出申请，邮轮会尽量提前安排。",
+        "小冰箱会在最后一个海上日上午锁住。未及时取出物品时，请联系船上工作人员或拨打前台电话解锁。"
+      ],
+      "items": []
+    },
+    {
+      "id": "interactive-screens",
+      "title": "互动屏幕和演出预约",
+      "paragraphs": [
+        "服务中心、电梯及船上公共区域设有 MSC 互动电子屏幕。插入房卡后即可规划船上活动。"
+      ],
+      "items": [
+        "预约剧院演出",
+        "浏览船上设施",
+        "预约特色餐饮",
+        "预订船上服务",
+        "管理个人活动",
+        "查询船上消费"
+      ],
+      "sections": [
+        {
+          "title": "剧院演出需要提前预约",
+          "text": "免费剧院为伦敦大剧院，位于6层甲板船头；收费剧院为旋转木马剧场，位于7层甲板船尾。"
+        },
+        {
+          "title": "其他预约方式",
+          "text": "还可以使用客舱内智能电视、船上公共区域的预约设备或 MSC for Me APP。"
+        }
+      ]
+    },
+    {
+      "id": "dining-service",
+      "title": "餐饮服务",
+      "paragraphs": [
+        "船上设有免费开放的主餐厅和自助餐厅，以及收费的特色餐厅和酒吧。"
+      ],
+      "items": [],
+      "sections": [
+        {
+          "title": "主餐厅",
+          "text": "属于正式社交场合，由侍者提供点餐服务。请穿休闲装入内，请勿穿背心或拖鞋。菜单通常包括前菜、主菜和甜品；晚餐一般分为两个时段，请按船卡标注的时间前往指定主餐厅。"
+        },
+        {
+          "title": "自助餐厅",
+          "text": "属于休闲餐厅，没有特殊着装要求，提供水果、西式和中式餐食、甜品蛋糕等，覆盖早餐、午餐、晚餐、下午茶和夜宵。请在开放时间内前往。"
+        },
+        {
+          "title": "特色餐厅及酒吧",
+          "text": "不同餐厅会按中式、美式、意式、日式等主题菜系，或火锅、铁板、寿司等烹调方式区分；部分酒吧有乐队现场表演。登船首日一般会有不同的优惠套餐。"
+        }
+      ]
+    }
+  ],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "门票状态默认只保存在当前浏览器。",
+    "items": []
+  },
+  "preTrip": {
+    "todoItems": [
+      {
+        "id": "carry-travel-documents",
+        "text": "护照、签证及其他相关旅行证件或文件随身携带，切勿托运",
+        "completed": false
+      },
+      {
+        "id": "passport-copies",
+        "text": "准备护照首页复印件，A4尺寸2份",
+        "completed": false
+      },
+      {
+        "id": "boarding-documents",
+        "text": "携带登船凭证、登船表格和用于托运行李的行李牌",
+        "completed": false
+      },
+      {
+        "id": "payment-card",
+        "text": "携带国际信用卡或借记卡",
+        "completed": false
+      },
+      {
+        "id": "carry-electronics",
+        "text": "手机、摄影设备等电子物品作为手提行李随身携带",
+        "completed": false
+      },
+      {
+        "id": "carry-valuables",
+        "text": "现金、珠宝、电子设备等贵重和易碎物品作为手提行李随身携带",
+        "completed": false
+      },
+      {
+        "id": "carry-medicine",
+        "text": "随身携带随时需要服用的药物和其他应急物品",
+        "completed": false
+      }
+    ],
+    "packingItems": [],
+    "shoppingItems": [],
+    "preparationsExplicitlyMentioned": [
+      "有效旅行证件",
+      "护照首页A4复印件2份",
+      "登船凭证、登船表格和行李牌",
+      "国际信用卡或借记卡",
+      "电子设备",
+      "贵重和易碎物品",
+      "随时服用的药物和应急物品"
+    ],
+    "missingNote": "购物内容尚未提供。"
+  },
+  "reminders": [
+    {
+      "id": "cabin-no-smoking",
+      "title": "客舱和阳台禁止吸烟",
+      "text": "在客舱或客舱阳台吸烟，相关费用将自动计入宾客账单；请前往指定吸烟区。",
+      "tone": "warning"
+    },
+    {
+      "id": "frozen-medicine-request",
+      "title": "需冷冻药品要提前申请",
+      "text": "客舱小冰箱不适合存放需冰冻药品，请提前向预订渠道提出申请；最后一个海上日上午冰箱会锁住。",
+      "tone": "warning"
+    },
+    {
+      "id": "show-reservation",
+      "title": "剧院演出必须提前预约",
+      "text": "伦敦大剧院和旋转木马剧场的演出均需预约，可使用互动屏幕、客舱智能电视或 MSC for Me APP。",
+      "tone": "info"
+    },
+    {
+      "id": "cruise-service-charge",
+      "title": "邮轮服务费",
+      "text": "适用于内舱房、海景房、阳台房和套房中年龄满2周岁的宾客。登船后按航程天数自动计算并计入房卡服务费账单；航程结束前可到宾客服务台使用信用卡、借记卡、支付宝或现金支付。",
+      "tone": "info"
+    },
+    {
+      "id": "japan-departure-tax",
+      "title": "日本国际观光旅客税",
+      "text": "2周岁以下婴儿免收。离船前从船上消费账户扣除。",
+      "tone": "warning"
+    },
+    {
+      "id": "cruise-payment-methods",
+      "title": "船上费用支持的支付方式",
+      "text": "接受银联借记卡、支付宝、Visa debit、Visa Electron 和 MasterCard debit。",
+      "tone": "info"
+    },
+    {
+      "id": "cruise-terminal",
+      "title": "10月4日 12:00–13:00 办理登船",
+      "text": "上海吴淞口国际邮轮码头 T1/T2，上海市宝山区宝杨路1号。",
+      "tone": "warning"
+    },
+    {
+      "id": "travel-documents",
+      "title": "旅行证件必须随身携带",
+      "text": "携带护照、签证及其他相关旅行文件，并准备护照首页A4复印件2份；切勿托运。",
+      "tone": "warning"
+    },
+    {
+      "id": "boarding-and-payment",
+      "title": "带好登船凭证和支付卡",
+      "text": "登船凭证包括登船表格和行李牌；同时携带国际信用卡或借记卡。",
+      "tone": "info"
+    },
+    {
+      "id": "electronics-valuables",
+      "title": "电子设备和贵重物品不要托运",
+      "text": "手机、摄影设备、现金、珠宝及其他贵重或易碎物品必须作为手提行李随身携带。",
+      "tone": "warning"
+    },
+    {
+      "id": "emergency-items",
+      "title": "药物和应急物品放在手提行李",
+      "text": "随身携带随时需要服用的药物，以及途中可能需要的其他物品。",
+      "tone": "warning"
+    },
+    {
+      "id": "local-time",
+      "title": "时间均为当地时间",
+      "text": "邮轮及航班订单页面均注明按当地时间显示。",
+      "tone": "info"
+    },
+    {
+      "id": "ticketing",
+      "title": "返程机票正在出票",
+      "text": "中国国航 CA858 的订单状态为“出票中”。",
+      "tone": "warning"
+    },
+    {
+      "id": "middle-gap",
+      "title": "城际交通细节待补充",
+      "text": "10月7日东京至京都的新干线车站、班次和时间，以及10月10日京都经神户前往大阪的用车时间、服务商和订单信息尚未提供。",
+      "tone": "warning"
+    },
+    {
+      "id": "kyoto-charter",
+      "title": "10月8日初版建议包车",
+      "text": "当天京都景点数量较多且外围分散，公共交通不便；包车尚未预订。",
+      "tone": "warning"
+    },
+    {
+      "id": "baggage-transfer",
+      "title": "10月10日注意行李转移",
+      "text": "从京都经神户前往大阪，需要携带行李；奥特莱斯购物可能增加行李，初版建议包车。",
+      "tone": "warning"
+    }
+  ],
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "东京至大阪的移动日期和交通方式尚未提供，因此路线图保留断点。",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": {
+      "noNavigationTypes": [
+        "note",
+        "rest"
+      ],
+      "selfNavigationTypes": [
+        "boat",
+        "flight",
+        "transfer",
+        "restaurant",
+        "attraction",
+        "walk"
+      ]
+    },
+    "navigationPlaces": []
+  },
+  "issuesAndUncertainties": [
+    "邮轮的东京离船码头和具体离船时间待补充。",
+    "10月7日东京至京都的新干线车站、班次、车票和时间待补充。",
+    "10月10日京都经神户前往大阪的用车时间、服务商、车型、上下车地点及订单信息待补充。",
+    "10月13日大阪酒店至关西国际机场T1的携程专车车型、司机、车牌、订单号及上车说明待补充。",
+    "京都和大阪酒店的房型、入住要求及订单号待补充。",
+    "景点的具体时间、游览顺序、门票和预约状态待补充。",
+    "购物内容，以及6位同行人的姓名和夫妻对应关系待补充。"
+  ],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "templateId": "auto",
+    "defaultRegionId": "east-asia-trip",
+    "regions": [
+      {
+        "id": "east-asia-trip",
+        "label": "上海与日本",
+        "countryCodes": [
+          "CN",
+          "JP"
+        ],
+        "heading": "SHANGHAI / JAPAN"
+      }
+    ],
+    "region": {
+      "id": "east-asia-trip",
+      "label": "上海与日本",
+      "countryCodes": [
+        "CN",
+        "JP"
+      ],
+      "heading": "SHANGHAI / JAPAN"
+    },
+    "disclaimer": "本图仅表达地点的相对方位与路线顺序，不代表真实比例或精确地理边界。",
+    "places": [
+      {
+        "id": "wusong-cruise-terminal",
+        "name": "Wusongkou Cruise Terminal",
+        "nameZh": "上海吴淞口国际邮轮码头",
+        "countryCode": "CN",
+        "geo": {
+          "lat": 31.409585,
+          "lng": 121.508681
+        }
+      },
+      {
+        "id": "tokyo",
+        "name": "Tokyo",
+        "nameZh": "东京",
+        "countryCode": "JP",
+        "geo": {
+          "lat": 35.6762,
+          "lng": 139.6503
+        }
+      },
+      {
+        "id": "osaka",
+        "name": "Osaka",
+        "nameZh": "大阪",
+        "countryCode": "JP",
+        "geo": {
+          "lat": 34.6937,
+          "lng": 135.5023
+        }
+      },
+      {
+        "id": "kix",
+        "name": "Kansai Airport T1",
+        "nameZh": "关西机场 T1",
+        "countryCode": "JP",
+        "geo": {
+          "lat": 34.4347,
+          "lng": 135.2441
+        }
+      },
+      {
+        "id": "pvg",
+        "name": "Pudong Airport T2",
+        "nameZh": "浦东机场 T2",
+        "countryCode": "CN",
+        "geo": {
+          "lat": 31.1443,
+          "lng": 121.8083
+        }
+      },
+      {
+        "id": "kyoto",
+        "name": "Kyoto",
+        "nameZh": "京都",
+        "countryCode": "JP",
+        "geo": {
+          "lat": 35.0116,
+          "lng": 135.7681
+        }
+      },
+      {
+        "id": "kobe-sanda-outlets",
+        "name": "Kobe-Sanda Premium Outlets",
+        "nameZh": "神户三田奥特莱斯",
+        "countryCode": "JP",
+        "geo": {
+          "lat": 34.860167,
+          "lng": 135.191778
+        }
+      }
+    ],
+    "routes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "wusong-cruise-terminal",
+          "tokyo"
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "tokyo",
+          "kyoto"
+        ]
+      },
+      {
+        "day": 7,
+        "placeIds": [
+          "kyoto",
+          "kobe-sanda-outlets",
+          "osaka"
+        ]
+      },
+      {
+        "day": 10,
+        "placeIds": [
+          "kix",
+          "pvg"
+        ]
+      }
+    ],
+    "dailyRoutes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "wusong-cruise-terminal",
+          "tokyo"
+        ],
+        "scheduleItems": [
+          [
+            "cruise-board"
+          ]
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "tokyo",
+          "kyoto"
+        ],
+        "scheduleItems": [
+          [
+            "shinkansen-tokyo-kyoto"
+          ]
+        ]
+      },
+      {
+        "day": 7,
+        "placeIds": [
+          "kyoto",
+          "kobe-sanda-outlets",
+          "osaka"
+        ],
+        "scheduleItems": [
+          [
+            "kyoto-kobe-osaka"
+          ]
+        ]
+      },
+      {
+        "day": 10,
+        "placeIds": [
+          "kix",
+          "pvg"
+        ],
+        "scheduleItems": [
+          [
+            "flight-depart",
+            "flight-arrive"
+          ]
+        ]
+      }
+    ]
+  }
+}
