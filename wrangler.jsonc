@@ -1,7 +1,16 @@
 {
   "name": "trip-together",
   "compatibility_date": "2026-09-11",
+  "main": "worker.js",
   "assets": {
-    "directory": "./dist"
-  }
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "TRIP_DB",
+      "database_name": "trip-together-db",
+      "database_id": "3b09eef2-2f2c-46d1-ba4f-2fcbf50e7496"
+    }
+  ]
 }

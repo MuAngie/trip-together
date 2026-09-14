@@ -159,7 +159,7 @@ if (config && trip) {
   if (config.persistence?.mode !== "local" && config.persistence?.mode !== "d1") errors.push("persistence.mode 只能是 local 或 d1");
   if (config.persistence?.mode === "d1") {
     const sharedCollections = config.persistence.sharedCollections;
-    const allowedCollections = new Set(["todos", "tickets", "ledger"]);
+    const allowedCollections = new Set(["todos", "tickets", "ledger", "shopping"]);
     if (!Array.isArray(sharedCollections) || !sharedCollections.length || sharedCollections.some((name) => !allowedCollections.has(name))) {
       errors.push("D1 模式必须提供有效的 persistence.sharedCollections");
     }

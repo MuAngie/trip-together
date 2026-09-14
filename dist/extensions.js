@@ -125,9 +125,13 @@
   async function setupShopping(data) {
     const storage = window.TravelRuntimeStorage;
     if (!storage?.createAdapter) return;
+    const persistence = window.TRAVEL_PLAN_CONFIG?.persistence || { mode: "local" };
+    const sharedCollections = new Set(Array.isArray(persistence.sharedCollections) ? persistence.sharedCollections : []);
+    const mode = persistence.mode === "d1" && sharedCollections.has("shopping") ? "d1" : "local";
     const adapter = storage.createAdapter({
-      mode: "local",
+      mode,
       tripId: data.metadata.tripId,
+      apiBase: persistence.apiBase || "/api/trip",
       collections: ["shopping"]
     });
     let snapshot = await adapter.load();
@@ -186,7 +190,7 @@
         await context.registerTool({
           name: "add_shopping_item",
           title: "添加购物项目",
-          description: "向当前旅行的购物清单添加一项内容并保存在本机。",
+          description: `向当前旅行的购物清单添加一项内容并保存在${mode === "d1" ? "共享数据库" : "本机"}。`,
           inputSchema: { type: "object", properties: { text: { type: "string" } }, required: ["text"] },
           execute: async ({ text }) => {
             const clean = String(text || "").trim();

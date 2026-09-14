@@ -269,7 +269,7 @@
               "type": "array",
               "minItems": 1,
               "uniqueItems": true,
-              "items": { "enum": ["todos", "tickets", "ledger"] }
+              "items": { "enum": ["todos", "tickets", "ledger", "shopping"] }
             },
             "local": { "type": "object" },
             "d1": { "type": "object" }

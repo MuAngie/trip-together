@@ -156,3 +156,39 @@ test("D1 rejects cross-origin and backslash apiBase values", () => {
     assert.throws(() => storageRuntime.createAdapter({ mode: "d1", tripId: "shared-trip", collections: ["todos"], apiBase }), /same-origin/);
   }
 });
+
+test("D1 saves ask for and remember the team editor password", async () => {
+  const originalFetch = global.fetch;
+  const originalPrompt = global.prompt;
+  const calls = [];
+  let prompts = 0;
+  global.prompt = () => {
+    prompts += 1;
+    return "team-password";
+  };
+  global.fetch = async (url, init = {}) => {
+    calls.push({ url, init });
+    return {
+      ok: true,
+      status: 200,
+      async json() { return { version: 1, todos: [{ id: "todo-1", text: "Pack" }] }; }
+    };
+  };
+  try {
+    const storage = createMemoryStorage();
+    const adapter = storageRuntime.createAdapter({
+      mode: "d1",
+      tripId: "shared-trip",
+      collections: ["todos"],
+      storage
+    });
+    await adapter.applyChange("todos", { id: "todo-1", text: "Pack" });
+    await adapter.applyChange("todos", { id: "todo-1", text: "Pack passports" });
+    assert.equal(prompts, 1);
+    assert.equal(calls[0].init.headers.authorization, "Bearer team-password");
+    assert.equal(calls[1].init.headers.authorization, "Bearer team-password");
+  } finally {
+    global.fetch = originalFetch;
+    global.prompt = originalPrompt;
+  }
+});

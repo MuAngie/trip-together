@@ -197,6 +197,12 @@
       storageKeyPrefix: options.storageKeyPrefix || `${DEFAULT_KEY_PREFIX}:d1-settings`,
       collections: ["settings"]
     });
+    let tokenStorage = options.tokenStorage || null;
+    if (!tokenStorage) {
+      try { tokenStorage = globalThis.sessionStorage || null; } catch { tokenStorage = null; }
+    }
+    if (!tokenStorage) tokenStorage = resolveStorage(options.storage);
+    const editorTokenKey = options.editorTokenStorageKey || `travel-plan:editor-token:${encodeURIComponent(tripId)}`;
     let previous = null;
     let queue = Promise.resolve();
 
@@ -218,17 +224,55 @@
       return snapshot;
     }
 
+    function readEditorToken() {
+      try { return String(tokenStorage?.getItem(editorTokenKey) || ""); } catch { return ""; }
+    }
+
+    function storeEditorToken(token) {
+      try {
+        if (token) tokenStorage?.setItem(editorTokenKey, token);
+        else tokenStorage?.removeItem(editorTokenKey);
+      } catch {}
+    }
+
+    function askForEditorToken(message = "请输入团队编辑密码") {
+      const promptEditor = options.prompt || globalThis.prompt;
+      if (typeof promptEditor !== "function") return "";
+      const token = String(promptEditor(message) || "").trim();
+      if (token) storeEditorToken(token);
+      return token;
+    }
+
+    async function parseResponse(response) {
+      if (response.ok) return response.json();
+      let detail = "";
+      try { detail = String((await response.json())?.error || ""); } catch {}
+      throw new Error(`API ${response.status}${detail ? `: ${detail}` : ""}`);
+    }
+
     async function request(method, changes) {
-      const init = method === "GET"
-        ? { cache: "no-store" }
-        : {
-            method,
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify({ changes })
-          };
-      const response = await fetch(endpoint(), init);
-      if (!response.ok) throw new Error(`API ${response.status}`);
-      previous = await withLocalSettings(await response.json());
+      let response;
+      if (method === "GET") {
+        response = await fetch(endpoint(), { cache: "no-store" });
+      } else {
+        let token = readEditorToken() || askForEditorToken();
+        if (!token) throw new Error("需要团队编辑密码才能保存修改");
+        const makeRequest = () => fetch(endpoint(), {
+          method,
+          headers: { "content-type": "application/json", authorization: `Bearer ${token}` },
+          body: JSON.stringify({ changes })
+        });
+        response = await makeRequest();
+        if (response.status === 401) {
+          storeEditorToken("");
+          token = askForEditorToken("密码不正确，请重新输入团队编辑密码");
+          if (!token) throw new Error("团队编辑密码不正确");
+          response = await makeRequest();
+          if (response.status === 401) storeEditorToken("");
+        }
+      }
+      const payload = await parseResponse(response);
+      previous = await withLocalSettings(payload);
       return normalizeSnapshot(previous);
     }
 

@@ -6,7 +6,7 @@
   "scripts": {
     "build:map": "node scripts/build-map.mjs --trip dist/trip-data.json --out dist/trip-data.json",
     "validate": "node scripts/validate-lite.mjs --trip dist/trip-data.json",
-    "test:runtime": "node tests/runtime/runtime-storage.test.cjs",
+    "test:runtime": "node tests/runtime/run-tests.mjs",
     "check": "npm run build:map && npm run validate && npm run test:runtime",
     "preview": "node preview-server.mjs"
   }

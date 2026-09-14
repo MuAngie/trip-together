@@ -9,7 +9,7 @@ const state = {
 };
 
 const MODULE_NAMES = Object.freeze(["flights", "overview", "itinerary", "todo", "driving", "ledger"]);
-const SHARED_COLLECTIONS = Object.freeze(["todos", "tickets", "ledger"]);
+const SHARED_COLLECTIONS = Object.freeze(["todos", "tickets", "ledger", "shopping"]);
 
 function normalizeTripConfig(raw = {}) {
   if (!raw || typeof raw !== "object" || raw.schemaVersion !== "1.0.0") throw new Error("trip-data.json config.schemaVersion must be 1.0.0");

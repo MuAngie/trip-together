@@ -13,7 +13,14 @@
     },
     "language": "zh-CN",
     "persistence": {
-      "mode": "local"
+      "mode": "d1",
+      "apiBase": "/api/trip",
+      "sharedCollections": [
+        "todos",
+        "tickets",
+        "ledger",
+        "shopping"
+      ]
     }
   },
   "ledgerSeed": {
