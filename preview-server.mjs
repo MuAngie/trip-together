@@ -3,7 +3,7 @@ import { readFile } from "node:fs/promises";
 import { extname, join, normalize } from "node:path";
 
 const root = join(process.cwd(), "dist");
-const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".png": "image/png" };
+const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=utf-8", ".js": "text/javascript; charset=utf-8", ".json": "application/json; charset=utf-8", ".png": "image/png" };
 
 createServer(async (request, response) => {
   try {
@@ -22,4 +22,4 @@ createServer(async (request, response) => {
     response.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
     response.end("Not found");
   }
-}).listen(4173, "127.0.0.1", () => console.log("Local URL: http://127.0.0.1:4173"));
+}).listen(4173, "0.0.0.0", () => console.log("Local URL: http://127.0.0.1:4173 (same-network devices can use this computer's LAN address)"));

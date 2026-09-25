@@ -1035,7 +1035,8 @@ function preloadDefaultRouteMap() {
 
 async function init() {
   try {
-    const response = await fetch("trip-data.json", { cache: "no-store" });
+    const dataUrl = new URL("/trip-data.json", window.location.origin);
+    const response = await fetch(dataUrl, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.data = await response.json();
     state.config = normalizeTripConfig(state.data.config);
@@ -1065,8 +1066,19 @@ async function init() {
     if (moduleEnabled("driving")) renderRental();
     if (moduleEnabled("todo")) renderTravelPrep();
     if (moduleEnabled("ledger")) {
-      await window.TravelWallet?.init?.({ data: state.data, config: state.config });
-      await window.TravelLedger?.init?.({ tripId: state.data.metadata.tripId, config: state.config });
+      try {
+        await window.TravelWallet?.init?.({ data: state.data, config: state.config });
+      } catch (error) {
+        console.error("Public wallet could not be loaded", error);
+        $("#wallet-root").textContent = "公共钱包暂时无法载入，请刷新页面重试。";
+      }
+      try {
+        await window.TravelLedger?.init?.({ tripId: state.data.metadata.tripId, config: state.config });
+      } catch (error) {
+        console.error("Pre-trip ledger could not be loaded", error);
+        $("#ledger-root").textContent = "行前费用暂时无法载入，请刷新页面重试。";
+        $("#ledger-root").removeAttribute("aria-busy");
+      }
     }
     startCountdowns();
   } catch (error) {

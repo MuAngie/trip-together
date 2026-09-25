@@ -9,8 +9,15 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[character]);
 
+  function makeEntryId() {
+    if (globalThis.crypto && typeof globalThis.crypto.randomUUID === "function") {
+      return `wallet-${globalThis.crypto.randomUUID()}`;
+    }
+    return `wallet-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
   function validateEntry(entry, families) {
-    if (!Object.hasOwn(KINDS, entry.kind)) throw new Error("请选择收支类型。");
+    if (!Object.prototype.hasOwnProperty.call(KINDS, entry.kind)) throw new Error("请选择收支类型。");
     if (entry.currency !== "JPY" || !Number.isSafeInteger(entry.amountYen) || entry.amountYen <= 0) {
       throw new Error("请输入大于 0 的整数日元金额。");
     }
@@ -67,7 +74,7 @@
     });
     let entries = [];
     let editingId = null;
-    let draftId = `wallet-${crypto.randomUUID()}`;
+    let draftId = makeEntryId();
     let loaded = false;
     let busy = false;
     let notice = "";
@@ -196,7 +203,7 @@
         lock(true);
         acceptSnapshot(await adapter.applyChange("walletEntries", entry));
         editingId = null;
-        draftId = `wallet-${crypto.randomUUID()}`;
+        draftId = makeEntryId();
         notice = "已保存，公共钱包余额已更新。";
         render();
       } catch (error) {
