@@ -23,6 +23,58 @@
       ]
     }
   },
+  "walletSeed": {
+    "families": [
+      {
+        "id": "chen-feng",
+        "name": "CHEN FENG"
+      },
+      {
+        "id": "yu-jin",
+        "name": "YU JIN"
+      },
+      {
+        "id": "huang-xian",
+        "name": "HUANG XIAN"
+      }
+    ],
+    "entries": [
+      {
+        "id": "wallet-initialized-v1",
+        "kind": "initialization"
+      },
+      {
+        "id": "wallet-opening-chen-feng",
+        "kind": "contribution",
+        "currency": "JPY",
+        "amountYen": 200000,
+        "familyId": "chen-feng",
+        "category": "",
+        "note": "首笔公共资金缴款（已收齐）",
+        "date": ""
+      },
+      {
+        "id": "wallet-opening-yu-jin",
+        "kind": "contribution",
+        "currency": "JPY",
+        "amountYen": 200000,
+        "familyId": "yu-jin",
+        "category": "",
+        "note": "首笔公共资金缴款（已收齐）",
+        "date": ""
+      },
+      {
+        "id": "wallet-opening-huang-xian",
+        "kind": "contribution",
+        "currency": "JPY",
+        "amountYen": 200000,
+        "familyId": "huang-xian",
+        "category": "",
+        "note": "首笔公共资金缴款（已收齐）",
+        "date": ""
+      }
+    ]
+  },
   "ledgerSeed": {
     "version": 1,
     "settings": {
@@ -118,6 +170,23 @@
         ],
         "createdAt": "2026-09-14T12:03:00+08:00",
         "updatedAt": "2026-09-14T12:03:00+08:00"
+      },
+      {
+        "id": "charter-car-deposit-2026",
+        "originalAmountCents": 40000,
+        "baseAmountCents": 40000,
+        "currency": "CNY",
+        "category": "交通",
+        "note": "10月8日京都周边、10月10日京都经神户到大阪两天包车定金。总价¥3,900（报价¥90,000日元，按当时报价折合约¥3,930后优惠）；已付¥400，尾款¥3,500待最后结算。每天10小时，阿尔法和海狮各一天。",
+        "orderedAt": "",
+        "payerId": "chen-feng",
+        "participantIds": [
+          "chen-feng",
+          "yu-jin",
+          "huang-xian"
+        ],
+        "createdAt": "2026-09-25T00:00:00+08:00",
+        "updatedAt": "2026-09-25T00:00:00+08:00"
       }
     ],
     "updatedAt": "2026-09-14T12:03:00+08:00"
@@ -279,17 +348,30 @@
     "publicTransitAndRail": [],
     "carTransfers": [
       {
+        "id": "kyoto-sightseeing-car",
+        "date": "2026-10-08",
+        "time": null,
+        "provider": null,
+        "origin": "京都（具体上车地点待补充）",
+        "via": [
+          "京都周边景点（顺序待安排）"
+        ],
+        "destination": "京都（具体下车地点待补充）",
+        "status": "deposit-paid",
+        "note": "两天包车之一，当天用车10小时；阿尔法与海狮各用一天，具体车型分配、司机、车牌及订单信息待补充。"
+      },
+      {
         "id": "kyoto-kobe-osaka-car",
         "date": "2026-10-10",
         "time": null,
         "provider": null,
         "origin": "京都（具体上车地点待补充）",
         "via": [
-          "神户（具体地点待补充）"
+          "神户三田奥特莱斯"
         ],
         "destination": "大阪（具体下车地点待补充）",
-        "status": "details-pending",
-        "note": "用车信息已确认需要安排，时间、服务商、车型、上下车地点及订单信息待补充。"
+        "status": "deposit-paid",
+        "note": "两天包车之一，当天用车10小时；先逛神户三田奥特莱斯，再前往大阪。阿尔法与海狮各用一天，具体车型分配、司机、车牌及订单信息待补充。"
       },
       {
         "id": "osaka-hotel-kix-car",
@@ -429,6 +511,12 @@
           "text": "锦市场",
           "type": "attraction",
           "placeId": "nishiki-market"
+        },
+        {
+          "id": "dinner-kanegura",
+          "time": "17:00",
+          "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
+          "type": "restaurant"
         }
       ],
       "notes": [
@@ -444,6 +532,12 @@
         "京都"
       ],
       "schedule": [
+        {
+          "id": "kyoto-sightseeing-car",
+          "time": "待补充",
+          "text": "包车游览京都周边，当天用车10小时；具体出发时间、上车地点、车型分配及游览顺序待补充。",
+          "type": "transfer"
+        },
         {
           "id": "visit-arashiyama",
           "time": "待安排",
@@ -499,10 +593,16 @@
           "text": "伏见稻荷大社",
           "type": "attraction",
           "placeId": "fushimi-inari"
+        },
+        {
+          "id": "dinner-honke-1008",
+          "time": "待补充",
+          "text": "已预约本家（清桑）晚餐；进店报登记电话 07042277782，陈女士。具体用餐时间待补充。",
+          "type": "restaurant"
         }
       ],
       "notes": [
-        "景点多且外围分散，公共交通不便，初版建议包车。具体游览顺序和时间待安排。",
+        "景点多且外围分散，已安排当天包车；具体游览顺序和时间待安排。",
         "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
       ]
     },
@@ -556,7 +656,7 @@
         {
           "id": "kyoto-kobe-osaka",
           "time": "待补充",
-          "text": "安排用车从京都出发，经神户前往大阪；具体时间、服务商、车型、上下车地点及订单信息待补充。",
+          "text": "包车从京都出发，先逛神户三田奥特莱斯，再前往大阪；当天用车10小时。具体时间、车型分配、上下车地点及订单信息待补充。",
           "type": "transfer",
           "placeIds": [
             "kyoto",
@@ -572,6 +672,12 @@
           "placeId": "kobe-sanda-outlets"
         },
         {
+          "id": "dinner-wakko-shinkobe",
+          "time": "17:30",
+          "text": "已预约和黒 新神戸店晚餐，6人，吧台席、禁烟；仅订座，未指定套餐。预约编号：75WRVRLHP6。",
+          "type": "restaurant"
+        },
+        {
           "id": "arrive-osaka",
           "time": "待补充",
           "text": "抵达大阪，入住大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。地址：日本大阪府大阪市中央区久太郎町4-1-15（南御堂境内）；房型和入住要求待补充。",
@@ -580,7 +686,7 @@
         }
       ],
       "notes": [
-        "需要携带行李转移，且奥特莱斯购物可能增加行李，初版建议包车。"
+        "需要携带行李转移，且奥特莱斯购物可能增加行李；当天已安排包车。"
       ]
     },
     {
@@ -1191,6 +1297,67 @@
       "currency": "CNY",
       "bookedAt": "",
       "status": "酒店已确定"
+    },
+    {
+      "id": "charter-car-two-days",
+      "type": "transport",
+      "date": "2026-10-08",
+      "title": "京都周边及京都经神户至大阪包车（两天）",
+      "detail": "10月8日京都周边；10月10日先逛神户三田奥特莱斯，再前往大阪。每天用车10小时，阿尔法与海狮各一天，车型分配待补充。",
+      "schedule": "10月8日、10月10日；出发时间待补充",
+      "orderLabel": "订单号",
+      "orderNo": "",
+      "amount": 3900,
+      "currency": "CNY",
+      "paymentSummary": "CHEN FENG 已付定金 ¥400，尾款 ¥3,500 待结算",
+      "status": "定金已付"
+    },
+    {
+      "id": "restaurant-kanegura",
+      "type": "restaurant",
+      "date": "2026-10-07",
+      "time": "17:00",
+      "title": "伖（KANEGURA）",
+      "titleJa": "伖（カネグラ）",
+      "detail": "6人 · 桌席 / 禁烟 · 仅订座，未指定套餐",
+      "detailJa": "6名 · テーブル席 / 禁煙 · 席のみ予約、コース指定なし",
+      "schedule": "10月7日 17:00",
+      "orderLabel": "预约编号",
+      "orderNo": "QK9N9KSY6",
+      "reservationPhone": "07042277782",
+      "status": "已预约"
+    },
+    {
+      "id": "restaurant-honke-1008",
+      "type": "restaurant",
+      "date": "2026-10-08",
+      "time": "",
+      "title": "本家（清桑）",
+      "titleJa": "",
+      "detail": "用餐时间、人数、席位和预约编号待补充",
+      "detailJa": "利用時間・人数・席種・予約番号は未確認",
+      "schedule": "10月8日 晚餐 · 具体时间待补充",
+      "orderLabel": "预约编号",
+      "orderNo": "",
+      "reservationPhone": "07042277782",
+      "checkIn": "进店报登记电话 07042277782，陈女士。",
+      "checkInJa": "入店時は登録電話番号 07042277782 と予約名「陈女士」をお伝えください。",
+      "status": "已预约"
+    },
+    {
+      "id": "restaurant-wakko-shinkobe",
+      "type": "restaurant",
+      "date": "2026-10-10",
+      "time": "17:30",
+      "title": "和黑 新神户店",
+      "titleJa": "和黒 新神戸店",
+      "detail": "6人 · 吧台席 / 禁烟 · 仅订座，未指定套餐",
+      "detailJa": "6名 · カウンター席 / 禁煙 · 席のみ予約、コース指定なし",
+      "schedule": "10月10日 17:30",
+      "orderLabel": "预约编号",
+      "orderNo": "75WRVRLHP6",
+      "reservationPhone": "07042277782",
+      "status": "已预约"
     }
   ],
   "feesAndTaxes": [
@@ -1500,19 +1667,19 @@
     {
       "id": "middle-gap",
       "title": "城际交通细节待补充",
-      "text": "10月7日东京至京都的新干线车站、班次和时间，以及10月10日京都经神户前往大阪的用车时间、服务商和订单信息尚未提供。",
+      "text": "10月7日东京至京都的新干线车站、班次和时间，以及两天包车的出发时间、服务商、车型分配和订单信息尚未提供。",
       "tone": "warning"
     },
     {
       "id": "kyoto-charter",
-      "title": "10月8日初版建议包车",
-      "text": "当天京都景点数量较多且外围分散，公共交通不便；包车尚未预订。",
-      "tone": "warning"
+      "title": "10月8日京都周边包车",
+      "text": "当天用车10小时；具体出发时间、上车地点和车型分配待补充。",
+      "tone": "info"
     },
     {
       "id": "baggage-transfer",
       "title": "10月10日注意行李转移",
-      "text": "从京都经神户前往大阪，需要携带行李；奥特莱斯购物可能增加行李，初版建议包车。",
+      "text": "从京都经神户前往大阪，当天包车10小时；需要携带行李，奥特莱斯购物可能增加行李。",
       "tone": "warning"
     }
   ],
@@ -1539,7 +1706,7 @@
   "issuesAndUncertainties": [
     "邮轮的东京离船码头和具体离船时间待补充。",
     "10月7日东京至京都的新干线车站、班次、车票和时间待补充。",
-    "10月10日京都经神户前往大阪的用车时间、服务商、车型、上下车地点及订单信息待补充。",
+    "10月8日及10日两天包车的出发时间、服务商、阿尔法与海狮车型分配、上下车地点及订单信息待补充。",
     "10月13日大阪酒店至关西国际机场T1的携程专车车型、司机、车牌、订单号及上车说明待补充。",
     "京都和大阪酒店的房型、入住要求及订单号待补充。",
     "景点的具体时间、游览顺序、门票和预约状态待补充。",

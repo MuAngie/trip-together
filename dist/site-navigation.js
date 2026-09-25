@@ -14,7 +14,6 @@
     return {
       travelView: document.querySelector('[data-site-view="travel"]'),
       ledgerView: document.querySelector('[data-site-view="ledger"]'),
-      travelMenu: document.querySelector("#travel-navigation"),
       travelTrigger: document.querySelector("#travel-navigation-trigger"),
       ledgerLink: document.querySelector("#ledger-navigation-link"),
       skipLink: document.querySelector("#skip-link")
@@ -43,9 +42,10 @@
       if (ledgerActive) ledgerLink.setAttribute("aria-current", "page");
       else ledgerLink.removeAttribute("aria-current");
     }
-    if (skipLink) skipLink.href = ledgerActive ? "#ledger-root" : "#main";
+    if (skipLink) skipLink.href = ledgerActive ? "#public-wallet" : "#main";
 
     if (ledgerActive) {
+      if (location.hash === "#ledger-stats") document.querySelector("#pretrip-ledger").open = true;
       const tab = location.hash === "#ledger-stats" ? "stats" : location.hash === "#ledger" ? "entry" : "";
       if (tab) window.TravelLedger?.setActiveTab?.(tab, { updateHash: false });
     }
@@ -95,7 +95,6 @@
   }
 
   function setup() {
-    const { travelMenu } = elements();
     history.scrollRestoration = "manual";
     activeView = viewForHash(location.hash);
     routeFromLocation({ restore: false, forceScroll: true });
@@ -104,20 +103,16 @@
       const ledgerLink = event.target.closest("#ledger-navigation-link");
       if (ledgerLink) {
         event.preventDefault();
-        travelMenu?.removeAttribute("open");
         navigate("#ledger");
         return;
       }
 
-      const travelLink = event.target.closest(".travel-navigation-menu a, #wordmark");
+      const travelLink = event.target.closest("#travel-navigation-trigger, #wordmark");
       if (travelLink) {
         event.preventDefault();
-        travelMenu?.removeAttribute("open");
         navigate(travelLink.getAttribute("href") || "#top");
         return;
       }
-
-      if (travelMenu?.open && !event.target.closest("#travel-navigation")) travelMenu.removeAttribute("open");
     });
 
     window.addEventListener("popstate", () => scheduleBrowserRoute({ restore: true }));

@@ -8,35 +8,27 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>上海、日本旅行计划</title>
   <meta name="description" content="适合长辈使用的旅行行程、路线、清单和多人记账页面。">
-  <link rel="stylesheet" href="styles.css?v=20260914-1">
-  <link rel="stylesheet" href="ledger.css?v=20260914-3">
-  <link rel="stylesheet" href="senior.css?v=20260914-2">
-  <script src="runtime-storage.js?v=20260914-2" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20260925-4">
+  <link rel="stylesheet" href="ledger.css?v=20260925-3">
+  <link rel="stylesheet" href="senior.css?v=20260925-1">
+  <link rel="stylesheet" href="wallet.css?v=20260925-4">
+  <script src="runtime-storage.js?v=20260925-1" defer></script>
+  <script src="wallet.js?v=20260925-3" defer></script>
   <script src="overview-map.js?v=20260914-1" defer></script>
   <script src="route-ui.js?v=20260914-1" defer></script>
-  <script src="ledger.js?v=20260914-4" defer></script>
-  <script src="extensions.js?v=20260914-3" defer></script>
+  <script src="ledger.js?v=20260925-5" defer></script>
+  <script src="extensions.js?v=20260925-4" defer></script>
   <script src="collapsible-sections.js?v=20260914-1" defer></script>
-  <script src="app.js?v=20260914-2" defer></script>
+  <script src="app.js?v=20260925-6" defer></script>
   <script src="ticket-pdf-preview.js?v=20260914-1" defer></script>
-  <script src="site-navigation.js?v=20260914-1" defer></script>
+  <script src="site-navigation.js?v=20260925-3" defer></script>
 </head>
 <body>
   <a class="skip-link" id="skip-link" href="#main">跳到主要内容</a>
   <header class="topbar" id="topbar">
     <a class="wordmark" id="wordmark" href="#top" aria-label="返回顶部"></a>
     <nav class="primary-navigation" aria-label="主要模块">
-      <details class="travel-navigation" id="travel-navigation">
-        <summary id="travel-navigation-trigger">旅行信息</summary>
-        <div class="travel-navigation-menu" role="menu" aria-label="旅行信息栏目">
-          <a href="#next" role="menuitem">下一项</a>
-          <a href="#flights" role="menuitem" data-module="flights">酒店/交通</a>
-          <a href="#route" role="menuitem" data-module="overview">路线</a>
-          <a href="#itinerary" role="menuitem" data-module="itinerary">行程</a>
-          <a href="#onboard" role="menuitem">船上生活</a>
-          <a href="#prep" role="menuitem" data-module="todo">清单</a>
-        </div>
-      </details>
+      <a class="primary-navigation__travel" id="travel-navigation-trigger" href="#top">旅行信息</a>
       <a class="primary-navigation__ledger" id="ledger-navigation-link" href="#ledger" data-module="ledger">记账</a>
     </nav>
   </header>
@@ -58,10 +50,10 @@
 
     <section class="section flights-section" id="flights" aria-labelledby="flights-title" data-module="flights" hidden>
       <div class="section-heading">
-        <div><p class="section-kicker">STAY &amp; TRANSPORT</p><h2 id="flights-title">酒店/交通</h2></div>
+        <div><p class="section-kicker">STAY · TRANSPORT · DINING</p><h2 id="flights-title">酒店/交通/餐饮</h2></div>
         <p class="section-index" id="flight-index" aria-live="polite">1 / 1</p>
       </div>
-      <div class="flight-carousel" id="flight-carousel" aria-label="酒店和交通卡片，已按日期排列，可左右滑动"></div>
+      <div class="flight-carousel" id="flight-carousel" aria-label="酒店、交通和餐饮卡片，已按日期排列，可左右滑动"></div>
       <div class="carousel-dots" id="flight-dots" aria-hidden="true"></div>
     </section>
 
@@ -132,7 +124,14 @@
   </main>
 
   <main class="ledger-view" id="ledger-view" data-site-view="ledger" data-module="ledger" hidden>
-    <div id="ledger-root"></div>
+    <details class="ledger-group" id="public-wallet" open>
+      <summary><strong>公共钱包 · 日元</strong><span>集体出行统一支取</span></summary>
+      <div id="wallet-root">正在读取公共钱包…</div>
+    </details>
+    <details class="ledger-group pretrip-ledger" id="pretrip-ledger" open>
+      <summary><strong>行前费用 · 人民币</strong><span>包车总价 ¥3,900 · 已付 ¥400 · 待付 ¥3,500；邮轮、酒店、机票等独立结算</span></summary>
+      <div id="ledger-root"></div>
+    </details>
   </main>
 
   <dialog class="map-dialog" id="map-dialog">

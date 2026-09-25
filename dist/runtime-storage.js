@@ -3,7 +3,7 @@
 
   const STORAGE_VERSION = 1;
   const DEFAULT_KEY_PREFIX = "travel-plan:runtime:v1";
-  const RECORD_COLLECTIONS = Object.freeze(["bills", "travelers", "todos", "tickets", "shopping"]);
+  const RECORD_COLLECTIONS = Object.freeze(["bills", "travelers", "todos", "tickets", "shopping", "walletEntries"]);
   const SUPPORTED_COLLECTIONS = new Set([...RECORD_COLLECTIONS, "settings"]);
 
   function deepClone(value) {
@@ -20,6 +20,7 @@
       todos: [],
       tickets: [],
       shopping: [],
+      walletEntries: [],
       updatedAt: new Date().toISOString()
     };
   }
@@ -38,6 +39,7 @@
       todos: Array.isArray(raw.todos) ? deepClone(raw.todos) : [],
       tickets: Array.isArray(raw.tickets) ? deepClone(raw.tickets) : [],
       shopping: Array.isArray(raw.shopping) ? deepClone(raw.shopping) : [],
+      walletEntries: Array.isArray(raw.walletEntries) ? deepClone(raw.walletEntries) : [],
       updatedAt: typeof raw.updatedAt === "string" ? raw.updatedAt : fallback.updatedAt
     };
   }

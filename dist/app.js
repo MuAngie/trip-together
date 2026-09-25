@@ -47,9 +47,6 @@ function applyModuleConfig() {
   document.querySelectorAll("[data-module]").forEach((element) => {
     element.hidden = !moduleEnabled(element.dataset.module);
   });
-  const visibleTravelLinks = [...document.querySelectorAll(".travel-navigation-menu [data-module]")].filter((link) => !link.hidden);
-  const travelNavigation = $("#travel-navigation");
-  if (travelNavigation) travelNavigation.hidden = visibleTravelLinks.length === 0;
   document.documentElement.dataset.persistence = state.config.persistence.mode;
 
   const hashModules = {
@@ -58,8 +55,7 @@ function applyModuleConfig() {
   };
   const requestedModule = hashModules[location.hash];
   if (requestedModule && !moduleEnabled(requestedModule)) {
-    const firstVisible = visibleTravelLinks[0]?.getAttribute("href") || "#top";
-    history.replaceState({ view: "travel" }, "", firstVisible);
+    history.replaceState({ view: "travel" }, "", "#top");
   }
   window.dispatchEvent(new CustomEvent("travel-config:ready", { detail: { config: state.config } }));
 }
@@ -336,7 +332,7 @@ function carTransferCard(transfer, index, total) {
     <article class="flight-card car-transfer-card" data-transfer="${escapeHtml(transfer.id)}">
       <div class="flight-card__top car-transfer-card__top">
         <span>用车 ${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</span>
-        <b>信息待补充</b>
+        <b>${transfer.status === "deposit-paid" ? "定金已付" : "信息待补充"}</b>
       </div>
       <div class="car-transfer-card__provider">${escapeHtml(transfer.provider || "服务商待补充")}</div>
       <div class="car-transfer-card__time"><span>${escapeHtml(date)}</span><strong>${escapeHtml(time)}</strong></div>
@@ -373,26 +369,56 @@ function hotelStayCard(hotel, index, total) {
     </article>`;
 }
 
+function diningCard(booking, index, total) {
+  return `
+    <article class="flight-card dining-card" data-booking="${escapeHtml(booking.id)}">
+      <div class="flight-card__top dining-card__top">
+        <span>餐饮 ${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</span>
+        <b>${escapeHtml(booking.status || "状态待补充")}</b>
+      </div>
+      <div class="dining-card__date">${escapeHtml(formatCompactDate(booking.date))} · 晚餐 / <span lang="ja">夕食</span> · ${escapeHtml(booking.time || "时间待补充 / 時間未確認")}</div>
+      <h3>${escapeHtml(booking.title)}</h3>
+      <p class="dining-card__ja"${booking.titleJa ? ' lang="ja"' : ""}>${escapeHtml(booking.titleJa || "日文店名待补充")}</p>
+      <p class="dining-card__detail">${escapeHtml(booking.detail || "")}</p>
+      ${booking.detailJa ? `<p class="dining-card__detail dining-card__detail--ja" lang="ja">${escapeHtml(booking.detailJa)}</p>` : ""}
+      <dl class="dining-card__facts">
+        <div><dt>预约编号 <span lang="ja">/ 予約番号</span></dt><dd>${escapeHtml(booking.orderNo || "待补充")}</dd></div>
+        ${booking.reservationPhone ? `<div><dt>登记电话 <span lang="ja">/ 登録電話番号</span></dt><dd>${escapeHtml(booking.reservationPhone)}</dd></div>` : ""}
+      </dl>
+      ${booking.checkIn ? `<p class="dining-card__check-in">${escapeHtml(booking.checkIn)}</p>` : ""}
+      ${booking.checkInJa ? `<p class="dining-card__check-in dining-card__check-in--ja" lang="ja">${escapeHtml(booking.checkInJa)}</p>` : ""}
+    </article>`;
+}
+
 function renderFlights() {
   const journeys = state.data.flightJourneys;
   const carTransfers = state.data.groundTransport?.carTransfers || [];
   const hotels = (state.data.accommodations || []).filter((item) => item.type === "hotel");
+  const diningBookings = (state.data.bookingsAndTickets || []).filter((item) => item.type === "restaurant");
   const cards = [
     ...journeys.map((journey, index) => {
       const firstFlight = journeyFlights(journey.id)[0];
-      return { date: firstFlight?.departure?.date || "9999-12-31", time: firstFlight?.departure?.time || "23:59", markup: flightCard(journey, index) };
+      return { date: firstFlight?.departure?.date || "9999-12-31", priority: 0, time: firstFlight?.departure?.time || "23:59", markup: flightCard(journey, index) };
     }),
     ...carTransfers.map((transfer, index) => ({
       date: transfer.date || "9999-12-31",
+      priority: 0,
       time: transfer.time || "12:00",
       markup: carTransferCard(transfer, index, carTransfers.length)
     })),
     ...hotels.map((hotel, index) => ({
       date: hotel.checkInDate || "9999-12-31",
+      priority: 1,
       time: "23:59",
       markup: hotelStayCard(hotel, index, hotels.length)
+    })),
+    ...diningBookings.map((booking, index) => ({
+      date: booking.date || "9999-12-31",
+      priority: 2,
+      time: booking.time || "23:59",
+      markup: diningCard(booking, index, diningBookings.length)
     }))
-  ].sort((first, second) => first.date.localeCompare(second.date) || first.time.localeCompare(second.time));
+  ].sort((first, second) => first.date.localeCompare(second.date) || first.priority - second.priority || first.time.localeCompare(second.time));
   $("#flight-carousel").innerHTML = cards.map((card) => card.markup).join("");
   $("#flight-dots").innerHTML = cards.map((_, index) => `<span class="carousel-dot${index === 0 ? " is-active" : ""}"></span>`).join("");
   $("#flight-index").textContent = `1 / ${cards.length}`;
@@ -1039,6 +1065,7 @@ async function init() {
     if (moduleEnabled("driving")) renderRental();
     if (moduleEnabled("todo")) renderTravelPrep();
     if (moduleEnabled("ledger")) {
+      await window.TravelWallet?.init?.({ data: state.data, config: state.config });
       await window.TravelLedger?.init?.({ tripId: state.data.metadata.tripId, config: state.config });
     }
     startCountdowns();

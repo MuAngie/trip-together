@@ -1,4 +1,4 @@
-const RECORD_COLLECTIONS = Object.freeze(["bills", "travelers", "todos", "tickets", "shopping"]);
+const RECORD_COLLECTIONS = Object.freeze(["bills", "travelers", "todos", "tickets", "shopping", "walletEntries"]);
 const COLLECTION_SET = new Set(RECORD_COLLECTIONS);
 const API_PREFIX = "/api/trip/";
 const MAX_CHANGES = 200;
@@ -50,6 +50,7 @@ function emptySnapshot() {
     todos: [],
     tickets: [],
     shopping: [],
+    walletEntries: [],
     updatedAt: new Date().toISOString()
   };
 }
@@ -83,6 +84,7 @@ function seedRecords(data, tripId) {
   };
   push("travelers", data.ledgerSeed?.travelers);
   push("bills", data.ledgerSeed?.bills);
+  push("walletEntries", data.walletSeed?.entries);
   push("todos", data.preTrip?.todoItems || data.preTrip?.packingItems);
   push("shopping", data.preTrip?.shoppingItems);
   return records;
@@ -169,12 +171,21 @@ function validateChanges(rawChanges, collections) {
     const collection = String(raw?.collection || "");
     const id = String(raw?.id || "").trim();
     if (!["upsert", "delete"].includes(op) || !allowed.has(collection) || !id || id.length > 200) return null;
+    if (collection === "walletEntries" && id === "wallet-initialized-v1") return null;
     if (op === "delete") {
       changes.push({ op, collection, id });
       continue;
     }
     if (!raw.value || typeof raw.value !== "object" || Array.isArray(raw.value)) return null;
     const value = { ...raw.value, id };
+    if (collection === "walletEntries" && (
+      !["expense", "contribution", "refund", "return"].includes(value.kind)
+      || value.currency !== "JPY"
+      || !Number.isSafeInteger(value.amountYen) || value.amountYen <= 0
+      || typeof value.note !== "string" || value.note.length > 160
+      || typeof value.date !== "string" || (value.date && !/^\d{4}-\d{2}-\d{2}$/.test(value.date))
+      || (["contribution", "return"].includes(value.kind) && !value.familyId)
+    )) return null;
     const serialized = JSON.stringify(value);
     if (new TextEncoder().encode(serialized).byteLength > MAX_RECORD_BYTES) return null;
     changes.push({ op, collection, id, serialized });

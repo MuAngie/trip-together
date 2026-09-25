@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { handleApiRequest } from "../../worker.js";
+import { readFileSync } from "node:fs";
 
 class MemoryStatement {
   constructor(database, sql) {
@@ -81,6 +82,7 @@ function createEnvironment() {
       travelers: [{ id: "person-1", name: "旅行者" }],
       bills: [{ id: "bill-1", title: "酒店" }]
     },
+    walletSeed: JSON.parse(readFileSync(new URL("../../dist/trip-data.json", import.meta.url), "utf8")).walletSeed,
     preTrip: {
       todoItems: [{ id: "todo-1", text: "带护照" }],
       shoppingItems: []
@@ -144,4 +146,28 @@ test("a client can delete only a collection named in its allowlist", async () =>
     }
   ), env);
   assert.equal(response.status, 400);
+});
+
+test("shared wallet seeds once, merges separate clients, and keeps CNY bills independent", async () => {
+  const env = createEnvironment();
+  const url = "https://trip.example/api/trip/shared-trip?collections=walletEntries";
+  const read = () => handleApiRequest(new Request(url), env);
+  const post = (changes, token = "team-password") => handleApiRequest(new Request(url, {
+    method: "POST", headers: { "content-type": "application/json", authorization: `Bearer ${token}` },
+    body: JSON.stringify({ changes })
+  }), env);
+  const change = (id, amountYen) => ({ op: "upsert", collection: "walletEntries", id,
+    value: { id, kind: "expense", currency: "JPY", amountYen, note: "集体用餐", date: "2026-10-07" }
+  });
+  assert.equal((await (await read()).json()).walletEntries.length, 4);
+  assert.equal((await post([change("a", 18000)], "wrong")).status, 401);
+  assert.equal((await post([change("a", -1)])).status, 400);
+  assert.equal((await post([{ op: "delete", collection: "walletEntries", id: "wallet-initialized-v1" }])).status, 400);
+  assert.equal((await post([change("a", 18000)])).status, 200);
+  const saved = await (await post([change("b", 3000)])).json();
+  assert.equal(saved.walletEntries.length, 6);
+  await post([{ op: "delete", collection: "walletEntries", id: "wallet-opening-chen-feng" }]);
+  assert.equal((await (await read()).json()).walletEntries.length, 5);
+  const cny = await (await handleApiRequest(new Request("https://trip.example/api/trip/shared-trip?collections=bills"), env)).json();
+  assert.equal(cny.bills[0].title, "酒店");
 });

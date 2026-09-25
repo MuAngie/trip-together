@@ -513,6 +513,7 @@
   function availableCurrencyCodes(extraCode = "") {
     return [...new Set([
       ledgerData.settings.baseCurrency,
+      "JPY",
       ...ledgerData.settings.commonCurrencies,
       extraCode
     ].filter((code) => CURRENCY_BY_CODE.has(code)))];
@@ -973,7 +974,7 @@
         <div class="ledger-known-cost-list">
           ${bookings.map((item) => `
             <div class="ledger-known-cost-row">
-              <span><small>${escapeHtml(referenceDate(item.date))} · 已预订总价</small><strong>${escapeHtml(item.title)}</strong></span>
+              <span><small>${escapeHtml(referenceDate(item.date))} · 已预订总价</small><strong>${escapeHtml(item.title)}</strong>${item.paymentSummary ? `<small class="ledger-known-cost-row__payment">${escapeHtml(item.paymentSummary)}</small>` : ""}</span>
               <b>${escapeHtml(referenceMoney(item.amount, item.currency))}</b>
             </div>`).join("")}
           ${fees.map((item) => `
@@ -1218,7 +1219,7 @@
     ledgerRoot.innerHTML = `
       <div class="ledger-app" data-ledger-trip-id="${escapeAttribute(ledgerTripId)}">
         <header class="ledger-page-header">
-          <h1>旅行记账</h1>
+          <h2>账单与结算</h2>
           <div class="ledger-header-actions">
             <button class="ledger-icon-button" type="button" data-ledger-action="open-settings" aria-label="记账设置">设置</button>
           </div>
@@ -1926,12 +1927,36 @@
     const storedTravelers = Array.isArray(stored?.travelers) ? stored.travelers : [];
     const storedBills = Array.isArray(stored?.bills) ? stored.bills : [];
     const authoredSeed = globalThis.TRAVEL_PLAN_DATA?.ledgerSeed;
+    let initialSaveSucceeded = true;
     if (!storedTravelers.length && !storedBills.length && authoredSeed) {
       stored = normalizeData(authoredSeed);
       try {
         await Promise.resolve(ledgerAdapter.save(stored, { tripId: ledgerTripId }));
       } catch (error) {
         console.error("TravelLedger could not save initial data", error);
+        initialSaveSucceeded = false;
+      }
+    }
+    if (ledgerPersistenceMode === "local") {
+      const deposit = authoredSeed?.bills?.find((bill) => bill.id === "charter-car-deposit-2026");
+      const markerKey = `travel-ledger:${ledgerTripId}:charter-car-deposit-2026`;
+      let migrated = false;
+      try { migrated = globalThis.localStorage?.getItem(markerKey) === "1"; } catch {}
+      if (deposit && !migrated) {
+        let persisted = initialSaveSucceeded;
+        if (!(stored?.bills || []).some((bill) => bill.id === deposit.id)) {
+          const updated = normalizeData({ ...stored, bills: [...(stored?.bills || []), deposit] });
+          try {
+            await Promise.resolve(ledgerAdapter.save(updated, { tripId: ledgerTripId }));
+            stored = updated;
+          } catch (error) {
+            console.error("TravelLedger could not save charter deposit", error);
+            persisted = false;
+          }
+        }
+        if (persisted && (stored?.bills || []).some((bill) => bill.id === deposit.id)) {
+          try { globalThis.localStorage?.setItem(markerKey, "1"); } catch {}
+        }
       }
     }
     ledgerData = normalizeData(stored);

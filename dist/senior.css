@@ -16,8 +16,7 @@ button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
 :focus-visible { outline: 4px solid oklch(72% 0.12 65); outline-offset: 3px; }
 .topbar { height: calc(58px + var(--safe-top)); padding-inline: 16px; }
 .wordmark { min-height: 48px; font-size: 14px; }
-.primary-navigation a, .travel-navigation summary { min-height: 48px; font-size: 15px; }
-.travel-navigation-menu a { min-height: 48px; padding: 0 18px; }
+.primary-navigation a { min-height: 48px; font-size: 15px; }
 .hero { min-height: 210px; padding: 42px 18px 30px; }
 .hero h1 { font-size: 42px; line-height: 1.08; }
 .hero__eyebrow, .section-kicker { font-size: 12px; }

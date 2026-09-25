@@ -10,7 +10,12 @@ createServer(async (request, response) => {
     const relative = request.url === "/" ? "index.html" : request.url.slice(1).split("?")[0];
     const file = normalize(join(root, relative));
     if (!file.startsWith(root)) throw new Error("Invalid path");
-    const body = await readFile(file);
+    let body = await readFile(file);
+    if (relative === "trip-data.json") {
+      const data = JSON.parse(body);
+      data.config.persistence.mode = "local";
+      body = JSON.stringify(data);
+    }
     response.writeHead(200, { "Content-Type": types[extname(file)] || "application/octet-stream" });
     response.end(body);
   } catch (_) {

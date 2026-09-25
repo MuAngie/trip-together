@@ -112,13 +112,18 @@
 
   function renderBookings(data) {
     const host = document.querySelector("#booking-list");
-    const items = data.bookingsAndTickets || [];
+    const items = [...(data.bookingsAndTickets || [])].sort((first, second) =>
+      (first.date || "9999-12-31").localeCompare(second.date || "9999-12-31")
+    );
     host.innerHTML = items.length ? items.map((item) => `
       <article class="booking-row">
-        <div class="booking-row__head"><h3>${escapeHtml(item.title)}${item.titleEn ? `<small>${escapeHtml(item.titleEn)}</small>` : ""}</h3><span>${escapeHtml(item.status || "状态待补充")}</span></div>
+        <div class="booking-row__head"><h3>${escapeHtml(item.title)}${item.titleJa ? `<small lang="ja">${escapeHtml(item.titleJa)}</small>` : item.type === "restaurant" ? "<small>日文店名待补充</small>" : ""}${item.titleEn ? `<small>${escapeHtml(item.titleEn)}</small>` : ""}</h3><span>${escapeHtml(item.status || "状态待补充")}</span></div>
         <p>${escapeHtml(item.detail || "")}</p>
+        ${item.detailJa ? `<p lang="ja">${escapeHtml(item.detailJa)}</p>` : ""}
         <p>${escapeHtml(item.schedule || "")}</p>
-        <dl><div><dt>订单号</dt><dd>${escapeHtml(item.orderNo || "待补充")}</dd></div>${item.bookedAt ? `<div><dt>预订时间</dt><dd>${escapeHtml(item.bookedAt)}</dd></div>` : ""}</dl>
+        ${item.checkIn ? `<p>${escapeHtml(item.checkIn)}</p>` : ""}
+        ${item.checkInJa ? `<p lang="ja">${escapeHtml(item.checkInJa)}</p>` : ""}
+        <dl><div><dt>${escapeHtml(item.orderLabel || "订单号")}</dt><dd>${escapeHtml(item.orderNo || "待补充")}</dd></div>${item.reservationPhone ? `<div><dt>登记电话</dt><dd>${escapeHtml(item.reservationPhone)}</dd></div>` : ""}${item.bookedAt ? `<div><dt>预订时间</dt><dd>${escapeHtml(item.bookedAt)}</dd></div>` : ""}</dl>
       </article>`).join("") : '<p class="empty-panel">尚未提供预订资料。</p>';
   }
 
