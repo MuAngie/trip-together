@@ -31,24 +31,25 @@ button, input, select, textarea { font-family: inherit; }
 .section-collapse-hint { right: 27px; font-size: 14px; }
 .section-collapse-toggle { min-height: 80px; }
 
-/* The three card types retain their distinct colors and use one readable scale. */
-.flight-card { padding: 22px; line-height: 1.5; }
-.flight-card__top { font-size: 14px; line-height: 1.45; letter-spacing: 0; }
-.flight-card__top b { font-size: 14px; }
-.flight-card__airlines, .flight-placeholder__eyebrow { font-size: 13px; }
-.flight-card h3 { font-size: 24px; line-height: 1.3; }
-.hotel-stay-card__dates, .dining-card__date, .car-transfer-card__provider { font-size: 16px; line-height: 1.5; }
-.hotel-stay-card__ja, .dining-card__ja, .dining-card__detail { font-size: 16px; line-height: 1.5; }
-.hotel-stay-card__en, .hotel-stay-location dd, .car-transfer-card__note { font-size: 14px; line-height: 1.55; }
-.hotel-stay-location dt, .car-transfer-route span, .dining-card__facts dt { font-size: 14px; line-height: 1.5; }
+/* Shared type hierarchy for hotel, transport, and dining cards. */
+.flight-card { padding: 22px; line-height: 1.5; font-weight: 400; }
+.flight-card__top { font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.4; letter-spacing: 0; }
+.flight-card__top b { font-size: 13px; font-weight: 600; }
+.flight-card h3 { font-size: 22px; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+.hotel-stay-card__dates, .dining-card__date, .car-transfer-card__time { font-size: 16px; font-weight: 600; line-height: 1.45; font-variant-numeric: tabular-nums; }
+.car-transfer-card__time span, .car-transfer-card__time strong { font: inherit; font-variant-numeric: tabular-nums; }
+.car-transfer-card h3 { margin: 14px 0 0; }
+.car-transfer-card__provider { margin-top: 7px; font-size: 14px; font-weight: 400; line-height: 1.5; }
+.hotel-stay-location dd, .car-transfer-route strong, .dining-card__detail, .dining-card__facts dd, .dining-card__check-in { font-size: 15px; font-weight: 400; line-height: 1.55; }
+.hotel-stay-card__ja, .hotel-stay-card__en, .dining-card__ja, .dining-card__detail--ja, .dining-card__check-in--ja, .hotel-stay-location div[lang="ja"] dd, .car-transfer-card__note { font-size: 14px; font-weight: 400; line-height: 1.55; }
+.hotel-stay-location dt, .car-transfer-route span, .dining-card__facts dt { font-size: 13px; font-weight: 600; line-height: 1.5; }
 .hotel-stay-location div { grid-template-columns: 72px minmax(0, 1fr); }
-.dining-card__facts dd, .dining-card__check-in, .car-transfer-route strong { font-size: 16px; line-height: 1.5; }
 .hotel-stay-card__footer a { min-height: var(--ui-control); padding-inline: 14px; font-size: 14px; }
-.flight-stop__city, .flight-stop__timing, .flight-stop__timing b,
-.flight-stop__timing em, .flight-countdown span { font-size: 13px; }
-.flight-segment span { font-size: 12px; }
-.flight-placeholder p, .flight-placeholder li { font-size: 14px; }
-.flight-countdown strong { overflow-wrap: anywhere; }
+.flight-card__airlines, .flight-placeholder p, .flight-placeholder li, .flight-stop__city { font-size: 14px; }
+.flight-placeholder__eyebrow, .flight-stop__timing, .flight-stop__timing em, .flight-countdown span { font-size: 13px; }
+.flight-stop__timing b { font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.flight-segment span { font-size: 13px; }
+.flight-countdown strong { font-family: inherit; font-size: 22px; font-weight: 700; line-height: 1.3; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .carousel-dots { min-height: 20px; align-items: center; }
 
 .day-meta, .schedule-time { font-size: 14px; }
@@ -119,8 +120,14 @@ button, input, select, textarea { font-family: inherit; }
 .map-place-action { min-height: 44px; padding: 6px 10px; border: 1px solid currentColor; border-radius: 10px; color: inherit; background: transparent; cursor: pointer; font-size: 14px; font-weight: 700; }
 .flight-airport-maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .flight-airport-maps .map-place-action { border-color: rgba(255,255,255,.5); }
-.car-transfer-route .map-place-action { margin-top: 6px; }
 .day-location-maps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .dining-card .map-place-action, .hotel-stay-card .map-place-action { align-self: flex-start; }
 .dining-card__map { display: flex; margin-top: auto; padding-top: 16px; }
 .booking-row__maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+
+@media (max-width: 520px) {
+  .schedule-item { padding-left: 68px; }
+  .schedule-time { width: 54px; font-size: 13px; overflow-wrap: anywhere; }
+  .schedule-item::before { left: 60px; }
+  .schedule-item::after { left: 56px; }
+}

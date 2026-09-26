@@ -71,8 +71,9 @@
 
   function renderBookings(data) {
     const host = document.querySelector("#booking-list");
+    const priority = (item) => item.displayPriority ?? (item.type === "transport" ? 0 : item.type === "restaurant" ? 2 : 1);
     const items = [...(data.bookingsAndTickets || [])].sort((first, second) =>
-      (first.date || "9999-12-31").localeCompare(second.date || "9999-12-31")
+      (first.date || "9999-12-31").localeCompare(second.date || "9999-12-31") || priority(first) - priority(second)
     );
     const locations = (item) => {
       if (item.type === "restaurant") return [{ nameZh: item.title, nameJa: item.titleJa }];

@@ -336,19 +336,20 @@ function flightCard(journey, index) {
 function carTransferCard(transfer, index, total) {
   const date = transfer.date ? formatCompactDate(transfer.date) : "日期待补充";
   const time = transfer.time || "时间待补充";
-  const via = (transfer.via || []).map((place) => `<li><span>途经</span><div><strong>${escapeHtml(place)}</strong>${mapButtonForNamedPlace(place)}</div></li>`).join("");
+  const via = (transfer.via || []).map((place) => `<li><span>途经</span><div><strong>${escapeHtml(place)}</strong></div></li>`).join("");
   return `
     <article class="flight-card car-transfer-card" data-transfer="${escapeHtml(transfer.id)}">
       <div class="flight-card__top car-transfer-card__top">
         <span>用车 ${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</span>
         <b>${transfer.status === "deposit-paid" ? "定金已付" : "信息待补充"}</b>
       </div>
-      <div class="car-transfer-card__provider">${escapeHtml(transfer.provider || "服务商待补充")}</div>
       <div class="car-transfer-card__time"><span>${escapeHtml(date)}</span><strong>${escapeHtml(time)}</strong></div>
+      <h3>${escapeHtml(transfer.title || "用车行程")}</h3>
+      <div class="car-transfer-card__provider">${escapeHtml(transfer.provider || "服务商待补充")}</div>
       <ol class="car-transfer-route">
-        <li><span>上车</span><div><strong>${escapeHtml(transfer.origin || "地点待补充")}</strong>${transfer.origin ? mapButtonForNamedPlace(transfer.origin, transfer.originPlaceId) : ""}</div></li>
+        <li><span>上车</span><div><strong>${escapeHtml(transfer.origin || "地点待补充")}</strong></div></li>
         ${via}
-        <li><span>到达</span><div><strong>${escapeHtml(transfer.destination || "地点待补充")}</strong>${transfer.destination ? mapButtonForNamedPlace(transfer.destination, transfer.destinationPlaceId) : ""}</div></li>
+        <li><span>到达</span><div><strong>${escapeHtml(transfer.destination || "地点待补充")}</strong></div></li>
       </ol>
       <p class="car-transfer-card__note">${escapeHtml(transfer.note || "具体信息待补充。")}</p>
     </article>`;
@@ -423,7 +424,7 @@ function renderFlights() {
     })),
     ...diningBookings.map((booking, index) => ({
       date: booking.date || "9999-12-31",
-      priority: 2,
+      priority: booking.displayPriority ?? 2,
       time: booking.time || "23:59",
       markup: diningCard(booking, index, diningBookings.length)
     }))

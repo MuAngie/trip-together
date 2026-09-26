@@ -350,9 +350,10 @@
       {
         "id": "kyoto-sightseeing-car",
         "date": "2026-10-08",
+        "title": "京都周边包车",
         "time": null,
         "provider": null,
-        "origin": "京都（具体上车地点待补充）",
+        "origin": "京都日航公主酒店",
         "via": [
           "京都周边景点（顺序待安排）"
         ],
@@ -363,9 +364,10 @@
       {
         "id": "kyoto-kobe-osaka-car",
         "date": "2026-10-10",
+        "title": "京都经神户至大阪",
         "time": null,
         "provider": null,
-        "origin": "京都（具体上车地点待补充）",
+        "origin": "京都日航公主酒店",
         "via": [
           "神户三田奥特莱斯"
         ],
@@ -376,6 +378,7 @@
       {
         "id": "osaka-hotel-kix-car",
         "date": "2026-10-13",
+        "title": "大阪酒店至关西机场",
         "time": "13:00",
         "provider": "携程专车",
         "origin": "大阪东急卓越酒店（Osaka Excel Hotel Tokyu）",
@@ -464,46 +467,40 @@
       "title": "东京离船，前往京都",
       "locations": [
         "东京",
-        "京都"
+        "品川站",
+        "京都站"
       ],
       "schedule": [
         {
           "id": "cruise-arrive",
-          "time": "待补充",
-          "text": "荣耀号抵达东京并离船；离船时间和码头待补充。",
+          "time": "05:30",
+          "text": "荣耀号抵达东京码头；具体码头和离船时间待补充。",
           "type": "boat",
           "placeId": "tokyo"
         },
         {
+          "id": "taxi-to-shinagawa",
+          "time": "约07:30",
+          "text": "打车前往品川 JR 站。",
+          "type": "transfer",
+          "placeId": "shinagawa-station"
+        },
+        {
           "id": "shinkansen-tokyo-kyoto",
-          "time": "待补充",
-          "text": "离船后乘新干线前往京都；车站、班次和时间待补充。",
+          "time": "现场决定",
+          "text": "在品川 JR 站现场购买品川至京都的新干线车票，现场选择车次和时间，乘车前往京都。",
           "type": "train",
           "placeIds": [
-            "tokyo",
-            "kyoto"
+            "shinagawa-station",
+            "kyoto-station"
           ]
         },
         {
-          "id": "visit-gion-shijo",
+          "id": "arrive-kyoto-hotel",
           "time": "待安排",
-          "text": "祇园四条",
-          "type": "attraction",
-          "placeId": "gion-shijo"
-        },
-        {
-          "id": "visit-hanamikoji",
-          "time": "待安排",
-          "text": "花见小路",
-          "type": "attraction",
-          "placeId": "hanamikoji"
-        },
-        {
-          "id": "visit-yasaka-shrine",
-          "time": "待安排",
-          "text": "八坂神社",
-          "type": "attraction",
-          "placeId": "yasaka-shrine"
+          "text": "前往京都日航公主酒店。",
+          "type": "check-in",
+          "placeId": "kyoto-hotel"
         },
         {
           "id": "visit-nishiki-market",
@@ -513,10 +510,25 @@
           "placeId": "nishiki-market"
         },
         {
+          "id": "visit-shijo-kamo-river",
+          "time": "待安排",
+          "text": "四条鸭川",
+          "type": "attraction",
+          "placeId": "shijo-kamo-river"
+        },
+        {
+          "id": "visit-shirakawa",
+          "time": "待安排",
+          "text": "祇园白川",
+          "type": "attraction",
+          "placeId": "kyoto-shirakawa"
+        },
+        {
           "id": "dinner-kanegura",
           "time": "17:00",
           "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
-          "type": "restaurant"
+          "type": "restaurant",
+          "placeId": "restaurant-kanegura"
         }
       ],
       "notes": [
@@ -535,8 +547,9 @@
         {
           "id": "kyoto-sightseeing-car",
           "time": "待补充",
-          "text": "包车游览京都周边，当天用车10小时；具体出发时间、上车地点、车型分配及游览顺序待补充。",
-          "type": "transfer"
+          "text": "从京都日航公主酒店上车，包车游览京都周边，当天用车10小时；具体出发时间、车型分配及游览顺序待补充。",
+          "type": "transfer",
+          "placeId": "kyoto-hotel"
         },
         {
           "id": "visit-arashiyama",
@@ -596,8 +609,8 @@
         },
         {
           "id": "dinner-honke-1008",
-          "time": "待补充",
-          "text": "已预约本家（清桑）晚餐；进店报登记电话 07042277782，陈女士。具体用餐时间待补充。",
+          "time": "19:00",
+          "text": "已预约本家（清桑）晚餐；进店报登记电话 07042277782，陈女士。",
           "type": "restaurant"
         }
       ],
@@ -656,10 +669,10 @@
         {
           "id": "kyoto-kobe-osaka",
           "time": "待补充",
-          "text": "包车从京都出发，先逛神户三田奥特莱斯，再前往大阪；当天用车10小时。具体时间、车型分配、上下车地点及订单信息待补充。",
+          "text": "从京都日航公主酒店上车，先逛神户三田奥特莱斯，再前往大阪；当天用车10小时。具体出发时间、车型分配、下车地点及订单信息待补充。",
           "type": "transfer",
           "placeIds": [
-            "kyoto",
+            "kyoto-hotel",
             "kobe-sanda-outlets",
             "osaka"
           ]
@@ -823,6 +836,17 @@
       }
     },
     {
+      "id": "shinagawa-station",
+      "name": "Shinagawa Station",
+      "nameZh": "品川站",
+      "nameJa": "品川駅",
+      "countryCode": "JP",
+      "cityOrArea": "东京",
+      "navigation": {
+        "query": "品川駅 東京"
+      }
+    },
+    {
       "id": "osaka",
       "name": "Osaka",
       "nameZh": "大阪",
@@ -878,33 +902,43 @@
       }
     },
     {
-      "id": "gion-shijo",
-      "nameZh": "祇园四条",
-      "nameJa": "祇園四条",
+      "id": "kyoto-station",
+      "nameZh": "京都站",
+      "nameJa": "京都駅",
       "countryCode": "JP",
       "cityOrArea": "京都",
       "navigation": {
-        "query": "祇园四条 京都"
+        "query": "京都駅"
       }
     },
     {
-      "id": "hanamikoji",
-      "nameZh": "花见小路",
-      "nameJa": "花見小路通",
+      "id": "kyoto-hotel",
+      "nameZh": "京都日航公主酒店",
+      "nameJa": "ホテル日航プリンセス京都",
       "countryCode": "JP",
       "cityOrArea": "京都",
       "navigation": {
-        "query": "花见小路 京都"
+        "query": "〒600-8096 京都市下京区烏丸高辻東入高橋町630番地"
       }
     },
     {
-      "id": "yasaka-shrine",
-      "nameZh": "八坂神社",
-      "nameJa": "八坂神社",
+      "id": "shijo-kamo-river",
+      "nameZh": "四条鸭川",
+      "nameJa": "鴨川（四条付近）",
       "countryCode": "JP",
       "cityOrArea": "京都",
       "navigation": {
-        "query": "八坂神社 京都"
+        "query": "鴨川 四条 京都"
+      }
+    },
+    {
+      "id": "kyoto-shirakawa",
+      "nameZh": "祇园白川",
+      "nameJa": "祇園白川",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "祇園白川 京都"
       }
     },
     {
@@ -915,6 +949,16 @@
       "cityOrArea": "京都",
       "navigation": {
         "query": "锦市场 京都"
+      }
+    },
+    {
+      "id": "restaurant-kanegura",
+      "nameZh": "KANEGURA",
+      "nameJa": "伖（カネグラ）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "伖 カネグラ 京都"
       }
     },
     {
@@ -1065,34 +1109,24 @@
   "restaurants": [],
   "attractions": [
     {
-      "id": "attraction-gion-shijo",
-      "placeId": "gion-shijo",
-      "name": "祇园四条",
-      "nameJa": "祇園四条",
+      "id": "attraction-shijo-kamo-river",
+      "placeId": "shijo-kamo-river",
+      "name": "四条鸭川",
+      "nameJa": "鴨川（四条付近）",
       "dates": [
         "2026-10-07"
       ],
-      "detail": "京阪祇园四条站及四条大桥周边是进入祇园的主要入口，可步行串联花见小路、八坂神社等地点。"
+      "detail": "鸭川四条一带的河岸，计划在锦市场之后散步；具体停留时间待安排。"
     },
     {
-      "id": "attraction-hanamikoji",
-      "placeId": "hanamikoji",
-      "name": "花见小路",
-      "nameJa": "花見小路通",
+      "id": "attraction-kyoto-shirakawa",
+      "placeId": "kyoto-shirakawa",
+      "name": "祇园白川",
+      "nameJa": "祇園白川",
       "dates": [
         "2026-10-07"
       ],
-      "detail": "祇园代表性的传统街道，两侧可见町家与茶屋建筑。这里同时是居民和商户的日常空间，拍照时请留意现场提示。"
-    },
-    {
-      "id": "attraction-yasaka-shrine",
-      "placeId": "yasaka-shrine",
-      "name": "八坂神社",
-      "nameJa": "八坂神社",
-      "dates": [
-        "2026-10-07"
-      ],
-      "detail": "位于祇园东端，是祇园地区的重要神社，也与祇园祭关系密切。西楼门是从四条通进入神社时醒目的地标。"
+      "detail": "祇园白川一带，计划在晚餐前散步；具体路线和停留时间待安排。"
     },
     {
       "id": "attraction-nishiki-market",
@@ -1303,7 +1337,7 @@
       "type": "transport",
       "date": "2026-10-08",
       "title": "京都周边及京都经神户至大阪包车（两天）",
-      "detail": "10月8日京都周边；10月10日先逛神户三田奥特莱斯，再前往大阪。每天用车10小时，阿尔法与海狮各一天，车型分配待补充。",
+      "detail": "10月8日京都周边；10月10日先逛神户三田奥特莱斯，再前往大阪。两天均从京都日航公主酒店上车，每天用车10小时，阿尔法与海狮各一天，车型分配待补充。",
       "schedule": "10月8日、10月10日；出发时间待补充",
       "orderLabel": "订单号",
       "orderNo": "",
@@ -1331,12 +1365,12 @@
       "id": "restaurant-honke-1008",
       "type": "restaurant",
       "date": "2026-10-08",
-      "time": "",
+      "time": "19:00",
       "title": "本家（清桑）",
       "titleJa": "",
-      "detail": "用餐时间、人数、席位和预约编号待补充",
-      "detailJa": "利用時間・人数・席種・予約番号は未確認",
-      "schedule": "10月8日 晚餐 · 具体时间待补充",
+      "detail": "人数、席位和预约编号待补充",
+      "detailJa": "人数・席種・予約番号は未確認",
+      "schedule": "10月8日 19:00 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "",
       "reservationPhone": "07042277782",
@@ -1348,6 +1382,7 @@
       "id": "restaurant-wakko-shinkobe",
       "type": "restaurant",
       "date": "2026-10-10",
+      "displayPriority": 0.5,
       "time": "17:30",
       "title": "和黑 新神户店",
       "titleJa": "和黒 新神戸店",
@@ -1667,13 +1702,13 @@
     {
       "id": "middle-gap",
       "title": "城际交通细节待补充",
-      "text": "10月7日东京至京都的新干线车站、班次和时间，以及两天包车的出发时间、服务商、车型分配和订单信息尚未提供。",
+      "text": "10月7日在品川站现场购买赴京都的新干线车票，车次和时间届时选择；两天包车的出发时间、服务商、车型分配和订单信息尚待补充。",
       "tone": "warning"
     },
     {
       "id": "kyoto-charter",
       "title": "10月8日京都周边包车",
-      "text": "当天用车10小时；具体出发时间、上车地点和车型分配待补充。",
+      "text": "从京都日航公主酒店上车，当天用车10小时；具体出发时间和车型分配待补充。",
       "tone": "info"
     },
     {
@@ -1705,8 +1740,8 @@
   },
   "issuesAndUncertainties": [
     "邮轮的东京离船码头和具体离船时间待补充。",
-    "10月7日东京至京都的新干线车站、班次、车票和时间待补充。",
-    "10月8日及10日两天包车的出发时间、服务商、阿尔法与海狮车型分配、上下车地点及订单信息待补充。",
+    "10月7日品川至京都的新干线车票将在品川站现场购买，车次和时间现场决定。",
+    "10月8日及10日两天包车均从京都日航公主酒店上车；出发时间、服务商、阿尔法与海狮车型分配、下车地点及订单信息待补充。",
     "10月13日大阪酒店至关西国际机场T1的携程专车车型、司机、车牌、订单号及上车说明待补充。",
     "京都和大阪酒店的房型、入住要求及订单号待补充。",
     "景点的具体时间、游览顺序、门票和预约状态待补充。",
