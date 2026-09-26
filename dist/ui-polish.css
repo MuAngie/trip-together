@@ -1,0 +1,126 @@
+/* Shared type and spacing for the travel view and both ledger sections. */
+:root { --ui-space: 8px; --ui-control: 48px; }
+body { font-size: 17px; line-height: 1.6; }
+button, input, select, textarea { font-family: inherit; }
+.section { padding-block: 40px; }
+.section-kicker { margin-bottom: 7px; color: var(--lake); font-size: 12px; line-height: 1.4; }
+.section-heading { align-items: start; gap: 12px; }
+.section-heading > div { min-width: 0; }
+.section-heading h2 { font-size: 28px; line-height: 1.2; letter-spacing: -.025em; }
+.section-index, .soft-label { font-size: 14px; line-height: 1.4; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+
+/* A long section title and the carousel count need separate rows on a phone. */
+.section.is-collapsible .section-heading--collapsible {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-content: center;
+  align-items: center;
+  gap: 5px 12px;
+  min-height: 80px;
+  padding: 10px 84px 10px 0;
+}
+.section.is-collapsible .section-heading--collapsible > div { grid-column: 1; min-width: 0; }
+.section.is-collapsible .section-heading--collapsible > .section-index,
+.section.is-collapsible .section-heading--collapsible > .soft-label {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  justify-self: start;
+  white-space: nowrap;
+}
+.section-collapse-hint { right: 27px; font-size: 14px; }
+.section-collapse-toggle { min-height: 80px; }
+
+/* The three card types retain their distinct colors and use one readable scale. */
+.flight-card { padding: 22px; line-height: 1.5; }
+.flight-card__top { font-size: 14px; line-height: 1.45; letter-spacing: 0; }
+.flight-card__top b { font-size: 14px; }
+.flight-card__airlines, .flight-placeholder__eyebrow { font-size: 13px; }
+.flight-card h3 { font-size: 24px; line-height: 1.3; }
+.hotel-stay-card__dates, .dining-card__date, .car-transfer-card__provider { font-size: 16px; line-height: 1.5; }
+.hotel-stay-card__ja, .dining-card__ja, .dining-card__detail { font-size: 16px; line-height: 1.5; }
+.hotel-stay-card__en, .hotel-stay-location dd, .car-transfer-card__note { font-size: 14px; line-height: 1.55; }
+.hotel-stay-location dt, .car-transfer-route span, .dining-card__facts dt { font-size: 14px; line-height: 1.5; }
+.hotel-stay-location div { grid-template-columns: 72px minmax(0, 1fr); }
+.dining-card__facts dd, .dining-card__check-in, .car-transfer-route strong { font-size: 16px; line-height: 1.5; }
+.hotel-stay-card__footer a { min-height: var(--ui-control); padding-inline: 14px; font-size: 14px; }
+.flight-stop__city, .flight-stop__timing, .flight-stop__timing b,
+.flight-stop__timing em, .flight-countdown span { font-size: 13px; }
+.flight-segment span { font-size: 12px; }
+.flight-placeholder p, .flight-placeholder li { font-size: 14px; }
+.flight-countdown strong { overflow-wrap: anywhere; }
+.carousel-dots { min-height: 20px; align-items: center; }
+
+.day-meta, .schedule-time { font-size: 14px; }
+.day-locations, .schedule-map-link, .detail-note { font-size: 15px; }
+.schedule-ticket__status, .schedule-ticket__content small, .schedule-ticket__open { font-size: 13px; }
+.schedule-ticket__content strong { font-size: 15px; }
+.schedule-ticket__open { min-height: var(--ui-control); }
+.detail-note { border-left: 1px solid var(--terracotta); border-radius: 10px; }
+.booking-row p, .booking-row dt, .booking-row dd { font-size: 15px; }
+
+/* Matching section and form vocabulary across the yen wallet and CNY ledger. */
+.ledger-group { border-color: var(--line); background: var(--surface); }
+#public-wallet { background: color-mix(in srgb, var(--lake-soft) 55%, var(--surface)); }
+.ledger-group > summary { padding: 18px 20px; }
+.ledger-group > summary strong { font-size: 22px; line-height: 1.3; }
+.ledger-group > summary span { margin-top: 5px; line-height: 1.5; }
+.wallet, .ledger-app { color: var(--ink); font-size: 17px; line-height: 1.6; }
+.wallet-totals, .wallet-entry, .wallet-details, .wallet-records,
+.ledger-entry-card, .ledger-list-section, .ledger-stats-overview {
+  border-color: var(--line);
+  background: var(--surface);
+  box-shadow: none;
+}
+.wallet-form, .ledger-entry-card { padding: 20px; }
+.wallet-form { gap: 18px; }
+.wallet-entry, .wallet-details, .wallet-records { margin-top: 24px; }
+.wallet button, .wallet input, .wallet select,
+.ledger-input, .ledger-select, .ledger-currency-dropdown summary,
+.ledger-field-amount .ledger-amount-input { min-height: var(--ui-control); font-size: 16px; }
+.wallet input[name="amount"] { font-size: 24px; }
+.ledger-section-kicker, .ledger-field-label, .ledger-fieldset legend,
+.ledger-soft-count, .ledger-known-costs-note { font-size: 14px; line-height: 1.45; }
+.ledger-section-heading h2, .wallet h2, .wallet-entry > summary, .wallet-details > summary,
+.wallet-records > summary { font-size: 20px; line-height: 1.35; }
+.ledger-category-choice, .ledger-person-name, .ledger-person-static,
+.ledger-bill-people, .ledger-bill-date, .ledger-bill-note-trigger,
+.ledger-known-cost-row small { font-size: 13px; line-height: 1.4; }
+.ledger-category-choice { min-height: var(--ui-control); }
+.ledger-person-input:focus-visible + .ledger-person-visual { outline: 3px solid var(--terracotta); outline-offset: 5px; border-radius: 50%; }
+.ledger-bill-note-trigger { min-height: var(--ui-control); align-items: start; }
+.ledger-bill-note-trigger span:last-child { overflow: visible; text-overflow: clip; white-space: normal; overflow-wrap: anywhere; }
+.ledger-bill-title-row h3, .ledger-known-cost-row strong { font-size: 16px; line-height: 1.4; }
+.ledger-bill-amount strong { font-size: 18px; }
+.ledger-row-actions .ledger-text-button, .ledger-text-button,
+.ledger-icon-button { min-height: 44px; font-size: 14px; }
+.ledger-primary-button, .ledger-secondary-button { font-size: 16px; }
+.ledger-currency-option { min-height: 44px; font-size: 14px; }
+.ledger-currency-option b { font-size: 13px; }
+
+@media (max-width: 420px) {
+  .section-heading h2 { font-size: 25px; }
+  .flight-card { padding: 18px; }
+  .ledger-group { width: calc(100% - 28px); }
+  #wallet-root, .pretrip-ledger .ledger-app { padding-inline: 16px; }
+  .ledger-amount-block { width: 100%; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); }
+  .ledger-category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .ledger-person-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.place-map-sheet { height: auto; max-height: min(85dvh, 520px); padding: 0 18px calc(24px + var(--safe-bottom)); overflow-y: auto; }
+.place-map-sheet header { min-height: 70px; padding-inline: 0; border-bottom: 1px solid var(--line); }
+.place-map-sheet h2 { font-size: 22px; line-height: 1.3; }
+.place-map-sheet__intro { margin: 22px 0 12px; color: var(--muted); font-size: 16px; }
+.place-map-providers { display: grid; gap: 10px; }
+.place-map-providers a { min-height: 56px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--line); border-radius: 13px; color: var(--ink); background: var(--surface); font-size: 18px; font-weight: 700; text-decoration: none; }
+.place-map-providers a:focus-visible, .place-map-providers a:hover { border-color: var(--lake); background: var(--lake-soft); }
+.place-map-sheet__note { margin: 16px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+.map-place-action { min-height: 44px; padding: 6px 10px; border: 1px solid currentColor; border-radius: 10px; color: inherit; background: transparent; cursor: pointer; font-size: 14px; font-weight: 700; }
+.flight-airport-maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.flight-airport-maps .map-place-action { border-color: rgba(255,255,255,.5); }
+.car-transfer-route .map-place-action { margin-top: 6px; }
+.day-location-maps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.dining-card .map-place-action, .hotel-stay-card .map-place-action { align-self: flex-start; }
+.dining-card__map { display: flex; margin-top: auto; padding-top: 16px; }
+.booking-row__maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }

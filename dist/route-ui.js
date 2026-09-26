@@ -103,7 +103,7 @@ function travelMapMarkup(source, route) {
     const place = placeLayers.find((item) => item.id === placeId);
     if (!place) return "";
     const role = dailyPointRole(layout, placeId, index);
-    return `<button type="button" class="map-place-dot" style="${position(place.x, place.y)}" data-map-region="${escapeHtml(source.id)}" data-place-id="${placeId}" data-place-day="${day.day}" data-place-role="${role}" aria-label="${role}：${escapeHtml(placeOptions(source, placeId)[0][0])}，打开 Google Maps" aria-haspopup="dialog" aria-expanded="false"><span></span></button>`;
+    return `<button type="button" class="map-place-dot" style="${position(place.x, place.y)}" data-map-region="${escapeHtml(source.id)}" data-place-id="${placeId}" data-place-day="${day.day}" data-place-role="${role}" aria-label="${role}：${escapeHtml(placeOptions(source, placeId)[0][0])}，选择地图" aria-haspopup="dialog" aria-expanded="false"><span></span></button>`;
   }).join("") : "";
   const transport = route && layout ? layout.transport.map((pin, index) => {
     const item = scheduleItemsForPin(day, pin)[0];
@@ -158,7 +158,7 @@ function setupRouteExplorer() {
     const wasOpen = activePin === pin; closePopover(); if (wasOpen) return;
     activePin = pin; pin.setAttribute("aria-expanded", "true"); pin.setAttribute("aria-controls", "route-active-popover");
     popover = document.createElement("section"); popover.id = "route-active-popover"; popover.className = `route-popover ${map ? "route-place-popover" : "transport-popover"}`;
-    popover.setAttribute("role", "dialog"); popover.setAttribute("aria-label", map ? "地点 Google Maps" : "交通信息");
+    popover.setAttribute("role", "dialog"); popover.setAttribute("aria-label", map ? "选择地点" : "交通信息");
     popover.innerHTML = `<button type="button" class="route-popover-close" data-close-route-popover aria-label="关闭">×</button>${content}`;
     (pin.closest("dialog") || document.body).append(popover); positionPopover();
     popover.querySelector("[data-close-route-popover]").focus({ preventScroll: true });
@@ -178,10 +178,14 @@ function setupRouteExplorer() {
       const source = travelMapSource(state.data?.routeMap, placePin.dataset.mapRegion);
       const options = placeOptions(source, placePin.dataset.placeId);
       const [label, query] = options[0];
+      if (options.length === 1) {
+        closePopover();
+        window.TravelMapPicker.open({ label, query, queryZh: label }, placePin);
+        return;
+      }
       showPopover(placePin, `<header><small>${escapeHtml(placePin.dataset.placeRole)}</small><strong data-popup-place-label>${escapeHtml(label)}</strong></header>
-        ${options.length > 1 ? `<div class="popup-place-options">${options.map(([name, value], index) => `<button type="button" data-popup-query="${escapeHtml(value)}" data-popup-label="${escapeHtml(name)}" aria-pressed="${index === 0}">${escapeHtml(name)}</button>`).join("")}</div>` : ""}
-        <iframe title="${escapeHtml(label)} Google Maps" src="https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-        <footer><a data-popup-external href="${mapsSearch(query)}" target="_blank" rel="noopener noreferrer">用 Google Maps 打开 ↗</a><small>页内地图供查看，实际导航以地图服务结果为准。</small></footer>`, true);
+        <div class="popup-place-options">${options.map(([name, value], index) => `<button type="button" data-popup-query="${escapeHtml(value)}" data-popup-label="${escapeHtml(name)}" aria-pressed="${index === 0}">${escapeHtml(name)}</button>`).join("")}</div>
+        <button type="button" class="map-place-action" data-map-query="${escapeHtml(query)}" data-map-query-zh="${escapeHtml(label)}" data-map-label="${escapeHtml(label)}" aria-haspopup="dialog" aria-controls="place-map">选择地图</button>`, true);
       return;
     }
     const pin = event.target.closest("[data-transport-day]");
@@ -198,8 +202,10 @@ function setupRouteExplorer() {
       const label = option.dataset.popupLabel;
       $$("[data-popup-query]", popover).forEach((button) => button.setAttribute("aria-pressed", String(button === option)));
       $("[data-popup-place-label]", popover).textContent = label;
-      const frame = $("iframe", popover); frame.title = `${label} Google Maps`; frame.src = `https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
-      $("[data-popup-external]", popover).href = mapsSearch(query);
+      const mapButton = $("[data-map-query]", popover);
+      mapButton.dataset.mapQuery = query;
+      mapButton.dataset.mapQueryZh = label;
+      mapButton.dataset.mapLabel = label;
       return;
     }
     if (event.target.closest(".route-popover")) return;

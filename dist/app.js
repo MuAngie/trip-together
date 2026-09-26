@@ -135,8 +135,16 @@ function todayForTrip() {
   }
 }
 
-function mapsSearch(query) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+function mapButton(label, query, queryZh = label, url = "", className = "map-place-action", text = "查看地图") {
+  if (!String(query || "").trim()) return "";
+  return `<button type="button" class="${className}" data-map-label="${escapeHtml(label)}" data-map-query="${escapeHtml(query)}" data-map-query-zh="${escapeHtml(queryZh)}" data-map-url="${escapeHtml(url)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(label)}">${escapeHtml(text)}</button>`;
+}
+
+function mapButtonForNamedPlace(name, placeId = "", showLabel = false) {
+  const place = (state.data.places || []).find((item) => item.id === placeId || item.nameZh === name || item.nameJa === name);
+  const label = place?.nameZh || String(name || "").replace(/（[^）]*待补充[^）]*）/g, "").trim();
+  const query = place?.navigation?.query || place?.googleMapsQuery || place?.nameJa || label;
+  return mapButton(label, query, [place?.nameZh, place?.cityOrArea].filter(Boolean).join(" ") || label, place?.navigation?.url || place?.googleMapsUrl || "", "map-place-action", showLabel ? `📍 ${label}` : "查看地图");
 }
 
 function heroDestinationFor(trip) {
@@ -314,6 +322,7 @@ function flightCard(journey, index) {
       <div class="flight-flow" style="--route-columns: ${stops.map((_, stopIndex) => stopIndex < stops.length - 1 ? "minmax(0,1fr) minmax(34px,.5fr)" : "minmax(0,1fr)").join(" ")}">
         ${routeItems.join("")}
       </div>
+      <div class="flight-airport-maps">${stops.map((stop) => mapButtonForNamedPlace(stop.airport.airportCode, stop.airport.airportCode.toLowerCase(), true)).join("")}</div>
       <div class="flight-card__countdown-row">
         <div class="flight-countdown" data-countdown-journey="${escapeHtml(journey.id)}">
           <span>${escapeHtml(status.label)}</span>
@@ -327,7 +336,7 @@ function flightCard(journey, index) {
 function carTransferCard(transfer, index, total) {
   const date = transfer.date ? formatCompactDate(transfer.date) : "日期待补充";
   const time = transfer.time || "时间待补充";
-  const via = (transfer.via || []).map((place) => `<li><span>途经</span><strong>${escapeHtml(place)}</strong></li>`).join("");
+  const via = (transfer.via || []).map((place) => `<li><span>途经</span><div><strong>${escapeHtml(place)}</strong>${mapButtonForNamedPlace(place)}</div></li>`).join("");
   return `
     <article class="flight-card car-transfer-card" data-transfer="${escapeHtml(transfer.id)}">
       <div class="flight-card__top car-transfer-card__top">
@@ -337,16 +346,15 @@ function carTransferCard(transfer, index, total) {
       <div class="car-transfer-card__provider">${escapeHtml(transfer.provider || "服务商待补充")}</div>
       <div class="car-transfer-card__time"><span>${escapeHtml(date)}</span><strong>${escapeHtml(time)}</strong></div>
       <ol class="car-transfer-route">
-        <li><span>上车</span><strong>${escapeHtml(transfer.origin || "地点待补充")}</strong></li>
+        <li><span>上车</span><div><strong>${escapeHtml(transfer.origin || "地点待补充")}</strong>${transfer.origin ? mapButtonForNamedPlace(transfer.origin, transfer.originPlaceId) : ""}</div></li>
         ${via}
-        <li><span>到达</span><strong>${escapeHtml(transfer.destination || "地点待补充")}</strong></li>
+        <li><span>到达</span><div><strong>${escapeHtml(transfer.destination || "地点待补充")}</strong>${transfer.destination ? mapButtonForNamedPlace(transfer.destination, transfer.destinationPlaceId) : ""}</div></li>
       </ol>
       <p class="car-transfer-card__note">${escapeHtml(transfer.note || "具体信息待补充。")}</p>
     </article>`;
 }
 
 function hotelStayCard(hotel, index, total) {
-  const mapUrl = mapsSearch(hotel.addressJa || hotel.addressZh || hotel.nameJa || hotel.name);
   return `
     <article class="flight-card hotel-stay-card" data-accommodation="${escapeHtml(hotel.id)}">
       <div class="flight-card__top hotel-stay-card__top">
@@ -364,7 +372,7 @@ function hotelStayCard(hotel, index, total) {
         <div lang="ja"><dt>アクセス</dt><dd>${escapeHtml(hotel.locationJa || "待補充")}</dd></div>
       </dl>
       <div class="hotel-stay-card__footer">
-        <a href="${escapeHtml(mapUrl)}" target="_blank" rel="noopener noreferrer">查看地图</a>
+        ${mapButton(hotel.name, hotel.addressJa || hotel.nameJa || hotel.name, hotel.addressZh || hotel.name)}
       </div>
     </article>`;
 }
@@ -387,6 +395,7 @@ function diningCard(booking, index, total) {
       </dl>
       ${booking.checkIn ? `<p class="dining-card__check-in">${escapeHtml(booking.checkIn)}</p>` : ""}
       ${booking.checkInJa ? `<p class="dining-card__check-in dining-card__check-in--ja" lang="ja">${escapeHtml(booking.checkInJa)}</p>` : ""}
+      <div class="dining-card__map">${mapButton(booking.title, booking.titleJa || booking.title, booking.title)}</div>
     </article>`;
 }
 
@@ -531,14 +540,26 @@ function dayCard(day) {
   const schedule = day.schedule.map((item) => {
     const destinations = navigationDestinations(item);
     const mapLinks = destinations.map((destination) => `
-      <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="查看 ${escapeHtml(destination.label)} 的地图">📍 ${escapeHtml(destination.label)}</button>
+      <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
     `).join("");
     const scheduleTickets = ticketsForSchedule(day, item).map(inlineTicketMarkup).join("");
+    const attraction = item.type === "attraction"
+      ? (state.data.attractions || []).find((entry) => entry.placeId === item.placeId && entry.dates?.includes(day.date))
+      : null;
+    const scheduleText = attraction
+      ? `<details class="schedule-attraction">
+          <summary class="schedule-text">${escapeHtml(item.text)}</summary>
+          <div class="schedule-attraction__detail">
+            ${attraction.nameJa ? `<span lang="ja">${escapeHtml(attraction.nameJa)}</span>` : ""}
+            <p>${escapeHtml(attraction.detail || "介绍待补充。")}</p>
+          </div>
+        </details>`
+      : `<div class="schedule-text">${escapeHtml(item.text)}</div>`;
     return `
       <li class="schedule-item">
         <span class="schedule-time">${escapeHtml(item.time)}</span>
         <div class="schedule-content">
-          <div class="schedule-text">${escapeHtml(item.text)}</div>
+          ${scheduleText}
           ${scheduleTickets}
           ${mapLinks ? `<div class="schedule-map-links">${mapLinks}</div>` : ""}
         </div>
@@ -551,6 +572,10 @@ function dayCard(day) {
   const ticketSummary = dayTickets.length
     ? `<span class="day-ticket-summary ${pendingTicketCount ? "has-pending" : "is-complete"}">${pendingTicketCount ? `${pendingTicketCount} 项待购票` : "门票已准备"}</span>`
     : "";
+  const dayPlaces = (day.locations || []).filter((name) => !name.includes("荣耀号")).map((name) => {
+    const hotel = (state.data.accommodations || []).find((item) => item.type === "hotel" && item.name === name);
+    return hotel ? mapButton(hotel.name, hotel.addressJa || hotel.nameJa || hotel.name, hotel.addressZh || hotel.name, "map-place-action", `📍 ${hotel.name}`) : mapButtonForNamedPlace(name, "", true);
+  }).join("");
   return `
     <article class="day-card${isToday ? " is-today" : ""}" data-day="${day.day}">
       <span class="day-dot" aria-hidden="true"></span>
@@ -564,6 +589,7 @@ function dayCard(day) {
         <span class="day-chevron" aria-hidden="true">+</span>
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
+        ${dayPlaces ? `<div class="day-location-maps" aria-label="当日地点地图">${dayPlaces}</div>` : ""}
         <ol class="schedule">${schedule}</ol>
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
       </div>
@@ -974,44 +1000,6 @@ function setupTicketDialog() {
   });
 }
 
-function setupPlaceMap() {
-  const panel = $("#place-map");
-  const frame = $("#place-map-frame");
-  let opener;
-  let previousOverflow = "";
-  const close = () => {
-    panel.hidden = true;
-    frame.src = "about:blank";
-    document.body.style.overflow = previousOverflow;
-    opener?.focus();
-  };
-  document.addEventListener("click", (event) => {
-    const link = event.target.closest("button[data-map-query]");
-    if (!link) return;
-    event.preventDefault();
-    opener = link;
-    $("#place-map-title").textContent = link.dataset.mapLabel;
-    $("#place-map-external").href = safeExternalUrl(link.dataset.mapUrl) || mapsSearch(link.dataset.mapQuery);
-    frame.title = `${link.dataset.mapLabel} Google Maps`;
-    frame.src = `https://maps.google.com/maps?q=${encodeURIComponent(link.dataset.mapQuery)}&output=embed`;
-    previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    panel.hidden = false;
-    $("#place-map-close").focus();
-  });
-  $("#place-map-close").onclick = close;
-  panel.addEventListener("click", (event) => { if (event.target === panel) close(); });
-  panel.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") close();
-    if (event.key === "Tab") {
-      const first = $("#place-map-close");
-      const last = $("#place-map-external");
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    }
-  });
-}
-
 function startCountdowns() {
   if (moduleEnabled("flights")) updateFlightCountdowns();
   if (moduleEnabled("driving")) updateRentalCountdown();
@@ -1034,6 +1022,18 @@ function preloadDefaultRouteMap() {
 }
 
 async function init() {
+  if (window.location.protocol === "file:") {
+    const error = $("#loading-error");
+    error.querySelector("strong").textContent = "请使用本地预览打开";
+    const detail = error.querySelector("span");
+    detail.textContent = "直接打开 HTML 文件无法读取行程。请在项目目录运行 npm run preview，然后打开 ";
+    const link = document.createElement("a");
+    link.href = `http://127.0.0.1:4173/${window.location.hash || "#top"}`;
+    link.textContent = "本地预览页面";
+    detail.append(link);
+    error.hidden = false;
+    return;
+  }
   try {
     const dataUrl = new URL("/trip-data.json", window.location.origin);
     const response = await fetch(dataUrl, { cache: "no-store" });
@@ -1049,7 +1049,6 @@ async function init() {
     if (moduleEnabled("flights")) renderFlights();
     if (moduleEnabled("overview")) setupRouteExplorer();
     if (moduleEnabled("itinerary")) {
-      setupPlaceMap();
       setupTicketDialog();
     }
     if (moduleEnabled("todo") || moduleEnabled("itinerary")) {

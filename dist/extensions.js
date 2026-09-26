@@ -9,11 +9,11 @@
     return (data.places || []).find((place) => place.id === id) || null;
   }
 
-  function mapUrl(place) {
-    if (!place) return "";
-    if (place.navigation?.url) return place.navigation.url;
-    const query = place.navigation?.query || place.googleMapsQuery || place.nameZh || place.name;
-    return query ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}` : "";
+  function mapButton(place, label = place?.nameZh || place?.name || "地点", className = "map-place-action", text = "查看地图") {
+    const query = place?.navigation?.query || place?.googleMapsQuery || place?.nameJa || place?.nameZh || place?.name;
+    if (!query) return "";
+    const queryZh = [place?.nameZh || label, place?.cityOrArea].filter(Boolean).join(" ");
+    return `<button type="button" class="${className}" data-map-label="${escapeHtml(label)}" data-map-query="${escapeHtml(query)}" data-map-query-zh="${escapeHtml(queryZh)}" data-map-url="${escapeHtml(place?.navigation?.url || place?.googleMapsUrl || "")}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(label)}">${escapeHtml(text)}</button>`;
   }
 
   function renderNext(data) {
@@ -29,7 +29,7 @@
       <h3>${escapeHtml(item.title || "下一事项待补充")}</h3>
       <p>${escapeHtml(item.detail || "具体信息待补充。")}</p>
       <div class="next-action__buttons">
-        <a class="action-button action-button--light${mapUrl(place) ? "" : " is-disabled"}" ${mapUrl(place) ? `href="${escapeHtml(mapUrl(place))}" target="_blank" rel="noopener noreferrer"` : "aria-disabled=\"true\""}>地点地图</a>
+        ${place ? mapButton(place, place.nameZh || place.name, "action-button action-button--light") : ""}
         <button class="action-button action-button--accent" id="next-complete" type="button">${completed ? "已完成" : "标记完成"}</button>
       </div>`;
     const button = document.querySelector("#next-complete");
@@ -47,47 +47,6 @@
       <article class="notice-item notice-item--${escapeHtml(item.tone || "info")}">
         <strong>${escapeHtml(item.title)}</strong><p>${escapeHtml(item.text)}</p>
       </article>`).join("") : '<p class="empty-panel">实用提醒待补充。</p>';
-  }
-
-  function renderAttractions(data) {
-    const host = document.querySelector("#attraction-list");
-    const items = data.attractions || [];
-    if (!items.length) {
-      host.innerHTML = '<p class="empty-panel">尚未提供景点资料。</p>';
-      return;
-    }
-
-    const groups = new Map();
-    items.forEach((item) => {
-      (item.dates?.length ? item.dates : [""]).forEach((date) => {
-        if (!groups.has(date)) groups.set(date, []);
-        groups.get(date).push(item);
-      });
-    });
-
-    const dateLabel = (value) => {
-      const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
-      return match ? `${Number(match[2])}月${Number(match[3])}日` : "日期待补充";
-    };
-
-    host.innerHTML = [...groups.entries()].map(([date, groupItems], groupIndex) => `
-      <details class="attraction-day" ${groupIndex === 0 ? "open" : ""}>
-        <summary><span>${escapeHtml(dateLabel(date))}</span><small>${groupItems.length} 个地点</small></summary>
-        <div class="attraction-day__list">
-          ${groupItems.map((item) => {
-            const place = item.placeId ? placeById(data, item.placeId) : item;
-            const name = item.name || item.title || place?.nameZh || "地点待补充";
-            const nameJa = item.nameJa || place?.nameJa || "";
-            return `<article class="attraction-row">
-              <div class="attraction-row__content">
-                <h3>${escapeHtml(name)}${nameJa ? `<small lang="ja">${escapeHtml(nameJa)}</small>` : ""}</h3>
-                <p>${escapeHtml(item.detail || item.note || "介绍待补充。")}</p>
-              </div>
-              ${mapUrl(place) ? `<a href="${escapeHtml(mapUrl(place))}" target="_blank" rel="noopener noreferrer" aria-label="在地图中查看${escapeHtml(name)}">查看地图</a>` : ""}
-            </article>`;
-          }).join("")}
-        </div>
-      </details>`).join("");
   }
 
   function renderOnboardLife(data) {
@@ -115,7 +74,21 @@
     const items = [...(data.bookingsAndTickets || [])].sort((first, second) =>
       (first.date || "9999-12-31").localeCompare(second.date || "9999-12-31")
     );
-    host.innerHTML = items.length ? items.map((item) => `
+    const locations = (item) => {
+      if (item.type === "restaurant") return [{ nameZh: item.title, nameJa: item.titleJa }];
+      const hotel = (data.accommodations || []).find((place) => place.type === "hotel" && place.name === item.title);
+      if (hotel) return [{ ...hotel, nameZh: hotel.name, navigation: { query: hotel.addressJa || hotel.nameJa || hotel.name } }];
+      if (item.id === "cruise-order") return [placeById(data, data.nextItem?.placeId)].filter(Boolean);
+      if (item.id === "flight-order") {
+        const flight = (data.flights || []).find((entry) => item.title.includes(entry.flightNumber));
+        return [flight?.departure, flight?.arrival].map((airport) => placeById(data, airport?.airportCode?.toLowerCase())).filter(Boolean);
+      }
+      if (item.type === "transport") return ["kyoto", "kobe-sanda-outlets", "osaka"].map((id) => placeById(data, id)).filter(Boolean);
+      return [];
+    };
+    host.innerHTML = items.length ? items.map((item) => {
+      const mapButtons = locations(item).map((place) => mapButton(place, place.nameZh || place.name, "map-place-action", `📍 ${place.nameZh || place.name}`)).join("");
+      return `
       <article class="booking-row">
         <div class="booking-row__head"><h3>${escapeHtml(item.title)}${item.titleJa ? `<small lang="ja">${escapeHtml(item.titleJa)}</small>` : item.type === "restaurant" ? "<small>日文店名待补充</small>" : ""}${item.titleEn ? `<small>${escapeHtml(item.titleEn)}</small>` : ""}</h3><span>${escapeHtml(item.status || "状态待补充")}</span></div>
         <p>${escapeHtml(item.detail || "")}</p>
@@ -124,7 +97,9 @@
         ${item.checkIn ? `<p>${escapeHtml(item.checkIn)}</p>` : ""}
         ${item.checkInJa ? `<p lang="ja">${escapeHtml(item.checkInJa)}</p>` : ""}
         <dl><div><dt>${escapeHtml(item.orderLabel || "订单号")}</dt><dd>${escapeHtml(item.orderNo || "待补充")}</dd></div>${item.reservationPhone ? `<div><dt>登记电话</dt><dd>${escapeHtml(item.reservationPhone)}</dd></div>` : ""}${item.bookedAt ? `<div><dt>预订时间</dt><dd>${escapeHtml(item.bookedAt)}</dd></div>` : ""}</dl>
-      </article>`).join("") : '<p class="empty-panel">尚未提供预订资料。</p>';
+        ${mapButtons ? `<div class="booking-row__maps">${mapButtons}</div>` : ""}
+      </article>`;
+    }).join("") : '<p class="empty-panel">尚未提供预订资料。</p>';
   }
 
   async function setupShopping(data) {
@@ -216,7 +191,6 @@
     renderNext(data);
     renderOnboardLife(data);
     renderReminders(data);
-    renderAttractions(data);
     renderBookings(data);
     const caption = document.querySelector("#route-caption");
     if (caption) caption.textContent = `${data.mapLinks?.note || "路线为行程示意。"} 地点可点按查看地图。`;

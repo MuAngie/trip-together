@@ -330,6 +330,7 @@ main { overflow: hidden; }
 .loading-error { position: fixed; left: 16px; right: 16px; bottom: calc(16px + var(--safe-bottom)); z-index: 30; padding: 16px; border-radius: 14px; color: white; background: var(--warning); box-shadow: var(--shadow); }
 .loading-error strong, .loading-error span { display: block; }
 .loading-error span { margin-top: 5px; font-size: 12px; line-height: 1.5; }
+.loading-error a { color: inherit; text-decoration: underline; font-weight: 700; }
 
 :focus-visible { outline: 3px solid rgba(40,123,144,.45); outline-offset: 3px; }
 
@@ -339,10 +340,6 @@ main { overflow: hidden; }
 .place-map-sheet header { padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .place-map-sheet h2 { margin: 0; font-size: 17px; overflow-wrap: anywhere; }
 .place-map-sheet button { flex-shrink: 0; min-height: 44px; min-width: 48px; border: 0; background: transparent; color: var(--lake); }
-.place-map-sheet iframe { width: 100%; flex: 1; min-height: 0; border: 0; background: #e8eeeb; }
-.place-map-sheet footer { padding: 10px 16px; }
-.place-map-sheet footer p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
-.place-map-sheet footer a { display: flex; min-height: 44px; align-items: center; color: var(--lake); font-size: 13px; font-weight: 700; }
 
 /* Compact ticket completion, driving notes and user-managed trip preparation */
 .schedule-ticket { min-height: 58px; padding: 9px 10px; background: #fff2ed; display: grid; grid-template-columns: 21px minmax(0,1fr) auto; align-items: flex-start; gap: 9px; }
@@ -463,9 +460,6 @@ button:focus-visible,a:focus-visible {outline:2px solid var(--lake);outline-offs
 .route-place-popover header {padding-right:22px;margin-bottom:10px;}
 .route-place-popover header small {display:block;color:var(--muted);font-size:12px;margin-bottom:4px;}
 .route-place-popover header strong {font-size:15px;}
-.route-place-popover iframe {display:block;width:100%;height:min(240px,35dvh);border:1px solid var(--line);border-radius:8px;background:#edf1ea;}
-.route-place-popover footer {display:flex;flex-direction:column;gap:7px;margin-top:10px;font-size:13px;}
-.route-place-popover footer small {font-size:12px;color:var(--muted);}
 .popup-place-options {display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;}
 .popup-place-options button {padding:6px 9px;border:1px solid var(--line);border-radius:6px;background:white;font-size:12px;cursor:pointer;}
 

@@ -8,20 +8,22 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <title>上海、日本旅行计划</title>
   <meta name="description" content="适合长辈使用的旅行行程、路线、清单和多人记账页面。">
-  <link rel="stylesheet" href="styles.css?v=20260925-4">
+  <link rel="stylesheet" href="styles.css?v=20260926-1">
   <link rel="stylesheet" href="ledger.css?v=20260925-3">
-  <link rel="stylesheet" href="senior.css?v=20260925-1">
-  <link rel="stylesheet" href="wallet.css?v=20260925-4">
+  <link rel="stylesheet" href="senior.css?v=20260926-1">
+  <link rel="stylesheet" href="wallet.css?v=20260926-3">
+  <link rel="stylesheet" href="ui-polish.css?v=20260926-5">
   <script src="runtime-storage.js?v=20260925-1" defer></script>
-  <script src="wallet.js?v=20260925-4" defer></script>
+  <script src="map-picker.js?v=20260926-1" defer></script>
+  <script src="wallet.js?v=20260926-1" defer></script>
   <script src="overview-map.js?v=20260914-1" defer></script>
-  <script src="route-ui.js?v=20260914-1" defer></script>
+  <script src="route-ui.js?v=20260926-1" defer></script>
   <script src="ledger.js?v=20260925-5" defer></script>
-  <script src="extensions.js?v=20260925-4" defer></script>
+  <script src="extensions.js?v=20260926-2" defer></script>
   <script src="collapsible-sections.js?v=20260914-1" defer></script>
-  <script src="app.js?v=20260925-8" defer></script>
+  <script src="app.js?v=20260926-3" defer></script>
   <script src="ticket-pdf-preview.js?v=20260914-1" defer></script>
-  <script src="site-navigation.js?v=20260925-3" defer></script>
+  <script src="site-navigation.js?v=20260926-1" defer></script>
 </head>
 <body>
   <a class="skip-link" id="skip-link" href="#main">跳到主要内容</a>
@@ -72,11 +74,6 @@
         <span class="soft-label" id="day-count"></span>
       </div>
       <div class="timeline" id="timeline"></div>
-    </section>
-
-    <section class="section" id="attractions" aria-labelledby="attractions-title">
-      <div class="section-heading"><div><p class="section-kicker">PLACES</p><h2 id="attractions-title">景点信息</h2></div></div>
-      <div id="attraction-list"></div>
     </section>
 
     <section class="section onboard-section" id="onboard" aria-labelledby="onboard-title">
@@ -145,10 +142,15 @@
   <div class="place-map-overlay" id="place-map" hidden>
     <section class="place-map-sheet" role="dialog" aria-modal="true" aria-labelledby="place-map-title">
       <header><h2 id="place-map-title">地点地图</h2><button id="place-map-close" type="button">关闭</button></header>
-      <iframe id="place-map-frame" title="地点地图" src="about:blank" sandbox="allow-scripts allow-same-origin allow-forms" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-      <footer><p>境外地点使用 Google Maps；如地图无法显示，可用下方按钮在系统浏览器打开。</p><a id="place-map-external" target="_blank" rel="noopener noreferrer">打开地图 ↗</a></footer>
+      <p class="place-map-sheet__intro">选择地图查看地点</p>
+      <nav class="place-map-providers" aria-label="选择地图服务">
+        <a data-map-provider="google" target="_blank" rel="noopener noreferrer">谷歌地图 <span aria-hidden="true">↗</span></a>
+        <a data-map-provider="amap" target="_blank" rel="noopener noreferrer">高德地图 <span aria-hidden="true">↗</span></a>
+        <a data-map-provider="baidu" target="_blank" rel="noopener noreferrer">百度地图 <span aria-hidden="true">↗</span></a>
+      </nav>
+      <p class="place-map-sheet__note">地图按已知名称或地址搜索；境外地点请核对搜索结果。</p>
     </section>
   </div>
-  <div class="loading-error" id="loading-error" hidden><strong>行程暂时无法载入</strong><span>请确认 trip-data.json 已通过校验并与网页位于同一目录。</span></div>
+  <div class="loading-error" id="loading-error" hidden><strong>行程暂时无法载入</strong><span>请检查本地预览服务或行程数据，再刷新页面。</span></div>
 </body>
 </html>

@@ -1,5 +1,6 @@
 (() => {
   const TRAVEL_HASHES = new Set(["", "#top", "#next", "#flights", "#route", "#itinerary", "#drive", "#onboard", "#reminders", "#attractions", "#bookings", "#prep"]);
+  const travelTarget = (hash) => hash === "#attractions" ? "itinerary" : TRAVEL_HASHES.has(hash) ? hash.slice(1) : "";
   const isLedgerHash = (hash) => hash === "#ledger" || hash.startsWith("#ledger-");
   const ledgerEnabled = () => !document.querySelector("#ledger-navigation-link")?.hidden;
   const viewForHash = (hash) => isLedgerHash(hash) && ledgerEnabled() ? "ledger" : "travel";
@@ -68,7 +69,7 @@
   function routeFromLocation(options = {}) {
     const hash = location.hash;
     const nextView = viewForHash(hash);
-    const targetId = nextView === "travel" && TRAVEL_HASHES.has(hash) ? hash.slice(1) : "";
+    const targetId = nextView === "travel" ? travelTarget(hash) : "";
     setVisibleView(nextView, { ...options, targetId });
   }
 
@@ -76,11 +77,11 @@
     const nextView = viewForHash(hash);
     scrollPositions[activeView] = window.scrollY;
     if (location.hash === hash) {
-      setVisibleView(nextView, { targetId: nextView === "travel" ? hash.slice(1) : "" });
+      setVisibleView(nextView, { targetId: nextView === "travel" ? travelTarget(hash) : "" });
       return;
     }
     history.pushState({ view: nextView }, "", hash);
-    setVisibleView(nextView, { targetId: nextView === "travel" ? hash.slice(1) : "" });
+    setVisibleView(nextView, { targetId: nextView === "travel" ? travelTarget(hash) : "" });
   }
 
   function scheduleBrowserRoute({ restore = false } = {}) {

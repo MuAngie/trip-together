@@ -7,6 +7,30 @@ const vm = require("node:vm");
 const source = (name) => fs.readFileSync(path.join(__dirname, "../../dist", name), "utf8");
 const data = JSON.parse(source("trip-data.json"));
 
+test("opening the HTML as a file explains the local preview path without fetching trip data", async () => {
+  const heading = { textContent: "" };
+  const detail = { textContent: "", append(link) { this.link = link; } };
+  const error = {
+    hidden: true,
+    querySelector: (selector) => selector === "strong" ? heading : detail
+  };
+  const context = vm.createContext({
+    fetch: () => { throw new Error("file preview should not fetch"); },
+    document: {
+      querySelector: () => error,
+      createElement: () => ({}),
+      addEventListener() {}
+    },
+    window: { location: { protocol: "file:", hash: "#ledger" } }
+  });
+  vm.runInContext(source("app.js"), context);
+  await vm.runInContext("init()", context);
+  assert.equal(error.hidden, false);
+  assert.match(heading.textContent, /本地预览/);
+  assert.match(detail.textContent, /npm run preview/);
+  assert.equal(detail.link.href, "http://127.0.0.1:4173/#ledger");
+});
+
 for (const crypto of [undefined, {}]) {
   test(`wallet loads and saves separate entries without randomUUID or Object.hasOwn (crypto ${crypto ? "present" : "absent"})`, async () => {
     const handlers = {};

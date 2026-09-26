@@ -93,6 +93,7 @@
     }
 
     function render() {
+      const entryOpen = root.querySelector(".wallet-entry")?.open || Boolean(editingId);
       const recordsOpen = root.querySelector(".wallet-records")?.open || false;
       const stats = loaded ? calculate(entries, families) : null;
       const editing = entries.find((entry) => entry.id === editingId);
@@ -112,8 +113,8 @@
               ${stats.return ? `<div><dt>已退还家庭</dt><dd>${money(stats.return)}</dd></div>` : ""}
             </dl>
             ${stats.balance < 0 ? '<p class="wallet-warning">账面余额不足，请核对流水或登记追加缴款。</p>' : ""}
+            <details class="wallet-entry" ${entryOpen ? "open" : ""}><summary>${editing ? "修改这笔收支" : "记一笔"}</summary>
             <form id="wallet-form" class="wallet-form">
-              <h2>${editing ? "修改这笔收支" : "记一笔"}</h2>
               <label>类型<select name="kind">${Object.entries(KINDS).map(([kind, label]) => `<option value="${kind}" ${kind === (editing?.kind || "expense") ? "selected" : ""}>${label}</option>`).join("")}</select></label>
               <label>金额（日元）<input name="amount" type="text" inputmode="numeric" autocomplete="off" placeholder="例如 18000" required value="${editing?.amountYen || ""}"></label>
               <label data-wallet-family>家庭<select name="familyId">${families.map((family) => `<option value="${escape(family.id)}" ${family.id === editing?.familyId ? "selected" : ""}>${escape(family.name)} 家</option>`).join("")}</select></label>
@@ -125,6 +126,14 @@
               <div class="wallet-actions"><button class="wallet-primary" type="submit">${editing ? "保存修改" : "保存这笔收支"}</button>
                 ${editing ? '<button type="button" data-wallet-action="cancel">取消</button>' : ""}</div>
             </form>
+            </details>
+            <details class="wallet-records" ${recordsOpen ? "open" : ""}><summary>收支明细 <small>${records.length} 笔</small></summary>
+              ${records.length ? records.map((entry) => `<article class="wallet-record">
+                <div><strong>${escape(entry.note || KINDS[entry.kind])}</strong><p>${escape(KINDS[entry.kind])}${entry.familyId ? ` · ${escape(familyName(entry.familyId))} 家` : ""}${entry.category ? ` · ${escape(entry.category)}` : ""}</p><p>${escape(entry.date || "日期待补充")}</p></div>
+                <div class="wallet-record-amount"><b>${["contribution", "refund"].includes(entry.kind) ? "+" : "−"}${money(entry.amountYen)}</b>
+                  <div class="wallet-actions"><button type="button" data-wallet-action="edit" data-id="${escape(entry.id)}" aria-label="修改${escape(entry.note || KINDS[entry.kind])}">修改</button><button type="button" data-wallet-action="delete" data-id="${escape(entry.id)}" aria-label="删除${escape(entry.note || KINDS[entry.kind])}">删除</button></div>
+                </div></article>`).join("") : '<p class="wallet-help">还没有收支记录。</p>'}
+            </details>
             <details class="wallet-details"><summary>家庭缴款与结余</summary>
               <p class="wallet-help">所有公共支出由三家均摊。以下为按当前支出估算的应退 / 应补金额，实际退钱需另记“退还家庭”。不足 3 日元的尾数按家庭显示顺序分配。</p>
               ${stats.members.map((member) => `<div class="wallet-family"><h3>${escape(member.name)} 家</h3><dl>
@@ -133,13 +142,6 @@
                 <div><dt>已退还</dt><dd>${money(member.returned)}</dd></div>
                 <div><dt>${member.remaining >= 0 ? "预计可退" : "预计需补"}</dt><dd>${money(Math.abs(member.remaining))}</dd></div>
               </dl></div>`).join("")}
-            </details>
-            <details class="wallet-records" ${recordsOpen ? "open" : ""}><summary>收支明细 <small>${records.length} 笔</small></summary>
-              ${records.length ? records.map((entry) => `<article class="wallet-record">
-                <div><strong>${escape(entry.note || KINDS[entry.kind])}</strong><p>${escape(KINDS[entry.kind])}${entry.familyId ? ` · ${escape(familyName(entry.familyId))} 家` : ""}${entry.category ? ` · ${escape(entry.category)}` : ""}</p><p>${escape(entry.date || "日期待补充")}</p></div>
-                <div class="wallet-record-amount"><b>${["contribution", "refund"].includes(entry.kind) ? "+" : "−"}${money(entry.amountYen)}</b>
-                  <div class="wallet-actions"><button type="button" data-wallet-action="edit" data-id="${escape(entry.id)}" aria-label="修改${escape(entry.note || KINDS[entry.kind])}">修改</button><button type="button" data-wallet-action="delete" data-id="${escape(entry.id)}" aria-label="删除${escape(entry.note || KINDS[entry.kind])}">删除</button></div>
-                </div></article>`).join("") : '<p class="wallet-help">还没有收支记录。</p>'}
             </details>` : '<p class="wallet-help">余额暂不可用。请刷新重试，当前无法新增收支。</p>'}
         </section>`;
       updateFields();
@@ -225,7 +227,7 @@
       } else if (action === "edit" || action === "cancel") {
         editingId = action === "edit" ? button.dataset.id : null;
         render();
-        root.querySelector('[name="amount"]').focus();
+        if (action === "edit") root.querySelector('[name="amount"]').focus();
       } else if (action === "delete") {
         const entry = entries.find((record) => record.id === button.dataset.id);
         if (!window.confirm(`删除“${entry.note || KINDS[entry.kind]}” ${money(entry.amountYen)}？余额将重新计算。`)) return;
