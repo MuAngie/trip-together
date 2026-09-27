@@ -80,6 +80,7 @@ button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
 .action-button { min-height: 50px; padding: 0 17px; border: 0; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-weight: 760; text-decoration: none; cursor: pointer; }
 .action-button--light { color: var(--ink); background: var(--surface); }
 .action-button--accent { color: oklch(99% 0.006 80); background: var(--terracotta); }
+.next-action .action-button { min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 15px; font-weight: 400; }
 .action-button.is-disabled { pointer-events: none; opacity: .5; }
 
 .flight-card { min-height: 350px; }

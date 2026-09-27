@@ -120,13 +120,13 @@ button, input, select, textarea { font-family: inherit; }
 .map-place-action { min-height: 44px; padding: 6px 10px; border: 1px solid currentColor; border-radius: 10px; color: inherit; background: transparent; cursor: pointer; font-size: 14px; font-weight: 700; }
 .flight-airport-maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .flight-airport-maps .map-place-action { border-color: rgba(255,255,255,.5); }
-.day-location-maps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
 .daily-map { margin: 0 0 24px; }
 .daily-map h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.4; }
 .daily-map p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
 .daily-map__canvas { height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
 .daily-map__marker { display: grid; place-items: center; border: 2px solid white; border-radius: 50%; color: white; background: #087988; box-shadow: 0 2px 8px rgba(0, 35, 43, .3); font-size: 15px; font-weight: 700; }
 .daily-map__marker--suggested { color: #1b2527; background: #f1a950; }
+.daily-map__marker--evening { background: #7550a3; }
 .daily-map__marker span { line-height: 28px; }
 .schedule-walk { margin: 7px 0 0; color: #277281; font-size: 13px; line-height: 1.5; font-weight: 600; }
 .dining-card .map-place-action, .hotel-stay-card .map-place-action { align-self: flex-start; }

@@ -351,15 +351,16 @@
         "id": "kyoto-sightseeing-car",
         "date": "2026-10-08",
         "title": "京都周边包车",
-        "time": null,
+        "time": "08:30",
         "provider": null,
         "origin": "京都日航公主酒店",
         "via": [
-          "京都周边景点（顺序待安排）"
+          "金阁寺",
+          "岚山"
         ],
-        "destination": "京都（具体下车地点待补充）",
+        "destination": "京都日航公主酒店",
         "status": "deposit-paid",
-        "note": "两天包车之一，当天用车10小时；阿尔法与海狮各用一天，具体车型分配、司机、车牌及订单信息待补充。"
+        "note": "两天包车之一，10月8日计划08:30从酒店出发、约16:00从岚山返回酒店；当天用车10小时。阿尔法与海狮各用一天，具体车型分配、司机、车牌及订单信息待补充。"
       },
       {
         "id": "kyoto-kobe-osaka-car",
@@ -474,7 +475,7 @@
         {
           "id": "cruise-arrive",
           "time": "05:30",
-          "text": "荣耀号抵达东京码头；具体码头和离船时间待补充。",
+          "text": "荣耀号抵达东京码头。",
           "type": "boat",
           "placeId": "tokyo"
         },
@@ -544,6 +545,18 @@
           "walkingEstimate": "祇园白川 → KANEGURA：约 1.6 公里，步行约 30 分钟。",
           "type": "restaurant",
           "placeId": "restaurant-kanegura"
+        },
+        {
+          "id": "gion-evening-walk",
+          "time": "晚餐后",
+          "text": "晚餐后可到祇园白川、花见小路、八坂神社散步看夜景，之后返回京都日航公主酒店；视体力选择，不作为固定行程。",
+          "walkingEstimate": "KANEGURA → 祇园白川：约 1.6 公里，步行约 30 分钟；祇园白川 → 花见小路：约 0.5 公里，步行约 10 分钟；花见小路 → 八坂神社：约 0.6 公里，步行约 10 分钟；八坂神社 → 京都日航公主酒店：约 2.1 公里，步行约 35–40 分钟。",
+          "type": "night-walk",
+          "placeIds": [
+            "kyoto-shirakawa",
+            "hanamikoji-street",
+            "yasaka-shrine"
+          ]
         }
       ]
     },
@@ -551,83 +564,123 @@
       "id": "day-5",
       "day": 5,
       "date": "2026-10-08",
-      "title": "京都景点（初版）",
+      "title": "包车游金阁寺与岚山",
       "locations": [
         "京都"
       ],
       "schedule": [
         {
           "id": "kyoto-sightseeing-car",
-          "time": "待补充",
-          "text": "从京都日航公主酒店上车，包车游览京都周边，当天用车10小时；具体出发时间、车型分配及游览顺序待补充。",
+          "time": "08:30",
+          "text": "从京都日航公主酒店上车，包车出发前往金阁寺；车程预留约30分钟，按当日车流调整。当天用车10小时，车型和司机信息待补充。",
           "type": "transfer",
           "placeId": "kyoto-hotel"
         },
         {
-          "id": "visit-arashiyama",
-          "time": "待安排",
-          "text": "岚山",
-          "type": "attraction",
-          "placeId": "arashiyama"
-        },
-        {
-          "id": "visit-jojakkoji",
-          "time": "待安排",
-          "text": "常寂光寺",
-          "type": "attraction",
-          "placeId": "jojakkoji"
-        },
-        {
           "id": "visit-kinkakuji",
-          "time": "待安排",
+          "time": "约09:00—11:00",
           "text": "金阁寺",
           "type": "attraction",
           "placeId": "kinkakuji"
         },
         {
+          "id": "kinkakuji-to-arashiyama",
+          "time": "11:00后",
+          "text": "乘包车前往岚山，车程预留约35—45分钟，按当日车流调整。",
+          "type": "transfer"
+        },
+        {
+          "id": "visit-arashiyama",
+          "time": "抵达后",
+          "text": "岚山",
+          "type": "attraction",
+          "placeId": "arashiyama"
+        },
+        {
+          "id": "visit-tenryuji",
+          "time": "午餐前后",
+          "text": "天龙寺（寺院首选，慢走约1小时；依抵达时间与午餐灵活调整）",
+          "type": "attraction",
+          "placeId": "tenryuji"
+        },
+        {
+          "id": "arashiyama-lunch",
+          "time": "约12:30后",
+          "text": "在岚山中心附近就近午餐，当天参考 Google 地图评分、营业情况和排队时间选店；尚未预订，不为找餐厅压缩游览和休息时间。",
+          "type": "restaurant"
+        },
+        {
+          "id": "visit-arashiyama-bamboo",
+          "time": "午餐后",
+          "text": "竹林小径",
+          "type": "attraction",
+          "placeId": "arashiyama-bamboo"
+        },
+        {
+          "id": "visit-nonomiya-shrine",
+          "time": "下午",
+          "text": "野宫神社",
+          "type": "attraction",
+          "placeId": "nonomiya-shrine"
+        },
+        {
+          "id": "visit-togetsukyo",
+          "time": "下午",
+          "text": "渡月桥河畔",
+          "type": "attraction",
+          "placeId": "togetsukyo"
+        },
+        {
+          "id": "visit-jojakkoji",
+          "time": "体力允许时",
+          "text": "备选 · 常寂光寺（台阶较多；也可改为河边休息，若前往请提前与司机确认接车点）",
+          "type": "attraction",
+          "placeId": "jojakkoji"
+        },
+        {
+          "id": "arashiyama-return-car",
+          "time": "约16:00",
+          "text": "在与司机商定的地点上车返城，默认返回京都日航公主酒店；若提前结束岚山行程并考虑三十三间堂，请先与司机确认路线。景区内以短距离步行为主。",
+          "type": "transfer"
+        },
+        {
           "id": "visit-sanjusangendo",
-          "time": "待安排",
-          "text": "三十三间堂",
+          "time": "晚餐前·备选",
+          "text": "备选 · 三十三间堂（仅岚山行程提前结束、能在16:30前入场时考虑；否则直接回酒店休息）",
           "type": "attraction",
           "placeId": "sanjusangendo"
         },
         {
+          "id": "dinner-honke-1008",
+          "time": "19:00",
+          "text": "已预约天婦羅処京林泉晚餐；备注：本家（清桑）。进店报登记电话 07042277782，陈女士。",
+          "type": "restaurant",
+          "placeId": "restaurant-kyorinsen"
+        },
+        {
           "id": "visit-kifune-shrine",
-          "time": "待安排",
-          "text": "贵船神社",
+          "time": "备选",
+          "text": "备选 · 贵船神社（不纳入当日主线）",
           "type": "attraction",
           "placeId": "kifune-shrine"
         },
         {
           "id": "visit-rurikoin",
-          "time": "待安排",
-          "text": "琉璃光院",
+          "time": "备选",
+          "text": "备选 · 琉璃光院（不纳入当日主线）",
           "type": "attraction",
           "placeId": "rurikoin"
         },
         {
           "id": "visit-tofukuji",
-          "time": "待安排",
-          "text": "东福寺",
+          "time": "备选",
+          "text": "备选 · 东福寺（不纳入当日主线）",
           "type": "attraction",
           "placeId": "tofukuji"
-        },
-        {
-          "id": "visit-fushimi-inari",
-          "time": "待安排",
-          "text": "伏见稻荷大社",
-          "type": "attraction",
-          "placeId": "fushimi-inari"
-        },
-        {
-          "id": "dinner-honke-1008",
-          "time": "19:00",
-          "text": "已预约本家（清桑）晚餐；进店报登记电话 07042277782，陈女士。",
-          "type": "restaurant"
         }
       ],
       "notes": [
-        "景点多且外围分散，已安排当天包车；具体游览顺序和时间待安排。",
+        "上午约08:30—12:15、下午约12:30—16:30；金阁寺与岚山为主线，不以走完所有景点为目标。常寂光寺、三十三间堂及末尾三处景点均为备选；三十三间堂10月开放至17:00、16:30停止入场，能否前往取决于岚山返程时间。",
         "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
       ]
     },
@@ -635,35 +688,103 @@
       "id": "day-6",
       "day": 6,
       "date": "2026-10-09",
-      "title": "京都景点（初版）",
+      "title": "伏见稻荷与清水寺东山散步",
       "locations": [
         "京都"
       ],
       "schedule": [
         {
+          "id": "kyoto-breakfast-1009",
+          "time": "早餐",
+          "text": "在酒店吃早餐。",
+          "type": "meal"
+        },
+        {
+          "id": "kyoto-hotel-to-inari-1009",
+          "time": "约09:00",
+          "text": "从酒店步行至地铁四条站，乘乌丸线到京都站，再换乘JR奈良线普通列车到稻荷站；全程预留约30分钟。",
+          "type": "transfer"
+        },
+        {
+          "id": "visit-fushimi-inari-1009",
+          "time": "上午至约11:00",
+          "text": "伏见稻荷大社：参观本殿和山脚的千本鸟居，不登顶。",
+          "type": "attraction",
+          "placeId": "fushimi-inari"
+        },
+        {
+          "id": "taxi-inari-to-kiyomizu-1009",
+          "time": "约11:00后",
+          "text": "伏见稻荷结束后打车前往清水寺门前停车场附近安全下车点，车程预留约30—45分钟，随拥堵调整；司机无需驶入停车场。给司机看：清水寺門前駐車場の近くで、安全に降ろしてください。",
+          "type": "transfer"
+        },
+        {
+          "id": "kiyomizuzaka-lunch-1009",
+          "time": "约11:30后",
+          "text": "在清水坂一带就近找可坐下用餐的店吃午餐。",
+          "type": "meal",
+          "placeId": "kiyomizuzaka"
+        },
+        {
           "id": "visit-kiyomizu-dera",
-          "time": "待安排",
-          "text": "清水寺",
+          "time": "午餐后",
+          "text": "参观清水寺。",
           "type": "attraction",
           "placeId": "kiyomizu-dera"
         },
         {
+          "id": "higashiyama-slope-walk-1009",
+          "time": "下午",
+          "text": "沿三年坂、二年坂缓缓下行；坡路和石板路较多，以舒适步行为主。",
+          "type": "walk",
+          "placeIds": [
+            "sannenzaka",
+            "ninenzaka"
+          ]
+        },
+        {
+          "id": "higashiyama-extra-walk-1009",
+          "time": "视体力",
+          "text": "可继续走到八坂塔或祇园，不必勉强走完全程。",
+          "type": "walk",
+          "placeIds": [
+            "yasaka-pagoda",
+            "gion"
+          ]
+        },
+        {
+          "id": "kyoto-dinner-1009",
+          "time": "17:00后",
+          "text": "在祇园或四条一带自由晚餐，餐厅当天自选。",
+          "type": "meal",
+          "placeIds": [
+            "gion",
+            "shijo"
+          ]
+        },
+        {
+          "id": "kyoto-evening-return-1009",
+          "time": "晚餐后",
+          "text": "若还有精力，可沿鸭川短走；累了直接回酒店。从祇园四条步行过四条大桥至阪急京都河原町站，乘阪急至乌丸站后步行回酒店；不想走时可直接打车。",
+          "type": "transfer"
+        },
+        {
           "id": "visit-heian-shrine",
-          "time": "待安排",
-          "text": "平安神宫",
+          "time": "备选",
+          "text": "备选 · 平安神宫（不纳入当日主线）",
           "type": "attraction",
           "placeId": "heian-shrine"
         },
         {
           "id": "visit-kyoto-imperial-palace",
-          "time": "待安排",
-          "text": "京都御所",
+          "time": "备选",
+          "text": "备选 · 京都御所（不纳入当日主线）",
           "type": "attraction",
           "placeId": "kyoto-imperial-palace"
         }
       ],
       "notes": [
-        "具体游览顺序和时间待安排。",
+        "上午约09:00—11:00以伏见稻荷为主；下午约11:30—16:30走清水寺和东山街区。平安神宫、京都御所只作备选，不挤占主线和休息时间。",
         "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
       ]
     },
@@ -984,6 +1105,34 @@
       }
     },
     {
+      "id": "hanamikoji-street",
+      "nameZh": "花见小路",
+      "nameJa": "花見小路通",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.002206,
+        "lng": 135.774744
+      },
+      "navigation": {
+        "query": "花見小路通 京都 祇園"
+      }
+    },
+    {
+      "id": "yasaka-shrine",
+      "nameZh": "八坂神社",
+      "nameJa": "八坂神社",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.003967,
+        "lng": 135.778748
+      },
+      "navigation": {
+        "query": "八坂神社 京都 祇園"
+      }
+    },
+    {
       "id": "nishiki-market",
       "nameZh": "锦市场",
       "nameJa": "錦市場",
@@ -1017,8 +1166,82 @@
       "nameJa": "嵐山",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.01481,
+        "lng": 135.67755
+      },
       "navigation": {
         "query": "岚山 京都"
+      }
+    },
+    {
+      "id": "tenryuji",
+      "nameZh": "天龙寺",
+      "nameJa": "天龍寺",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.01617,
+        "lng": 135.67462
+      },
+      "navigation": {
+        "query": "天龍寺 京都 嵐山"
+      }
+    },
+    {
+      "id": "arashiyama-bamboo",
+      "nameZh": "竹林小径",
+      "nameJa": "竹林の小径",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0168,
+        "lng": 135.67127
+      },
+      "navigation": {
+        "query": "竹林の小径 京都 嵐山"
+      }
+    },
+    {
+      "id": "nonomiya-shrine",
+      "nameZh": "野宫神社",
+      "nameJa": "野宮神社",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.01776,
+        "lng": 135.67417
+      },
+      "navigation": {
+        "query": "野宮神社 京都 嵐山"
+      }
+    },
+    {
+      "id": "togetsukyo",
+      "nameZh": "渡月桥",
+      "nameJa": "渡月橋",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.01278,
+        "lng": 135.67776
+      },
+      "navigation": {
+        "query": "渡月橋 京都 嵐山"
+      }
+    },
+    {
+      "id": "restaurant-kyorinsen",
+      "nameZh": "天婦羅処京林泉",
+      "nameJa": "天婦羅処 京林泉",
+      "countryCode": "JP",
+      "cityOrArea": "京都站",
+      "geo": {
+        "lat": 34.98535,
+        "lng": 135.75877
+      },
+      "navigation": {
+        "query": "天婦羅処 京林泉 ホテルグランヴィア京都 M3F"
       }
     },
     {
@@ -1027,6 +1250,10 @@
       "nameJa": "常寂光寺",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.01964,
+        "lng": 135.66857
+      },
       "navigation": {
         "query": "常寂光寺 京都"
       }
@@ -1037,6 +1264,10 @@
       "nameJa": "金閣寺（鹿苑寺）",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.03959,
+        "lng": 135.72951
+      },
       "navigation": {
         "query": "金阁寺 京都"
       }
@@ -1047,6 +1278,10 @@
       "nameJa": "三十三間堂（蓮華王院）",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.9879,
+        "lng": 135.772
+      },
       "navigation": {
         "query": "三十三间堂 京都"
       }
@@ -1087,6 +1322,10 @@
       "nameJa": "伏見稲荷大社",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.96714,
+        "lng": 135.77267
+      },
       "navigation": {
         "query": "伏见稻荷大社 京都"
       }
@@ -1097,8 +1336,96 @@
       "nameJa": "清水寺",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.99483,
+        "lng": 135.785
+      },
       "navigation": {
         "query": "清水寺 京都"
+      }
+    },
+    {
+      "id": "kiyomizuzaka",
+      "nameZh": "清水坂",
+      "nameJa": "清水坂",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.9962,
+        "lng": 135.7807
+      },
+      "navigation": {
+        "query": "清水坂 京都"
+      }
+    },
+    {
+      "id": "sannenzaka",
+      "nameZh": "三年坂",
+      "nameJa": "産寧坂（三年坂）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.99649,
+        "lng": 135.78093
+      },
+      "navigation": {
+        "query": "産寧坂 京都"
+      }
+    },
+    {
+      "id": "ninenzaka",
+      "nameZh": "二年坂",
+      "nameJa": "二寧坂（二年坂）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.9981,
+        "lng": 135.78084
+      },
+      "navigation": {
+        "query": "二寧坂 京都"
+      }
+    },
+    {
+      "id": "yasaka-pagoda",
+      "nameZh": "八坂塔",
+      "nameJa": "八坂の塔（法観寺）",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.99856,
+        "lng": 135.77925
+      },
+      "navigation": {
+        "query": "八坂の塔 京都"
+      }
+    },
+    {
+      "id": "gion",
+      "nameZh": "祇园",
+      "nameJa": "祇園",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.00375,
+        "lng": 135.77715
+      },
+      "navigation": {
+        "query": "祇園 京都"
+      }
+    },
+    {
+      "id": "shijo",
+      "nameZh": "四条",
+      "nameJa": "四条",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.00382,
+        "lng": 135.77156
+      },
+      "navigation": {
+        "query": "四条 京都"
       }
     },
     {
@@ -1199,6 +1526,46 @@
       "detail": "京都西部的山水观光区，渡月桥、竹林小径和嵯峨野一带是主要看点。景区范围较大，步行距离需按体力安排。"
     },
     {
+      "id": "attraction-tenryuji",
+      "placeId": "tenryuji",
+      "name": "天龙寺",
+      "nameJa": "天龍寺",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "岚山寺院首选，计划慢走约1小时；实际游览顺序可依抵达时间和午餐调整。"
+    },
+    {
+      "id": "attraction-arashiyama-bamboo",
+      "placeId": "arashiyama-bamboo",
+      "name": "竹林小径",
+      "nameJa": "竹林の小径",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "午餐后可沿竹林一带择舒适路线散步，不以走完全程为目标。"
+    },
+    {
+      "id": "attraction-nonomiya-shrine",
+      "placeId": "nonomiya-shrine",
+      "name": "野宫神社",
+      "nameJa": "野宮神社",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "与竹林小径和渡月桥河畔一起作为岚山下午的散步地点，按体力选择停留。"
+    },
+    {
+      "id": "attraction-togetsukyo",
+      "placeId": "togetsukyo",
+      "name": "渡月桥河畔",
+      "nameJa": "渡月橋",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "下午可在河畔慢走或坐下休息；不必为多走景点压缩休息时间。"
+    },
+    {
       "id": "attraction-jojakkoji",
       "placeId": "jojakkoji",
       "name": "常寂光寺",
@@ -1264,9 +1631,9 @@
       "name": "伏见稻荷大社",
       "nameJa": "伏見稲荷大社",
       "dates": [
-        "2026-10-08"
+        "2026-10-09"
       ],
-      "detail": "全国稻荷神社的总本宫，最具代表性的景观是沿稻荷山延伸的千本鸟居。若继续登山会有连续坡道和台阶，可按体力折返。"
+      "detail": "日本各地稻荷神社的总本宫，起源可追溯至公元711年。朱红色的千本鸟居由信众为祈愿与感谢而奉纳，是这里最具代表性的景观。"
     },
     {
       "id": "attraction-kiyomizu-dera",
@@ -1387,8 +1754,8 @@
       "type": "transport",
       "date": "2026-10-08",
       "title": "京都周边及京都经神户至大阪包车（两天）",
-      "detail": "10月8日京都周边；10月10日先逛神户三田奥特莱斯，再前往大阪。两天均从京都日航公主酒店上车，每天用车10小时，阿尔法与海狮各一天，车型分配待补充。",
-      "schedule": "10月8日、10月10日；出发时间待补充",
+      "detail": "10月8日包车游金阁寺与岚山、约16:00从岚山返回京都日航公主酒店；10月10日先逛神户三田奥特莱斯，再前往大阪。两天均从京都日航公主酒店上车，每天用车10小时，阿尔法与海狮各一天，车型分配待补充。",
+      "schedule": "10月8日 08:30 从京都酒店出发；10月10日出发时间待补充",
       "orderLabel": "订单号",
       "orderNo": "",
       "amount": 3900,
@@ -1416,10 +1783,10 @@
       "type": "restaurant",
       "date": "2026-10-08",
       "time": "19:00",
-      "title": "本家（清桑）",
-      "titleJa": "",
-      "detail": "人数、席位和预约编号待补充",
-      "detailJa": "人数・席種・予約番号は未確認",
+      "title": "天婦羅処京林泉",
+      "titleJa": "天婦羅処京林泉",
+      "detail": "备注：本家（清桑）；人数、席位和预约编号待补充",
+      "detailJa": "備考：本家（清桑）。人数・席種・予約番号は未確認",
       "schedule": "10月8日 19:00 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "",
@@ -1791,7 +2158,7 @@
   "issuesAndUncertainties": [
     "邮轮的东京离船码头和具体离船时间待补充。",
     "10月7日品川至京都的新干线车票将在品川站现场购买，车次和时间现场决定。",
-    "10月8日及10日两天包车均从京都日航公主酒店上车；出发时间、服务商、阿尔法与海狮车型分配、下车地点及订单信息待补充。",
+    "10月8日包车计划08:30从京都日航公主酒店出发、约16:00从岚山返回酒店；10月10日出发时间，以及两天的服务商、阿尔法与海狮车型分配、司机、车牌及订单信息待补充。",
     "10月13日大阪酒店至关西国际机场T1的携程专车车型、司机、车牌、订单号及上车说明待补充。",
     "京都和大阪酒店的房型、入住要求及订单号待补充。",
     "景点的具体时间、游览顺序、门票和预约状态待补充。",

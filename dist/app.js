@@ -539,7 +539,7 @@ function dayCard(day) {
   const isToday = day.date === today;
   const expanded = state.expandedDay === day.day;
   const schedule = day.schedule.map((item) => {
-    const destinations = ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item);
+    const destinations = item.type === "transfer" || ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item);
     const mapLinks = destinations.map((destination) => `
       <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
     `).join("");
@@ -574,15 +574,21 @@ function dayCard(day) {
   const ticketSummary = dayTickets.length
     ? `<span class="day-ticket-summary ${pendingTicketCount ? "has-pending" : "is-complete"}">${pendingTicketCount ? `${pendingTicketCount} 项待购票` : "门票已准备"}</span>`
     : "";
-  const dayPlaces = (day.locations || []).filter((name) => !name.includes("荣耀号")).map((name) => {
-    const hotel = (state.data.accommodations || []).find((item) => item.type === "hotel" && item.name === name);
-    return hotel ? mapButton(hotel.name, hotel.addressJa || hotel.nameJa || hotel.name, hotel.addressZh || hotel.name, "map-place-action", `📍 ${hotel.name}`) : mapButtonForNamedPlace(name, "", true);
-  }).join("");
   const dailyMap = day.date === "2026-10-07" ? `
     <section class="daily-map" aria-label="10月7日京都市内地图">
       <h3>10月7日 · 京都市内地图</h3>
-      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为未预订的午餐建议，不加入连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
-      <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程与 Sukiyaki Kimura 午餐建议的位置地图"></div>
+      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为未预订的午餐建议，紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
+      <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐建议与晚餐后可选夜游地点的位置地图"></div>
+    </section>` : day.date === "2026-10-08" ? `
+    <section class="daily-map" aria-label="10月8日金阁寺与岚山地图">
+      <h3>10月8日 · 金阁寺与岚山地图</h3>
+      <p>编号标记为酒店出发、金阁寺、岚山景点及晚餐地点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。午餐未定具体餐厅，地图不标午餐点；紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
+      <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
+    </section>` : day.date === "2026-10-09" ? `
+    <section class="daily-map" aria-label="10月9日伏见稻荷与东山地图">
+      <h3>10月9日 · 伏见稻荷与东山地图</h3>
+      <p>编号标记为酒店、伏见稻荷、清水坂午餐区域、清水寺、三年坂和二年坂；连线仅表示行程先后，不代表实际车行或步行道路。清水坂是街区参考位置，不是已选餐厅；紫色“选”为可继续散步的八坂塔，橙色“餐”为自由晚餐区域，均不加入连线。放大地图可查看东山相邻地点；平安神宫与京都御所仍为备选，可通过下方地点按钮查看。</p>
+      <div class="daily-map__canvas" id="day-map-2026-10-09" role="region" aria-label="10月9日酒店、伏见稻荷、清水坂、清水寺、三年坂、二年坂与可选地点的位置地图"></div>
     </section>` : "";
   return `
     <article class="day-card${isToday ? " is-today" : ""}" data-day="${day.day}">
@@ -597,7 +603,6 @@ function dayCard(day) {
         <span class="day-chevron" aria-hidden="true">+</span>
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
-        ${dayPlaces ? `<div class="day-location-maps" aria-label="当日地点地图">${dayPlaces}</div>` : ""}
         ${dailyMap}
         <ol class="schedule">${schedule}</ol>
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
@@ -609,7 +614,40 @@ function dayCard(day) {
 let sampleDayMap = null;
 
 function showSampleDayMap() {
-  const canvas = $("#day-map-2026-10-07");
+  const maps = {
+    4: {
+      date: "2026-10-07",
+      routeIds: ["kyoto-station", "kyoto-hotel", "nishiki-market", "shijo-kamo-river", "kyoto-shirakawa", "restaurant-kanegura"],
+      highlightedIds: ["kyoto-shirakawa"],
+      extras: [
+        { id: "hanamikoji-street", label: "夜", kind: "evening", caption: "饭后可选" },
+        { id: "yasaka-shrine", label: "夜", kind: "evening", caption: "饭后可选" },
+        { id: "restaurant-sukiyaki-kimura", label: "午", kind: "suggested", caption: "午餐建议（未预订）" }
+      ]
+    },
+    5: {
+      date: "2026-10-08",
+      routeIds: ["kyoto-hotel", "kinkakuji", "arashiyama", "tenryuji", "arashiyama-bamboo", "nonomiya-shrine", "togetsukyo", "kyoto-hotel", "restaurant-kyorinsen"],
+      highlightedIds: [],
+      extras: [
+        { id: "jojakkoji", label: "选", kind: "evening", caption: "体力允许时备选" },
+        { id: "sanjusangendo", label: "选", kind: "evening", caption: "晚餐前备选；16:30停止入场" }
+      ]
+    },
+    6: {
+      date: "2026-10-09",
+      routeIds: ["kyoto-hotel", "fushimi-inari", "kiyomizuzaka", "kiyomizu-dera", "sannenzaka", "ninenzaka"],
+      highlightedIds: [],
+      extras: [
+        { id: "yasaka-pagoda", label: "选", kind: "evening", caption: "体力允许时可选" },
+        { id: "gion", label: "餐", kind: "suggested", caption: "自由晚餐区域" },
+        { id: "shijo", label: "餐", kind: "suggested", caption: "自由晚餐区域" }
+      ]
+    }
+  };
+  const config = maps[state.expandedDay];
+  if (!config) return;
+  const canvas = $(`#day-map-${config.date}`);
   if (!canvas || canvas.closest(".day-detail").hidden) return;
   if (!window.L) {
     canvas.textContent = "地图暂无法载入，请使用下方地点按钮查看。";
@@ -623,37 +661,42 @@ function showSampleDayMap() {
     sampleDayMap.invalidateSize();
     return;
   }
-  const ids = ["kyoto-station", "kyoto-hotel", "nishiki-market", "shijo-kamo-river", "kyoto-shirakawa", "restaurant-kanegura"];
-  const places = ids.map((id) => state.data.places.find((place) => place.id === id)).filter((place) => place?.geo);
+  const places = config.routeIds.map((id) => state.data.places.find((place) => place.id === id)).filter((place) => place?.geo);
   const points = places.map((place) => [place.geo.lat, place.geo.lng]);
-  const lunch = state.data.places.find((place) => place.id === "restaurant-sukiyaki-kimura");
-  const lunchPoint = lunch?.geo ? [lunch.geo.lat, lunch.geo.lng] : null;
-  sampleDayMap = window.L.map(canvas, { scrollWheelZoom: false }).fitBounds(lunchPoint ? [...points, lunchPoint] : points, { padding: [32, 32] });
+  const extras = config.extras.map((extra) => ({ ...extra, place: state.data.places.find((place) => place.id === extra.id) }))
+    .filter((extra) => extra.place?.geo);
+  const extraPoints = extras.map((extra) => [extra.place.geo.lat, extra.place.geo.lng]);
+  sampleDayMap = window.L.map(canvas, { scrollWheelZoom: false }).fitBounds([...points, ...extraPoints], { padding: [32, 32] });
   window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
   }).addTo(sampleDayMap);
   window.L.polyline(points, { color: "#187f8b", weight: 3, opacity: 0.7, dashArray: "5 7" }).addTo(sampleDayMap);
-  places.forEach((place, index) => {
+  const marked = new Set();
+  places.forEach((place) => {
+    if (marked.has(place.id)) return;
+    marked.add(place.id);
+    const number = marked.size;
     const icon = window.L.divIcon({
-      className: "daily-map__marker",
-      html: `<span>${index + 1}</span>`,
+      className: `daily-map__marker${config.highlightedIds.includes(place.id) ? " daily-map__marker--evening" : ""}`,
+      html: `<span>${number}</span>`,
       iconSize: [32, 32],
       iconAnchor: [16, 16]
     });
-    window.L.marker(points[index], { icon, title: place.nameZh }).bindPopup(`${index + 1}. ${escapeHtml(place.nameZh)}`).addTo(sampleDayMap);
+    const label = place.id === "kyoto-hotel" && config.date === "2026-10-08" ? `${place.nameZh}（出发／返回）` : place.nameZh;
+    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: label }).bindPopup(`${number}. ${escapeHtml(label)}`).addTo(sampleDayMap);
   });
-  if (lunchPoint) {
+  extras.forEach(({ place, label, kind, caption }) => {
     const icon = window.L.divIcon({
-      className: "daily-map__marker daily-map__marker--suggested",
-      html: "<span>午</span>",
+      className: `daily-map__marker daily-map__marker--${kind}`,
+      html: `<span>${label}</span>`,
       iconSize: [32, 32],
       iconAnchor: [16, 16]
     });
-    window.L.marker(lunchPoint, { icon, title: `${lunch.nameZh}（午餐建议）` })
-      .bindPopup(`午餐建议（未预订）：${escapeHtml(lunch.nameZh)}`)
+    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: `${place.nameZh}（${caption}）` })
+      .bindPopup(`${caption}：${escapeHtml(place.nameZh)}`)
       .addTo(sampleDayMap);
-  }
+  });
 }
 
 function navigationDestinations(item) {
@@ -750,7 +793,7 @@ function renderTimeline() {
       toggle.setAttribute("aria-expanded", "true");
       $(`#day-detail-${dayNumber}`).hidden = false;
       state.expandedDay = dayNumber;
-      if (dayNumber === 4) requestAnimationFrame(showSampleDayMap);
+      if (dayNumber === 4 || dayNumber === 5 || dayNumber === 6) requestAnimationFrame(showSampleDayMap);
     } else {
       state.expandedDay = null;
     }
@@ -763,7 +806,7 @@ function renderTimeline() {
     saveTicketState(checkbox.value, checkbox.checked);
     updateInlineTicketState(checkbox.value, checkbox.checked);
   };
-  if (state.expandedDay === 4) requestAnimationFrame(showSampleDayMap);
+  if (state.expandedDay === 4 || state.expandedDay === 5 || state.expandedDay === 6) requestAnimationFrame(showSampleDayMap);
 }
 
 function updateInlineTicketState(ticketId, purchased) {
