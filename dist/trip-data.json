@@ -503,9 +503,21 @@
           "placeId": "kyoto-hotel"
         },
         {
+          "id": "lunch-kyoto-options",
+          "time": "待安排",
+          "text": "午餐可选 Sukiyaki Kimura（名代 キムラ すき焼），或在锦市场、京都日航公主酒店周边用餐；尚未预订。",
+          "type": "restaurant",
+          "placeIds": [
+            "restaurant-sukiyaki-kimura",
+            "nishiki-market",
+            "kyoto-hotel"
+          ]
+        },
+        {
           "id": "visit-nishiki-market",
           "time": "待安排",
           "text": "锦市场",
+          "walkingEstimate": "京都日航公主酒店 → 锦市场：约 0.9 公里，步行约 15 分钟。",
           "type": "attraction",
           "placeId": "nishiki-market"
         },
@@ -513,6 +525,7 @@
           "id": "visit-shijo-kamo-river",
           "time": "待安排",
           "text": "四条鸭川",
+          "walkingEstimate": "锦市场 → 四条鸭川：约 0.8 公里，步行约 15 分钟。",
           "type": "attraction",
           "placeId": "shijo-kamo-river"
         },
@@ -520,6 +533,7 @@
           "id": "visit-shirakawa",
           "time": "待安排",
           "text": "祇园白川",
+          "walkingEstimate": "四条鸭川 → 祇园白川：约 0.5 公里，步行约 10 分钟。",
           "type": "attraction",
           "placeId": "kyoto-shirakawa"
         },
@@ -527,12 +541,10 @@
           "id": "dinner-kanegura",
           "time": "17:00",
           "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
+          "walkingEstimate": "祇园白川 → KANEGURA：约 1.6 公里，步行约 30 分钟。",
           "type": "restaurant",
           "placeId": "restaurant-kanegura"
         }
-      ],
-      "notes": [
-        "入住京都日航公主酒店（Hotel Nikko Princess Kyoto）。地址：日本京都府京都市下京区乌丸高辻东入高桥町630番地；房型和入住要求待补充。"
       ]
     },
     {
@@ -907,6 +919,10 @@
       "nameJa": "京都駅",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 34.98535,
+        "lng": 135.75877
+      },
       "navigation": {
         "query": "京都駅"
       }
@@ -917,8 +933,26 @@
       "nameJa": "ホテル日航プリンセス京都",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0005,
+        "lng": 135.76075
+      },
       "navigation": {
         "query": "〒600-8096 京都市下京区烏丸高辻東入高橋町630番地"
+      }
+    },
+    {
+      "id": "restaurant-sukiyaki-kimura",
+      "nameZh": "Sukiyaki Kimura",
+      "nameJa": "名代 キムラ すき焼",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.00450869,
+        "lng": 135.76664816
+      },
+      "navigation": {
+        "query": "名代 キムラ すき焼 京都"
       }
     },
     {
@@ -927,6 +961,10 @@
       "nameJa": "鴨川（四条付近）",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.003823,
+        "lng": 135.771558
+      },
       "navigation": {
         "query": "鴨川 四条 京都"
       }
@@ -937,6 +975,10 @@
       "nameJa": "祇園白川",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0056906,
+        "lng": 135.7743537
+      },
       "navigation": {
         "query": "祇園白川 京都"
       }
@@ -947,6 +989,10 @@
       "nameJa": "錦市場",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.00503,
+        "lng": 135.76471
+      },
       "navigation": {
         "query": "锦市场 京都"
       }
@@ -957,6 +1003,10 @@
       "nameJa": "伖（カネグラ）",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0002033,
+        "lng": 135.7641398
+      },
       "navigation": {
         "query": "伖 カネグラ 京都"
       }

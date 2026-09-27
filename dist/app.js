@@ -539,7 +539,7 @@ function dayCard(day) {
   const isToday = day.date === today;
   const expanded = state.expandedDay === day.day;
   const schedule = day.schedule.map((item) => {
-    const destinations = navigationDestinations(item);
+    const destinations = ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item);
     const mapLinks = destinations.map((destination) => `
       <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
     `).join("");
@@ -561,6 +561,7 @@ function dayCard(day) {
         <span class="schedule-time">${escapeHtml(item.time)}</span>
         <div class="schedule-content">
           ${scheduleText}
+          ${item.walkingEstimate ? `<p class="schedule-walk">步行参考 · ${escapeHtml(item.walkingEstimate)}</p>` : ""}
           ${scheduleTickets}
           ${mapLinks ? `<div class="schedule-map-links">${mapLinks}</div>` : ""}
         </div>
@@ -577,6 +578,12 @@ function dayCard(day) {
     const hotel = (state.data.accommodations || []).find((item) => item.type === "hotel" && item.name === name);
     return hotel ? mapButton(hotel.name, hotel.addressJa || hotel.nameJa || hotel.name, hotel.addressZh || hotel.name, "map-place-action", `📍 ${hotel.name}`) : mapButtonForNamedPlace(name, "", true);
   }).join("");
+  const dailyMap = day.date === "2026-10-07" ? `
+    <section class="daily-map" aria-label="10月7日京都市内地图">
+      <h3>10月7日 · 京都市内地图</h3>
+      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为未预订的午餐建议，不加入连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
+      <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程与 Sukiyaki Kimura 午餐建议的位置地图"></div>
+    </section>` : "";
   return `
     <article class="day-card${isToday ? " is-today" : ""}" data-day="${day.day}">
       <span class="day-dot" aria-hidden="true"></span>
@@ -591,11 +598,62 @@ function dayCard(day) {
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
         ${dayPlaces ? `<div class="day-location-maps" aria-label="当日地点地图">${dayPlaces}</div>` : ""}
+        ${dailyMap}
         <ol class="schedule">${schedule}</ol>
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
       </div>
     </article>
   `;
+}
+
+let sampleDayMap = null;
+
+function showSampleDayMap() {
+  const canvas = $("#day-map-2026-10-07");
+  if (!canvas || canvas.closest(".day-detail").hidden) return;
+  if (!window.L) {
+    canvas.textContent = "地图暂无法载入，请使用下方地点按钮查看。";
+    return;
+  }
+  if (sampleDayMap && sampleDayMap.getContainer() !== canvas) {
+    sampleDayMap.remove();
+    sampleDayMap = null;
+  }
+  if (sampleDayMap) {
+    sampleDayMap.invalidateSize();
+    return;
+  }
+  const ids = ["kyoto-station", "kyoto-hotel", "nishiki-market", "shijo-kamo-river", "kyoto-shirakawa", "restaurant-kanegura"];
+  const places = ids.map((id) => state.data.places.find((place) => place.id === id)).filter((place) => place?.geo);
+  const points = places.map((place) => [place.geo.lat, place.geo.lng]);
+  const lunch = state.data.places.find((place) => place.id === "restaurant-sukiyaki-kimura");
+  const lunchPoint = lunch?.geo ? [lunch.geo.lat, lunch.geo.lng] : null;
+  sampleDayMap = window.L.map(canvas, { scrollWheelZoom: false }).fitBounds(lunchPoint ? [...points, lunchPoint] : points, { padding: [32, 32] });
+  window.L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  }).addTo(sampleDayMap);
+  window.L.polyline(points, { color: "#187f8b", weight: 3, opacity: 0.7, dashArray: "5 7" }).addTo(sampleDayMap);
+  places.forEach((place, index) => {
+    const icon = window.L.divIcon({
+      className: "daily-map__marker",
+      html: `<span>${index + 1}</span>`,
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+    window.L.marker(points[index], { icon, title: place.nameZh }).bindPopup(`${index + 1}. ${escapeHtml(place.nameZh)}`).addTo(sampleDayMap);
+  });
+  if (lunchPoint) {
+    const icon = window.L.divIcon({
+      className: "daily-map__marker daily-map__marker--suggested",
+      html: "<span>午</span>",
+      iconSize: [32, 32],
+      iconAnchor: [16, 16]
+    });
+    window.L.marker(lunchPoint, { icon, title: `${lunch.nameZh}（午餐建议）` })
+      .bindPopup(`午餐建议（未预订）：${escapeHtml(lunch.nameZh)}`)
+      .addTo(sampleDayMap);
+  }
 }
 
 function navigationDestinations(item) {
@@ -692,6 +750,7 @@ function renderTimeline() {
       toggle.setAttribute("aria-expanded", "true");
       $(`#day-detail-${dayNumber}`).hidden = false;
       state.expandedDay = dayNumber;
+      if (dayNumber === 4) requestAnimationFrame(showSampleDayMap);
     } else {
       state.expandedDay = null;
     }
@@ -704,6 +763,7 @@ function renderTimeline() {
     saveTicketState(checkbox.value, checkbox.checked);
     updateInlineTicketState(checkbox.value, checkbox.checked);
   };
+  if (state.expandedDay === 4) requestAnimationFrame(showSampleDayMap);
 }
 
 function updateInlineTicketState(ticketId, purchased) {

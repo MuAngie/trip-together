@@ -121,13 +121,21 @@ button, input, select, textarea { font-family: inherit; }
 .flight-airport-maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .flight-airport-maps .map-place-action { border-color: rgba(255,255,255,.5); }
 .day-location-maps { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+.daily-map { margin: 0 0 24px; }
+.daily-map h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.4; }
+.daily-map p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.daily-map__canvas { height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
+.daily-map__marker { display: grid; place-items: center; border: 2px solid white; border-radius: 50%; color: white; background: #087988; box-shadow: 0 2px 8px rgba(0, 35, 43, .3); font-size: 15px; font-weight: 700; }
+.daily-map__marker--suggested { color: #1b2527; background: #f1a950; }
+.daily-map__marker span { line-height: 28px; }
+.schedule-walk { margin: 7px 0 0; color: #277281; font-size: 13px; line-height: 1.5; font-weight: 600; }
 .dining-card .map-place-action, .hotel-stay-card .map-place-action { align-self: flex-start; }
 .dining-card__map { display: flex; margin-top: auto; padding-top: 16px; }
 .booking-row__maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 
 @media (max-width: 520px) {
   .schedule-item { padding-left: 68px; }
-  .schedule-time { width: 54px; font-size: 13px; overflow-wrap: anywhere; }
-  .schedule-item::before { left: 60px; }
-  .schedule-item::after { left: 56px; }
+  .schedule-time { left: -12px; width: 54px; font-size: 13px; overflow-wrap: anywhere; }
+  .schedule-item::before { left: 54px; }
+  .schedule-item::after { left: 50px; }
 }
