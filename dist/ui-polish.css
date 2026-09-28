@@ -53,6 +53,8 @@ button, input, select, textarea { font-family: inherit; }
 .carousel-dots { min-height: 20px; align-items: center; }
 
 .day-meta, .schedule-time { font-size: 14px; }
+.day-detail { margin: 12px -12px 0; padding: 18px 12px 26px; border-radius: 14px; background: var(--surface); }
+.day-detail .schedule-item::after { background: var(--surface); }
 .day-locations, .schedule-map-link, .detail-note { font-size: 15px; }
 .schedule-ticket__status, .schedule-ticket__content small, .schedule-ticket__open { font-size: 13px; }
 .schedule-ticket__content strong { font-size: 15px; }
@@ -123,12 +125,31 @@ button, input, select, textarea { font-family: inherit; }
 .daily-map { margin: 0 0 24px; }
 .daily-map h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.4; }
 .daily-map p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.daily-map__legend { display: flex; gap: 18px; }
+.daily-map__legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; background: #087988; }
+.daily-map__legend .daily-map__legend--shopping::before { background: #f1a950; }
+.daily-map__legend .daily-map__legend--hotel::before { background: #7550a3; }
 .daily-map__canvas { height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
 .daily-map__marker { display: grid; place-items: center; border: 2px solid white; border-radius: 50%; color: white; background: #087988; box-shadow: 0 2px 8px rgba(0, 35, 43, .3); font-size: 15px; font-weight: 700; }
 .daily-map__marker--suggested { color: #1b2527; background: #f1a950; }
 .daily-map__marker--evening { background: #7550a3; }
+.daily-map__marker--hotel { background: #7550a3; }
 .daily-map__marker span { line-height: 28px; }
 .schedule-walk { margin: 7px 0 0; color: #277281; font-size: 13px; line-height: 1.5; font-weight: 600; }
+.optional-place-group { border-top: 1px solid var(--line); }
+.optional-place-group > summary, .optional-place > details > summary { display: flex; align-items: center; gap: 12px; min-height: var(--ui-control); padding-block: 10px; list-style: none; cursor: pointer; }
+.optional-place-group > summary { font-size: 18px; font-weight: 600; }
+.optional-place-group > summary span { margin-left: auto; color: var(--muted); font-size: 14px; font-weight: 400; }
+.optional-place-group > summary::after, .optional-place > details > summary::after { content: "+"; color: var(--lake); font-size: 22px; line-height: 1; font-weight: 400; }
+.optional-place-group[open] > summary::after, .optional-place > details[open] > summary::after { content: "−"; }
+.optional-place-group summary::-webkit-details-marker { display: none; }
+.optional-place-list { margin: 0; padding: 0; list-style: none; }
+.optional-place { border-top: 1px solid var(--line); }
+.optional-place > details > summary { font-size: 16px; font-weight: 500; }
+.optional-place > details > summary::after { margin-left: auto; }
+.optional-place__detail { padding-bottom: 16px; font-size: 15px; line-height: 1.6; }
+.optional-place__detail > span { color: var(--muted); font-size: 14px; }
+.optional-place__detail > p { margin: 6px 0 10px; }
 .dining-card .map-place-action, .hotel-stay-card .map-place-action { align-self: flex-start; }
 .dining-card__map { display: flex; margin-top: auto; padding-top: 16px; }
 .booking-row__maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }

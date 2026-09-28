@@ -16,27 +16,121 @@
     return `<button type="button" class="${className}" data-map-label="${escapeHtml(label)}" data-map-query="${escapeHtml(query)}" data-map-query-zh="${escapeHtml(queryZh)}" data-map-url="${escapeHtml(place?.navigation?.url || place?.googleMapsUrl || "")}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(label)}">${escapeHtml(text)}</button>`;
   }
 
+  let nextBrowseId = null;
+  let nextCardKey = "";
+  let nextClockTimer = null;
+  let nextPlan = null;
+
+  function nextItems(data) {
+    const freeDates = ["2026-10-11", "2026-10-12"];
+    const scheduled = (data.days || []).flatMap((day) => (freeDates.includes(day.date)
+      ? [{ id: `osaka-free-${day.date}`, time: "自由安排", text: "大阪购物／游览" }]
+      : day.date === "2026-10-05" ? [{ id: "cruise-at-sea", time: "全天", text: day.title, endDate: "2026-10-06" }]
+      : day.date === "2026-10-06" ? []
+      : (day.schedule || []))
+      .filter((entry) => entry.type !== "note")
+      .map((entry) => {
+        const offset = day.utcOffset || "+08:00";
+        const time = String(entry.time || "").match(/^(?:约)?(\d{1,2})[:：](\d{2})/);
+        return {
+          ...entry,
+          date: day.date,
+          dateLabel: entry.endDate ? "10月5–6日" : `${Number(day.date.slice(5, 7))}月${Number(day.date.slice(8, 10))}日`,
+          dayEnd: Date.parse(`${entry.endDate || day.date}T00:00:00${offset}`) + 86400000,
+          triggerAt: time ? Date.parse(`${day.date}T${time[1].padStart(2, "0")}:${time[2]}:00${entry.utcOffset || offset}`) : null,
+          title: entry.nextTitle || String(entry.text || "").split(/[；。]/)[0].trim(),
+          detail: entry.nextDetail || ""
+        };
+      }));
+    const firstIndex = scheduled.findIndex((entry) => entry.id === data.nextItem?.id);
+    const items = firstIndex < 0 ? [data.nextItem || {}] : scheduled.slice(firstIndex);
+    if (firstIndex >= 0) items[0] = { ...items[0], ...data.nextItem };
+    return items;
+  }
+
+  function currentNextIndex(items, now = Date.now()) {
+    let index = items.findIndex((item) => item.dayEnd > now);
+    if (index < 0) return items.length - 1;
+    const date = items[index].date;
+    items.forEach((item, position) => {
+      if (item.date === date && item.triggerAt !== null && item.triggerAt <= now) index = position;
+    });
+    return index;
+  }
+
+  function nextItemStatus(data, item, index) {
+    return localStorage.getItem(`travel-plan:next-status:${data.metadata.tripId}:${item.id}`)
+      || (index === 0 && localStorage.getItem(`travel-plan:next-complete:${data.metadata.tripId}`) === "true" ? "complete" : "");
+  }
+
+  function refreshNextClock(data) {
+    if (nextClockTimer !== null) window.clearTimeout(nextClockTimer);
+    nextClockTimer = null;
+    if (document.visibilityState === "hidden") return;
+    renderNext(data);
+    const now = Date.now();
+    const nextTime = Math.min(...nextItems(data).flatMap((item) => [item.triggerAt, item.dayEnd]).filter((time) => time > now));
+    if (Number.isFinite(nextTime)) nextClockTimer = window.setTimeout(() => refreshNextClock(data), Math.min(nextTime - now, 2147483647));
+  }
+
   function renderNext(data) {
-    const item = data.nextItem || {};
     const host = document.querySelector("#next-action");
     if (!host) return;
+    const items = nextItems(data);
+    let automaticIndex = currentNextIndex(items);
+    while (automaticIndex < items.length - 1 && ["complete", "skipped"].includes(nextItemStatus(data, items[automaticIndex], automaticIndex))) automaticIndex++;
+    const browseIndex = items.findIndex((entry) => entry.id === nextBrowseId);
+    const browsing = browseIndex >= 0;
+    const index = browsing ? browseIndex : automaticIndex;
+    const item = items[index];
+    const tripId = data.metadata.tripId;
+    const statusKey = `travel-plan:next-status:${tripId}:${item.id}`;
+    const legacyCompleteKey = `travel-plan:next-complete:${tripId}`;
+    const status = nextItemStatus(data, item, index);
+    const cardKey = JSON.stringify([tripId, item, index, status, browsing, automaticIndex]);
+    if (cardKey === nextCardKey) return;
+    nextCardKey = cardKey;
     document.querySelector("#next-date").textContent = item.dateLabel || "待补充";
-    const preferenceKey = `travel-plan:next-complete:${data.metadata.tripId}`;
-    const completed = localStorage.getItem(preferenceKey) === "true";
     const place = placeById(data, item.placeId);
     host.innerHTML = `
       <div class="next-action__time">${escapeHtml(item.time || "时间待补充")}</div>
       <h3>${escapeHtml(item.title || "下一事项待补充")}</h3>
-      <p>${escapeHtml(item.detail || "具体信息待补充。")}</p>
+      ${item.detail ? `<p>${escapeHtml(item.detail).replace(/\n/g, "<br>")}</p>` : ""}
+      ${status === "skipped" ? '<p class="next-action__status">此事项已跳过</p>' : ""}
+      <div class="next-action__footer">
       <div class="next-action__buttons">
         ${place ? mapButton(place, place.nameZh || place.name, "action-button action-button--light") : ""}
-        <button class="action-button action-button--accent" id="next-complete" type="button">${completed ? "已完成" : "标记完成"}</button>
+        <button class="action-button action-button--accent" id="next-complete" type="button">${status === "complete" ? "已完成" : "标记完成"}</button>
+        ${status !== "skipped" ? '<button class="action-button action-button--outline" id="next-skip" type="button">跳过</button>' : ""}
+      </div>
+      ${index > 0 || index < items.length - 1 || browsing ? `<div class="next-action__navigation">${index > 0 ? '<button class="action-button action-button--outline" id="next-previous" type="button">上一条</button>' : ""}${index < items.length - 1 ? '<button class="action-button action-button--outline" id="next-forward" type="button">下一条</button>' : ""}${browsing ? '<button class="action-button action-button--outline" id="next-current" type="button">回到当前</button>' : ""}</div>` : ""}
       </div>`;
-    const button = document.querySelector("#next-complete");
-    button?.addEventListener("click", () => {
-      const isComplete = button.textContent === "已完成";
-      localStorage.setItem(preferenceKey, String(!isComplete));
-      button.textContent = isComplete ? "标记完成" : "已完成";
+    host.querySelector("#next-complete")?.addEventListener("click", () => {
+      const completed = status !== "complete";
+      if (completed) localStorage.setItem(statusKey, "complete");
+      else localStorage.removeItem(statusKey);
+      if (index === 0) localStorage.setItem(legacyCompleteKey, String(completed));
+      renderNext(data);
+    });
+    host.querySelector("#next-skip")?.addEventListener("click", () => {
+      localStorage.setItem(statusKey, "skipped");
+      if (index === 0) localStorage.setItem(legacyCompleteKey, "false");
+      if (index < items.length - 1) {
+        if (browsing) nextBrowseId = items[index + 1].id;
+      }
+      renderNext(data);
+    });
+    host.querySelector("#next-previous")?.addEventListener("click", () => {
+      nextBrowseId = items[index - 1].id;
+      renderNext(data);
+    });
+    host.querySelector("#next-forward")?.addEventListener("click", () => {
+      nextBrowseId = items[index + 1].id;
+      renderNext(data);
+    });
+    host.querySelector("#next-current")?.addEventListener("click", () => {
+      nextBrowseId = null;
+      renderNext(data);
     });
   }
 
@@ -189,12 +283,19 @@
 
   document.addEventListener("travel-data-ready", (event) => {
     const data = event.detail;
-    renderNext(data);
+    nextPlan = data;
+    refreshNextClock(data);
     renderOnboardLife(data);
     renderReminders(data);
     renderBookings(data);
     const caption = document.querySelector("#route-caption");
     if (caption) caption.textContent = `${data.mapLinks?.note || "路线为行程示意。"} 地点可点按查看地图。`;
     setupShopping(data).catch(console.error);
+  });
+  document.addEventListener("visibilitychange", () => {
+    if (nextPlan) refreshNextClock(nextPlan);
+  });
+  window.addEventListener("pageshow", () => {
+    if (nextPlan) refreshNextClock(nextPlan);
   });
 })();

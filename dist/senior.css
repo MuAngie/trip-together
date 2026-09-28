@@ -72,15 +72,20 @@ button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
 }
 .section-collapse-content[hidden] { display: none; }
 
-.next-action { padding: 24px; border-radius: 24px; color: oklch(96% 0.012 190); background: var(--ink); box-shadow: var(--shadow); }
+.next-action { display: flex; flex-direction: column; min-height: 320px; padding: 20px; border-radius: 24px; color: oklch(96% 0.012 190); background: var(--ink); box-shadow: var(--shadow); }
 .next-action__time { color: oklch(79% 0.08 205); font: 750 15px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
 .next-action h3 { margin: 10px 0 0; font-size: 28px; line-height: 1.25; }
 .next-action p { margin: 12px 0 0; color: oklch(84% 0.025 200); font-size: 17px; }
-.next-action__buttons { display: flex; gap: 10px; margin-top: 22px; }
+.next-action__footer { margin-top: auto; padding-top: 16px; }
+.next-action__buttons { display: flex; flex-wrap: wrap; gap: 10px; }
+.next-action__navigation { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.next-action p.next-action__status { color: oklch(85% 0.09 73); }
 .action-button { min-height: 50px; padding: 0 17px; border: 0; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; font-weight: 760; text-decoration: none; cursor: pointer; }
 .action-button--light { color: var(--ink); background: var(--surface); }
 .action-button--accent { color: oklch(99% 0.006 80); background: var(--terracotta); }
+.action-button--outline { color: inherit; border: 1px solid currentColor; background: transparent; }
 .next-action .action-button { min-height: 44px; padding: 0 14px; border-radius: 12px; font-size: 15px; font-weight: 400; }
+.action-button:disabled { opacity: .5; cursor: default; }
 .action-button.is-disabled { pointer-events: none; opacity: .5; }
 
 .flight-card { min-height: 350px; }
@@ -155,8 +160,8 @@ button, a, input, select, summary { -webkit-tap-highlight-color: transparent; }
 
 @media (max-width: 380px) {
   .hero h1 { font-size: 36px; }
-  .next-action__buttons { flex-direction: column; }
   .action-button { width: 100%; }
+  .next-action .action-button { width: auto; }
   .onboard-topic__body { padding-left: 16px; }
   .section.is-collapsible .section-heading--collapsible { padding-right: 80px; }
   .section-collapse-hint { font-size: 14px; }

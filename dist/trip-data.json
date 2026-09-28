@@ -283,7 +283,7 @@
       "meal": "有餐食",
       "aircraft": "空客330（大）",
       "duration": "2小时45分",
-      "bookingStatus": "出票中"
+      "bookingStatus": "已出票"
     }
   ],
   "accommodations": [
@@ -412,6 +412,8 @@
           "id": "welcome-lunch",
           "time": "登船后",
           "text": "前往市集自助餐厅享用“欢迎登船”午餐，地点在15层甲板船尾。",
+          "nextTitle": "登船午餐",
+          "nextDetail": "餐厅：市集自助餐厅\n位置：15层甲板船尾",
           "type": "restaurant"
         }
       ],
@@ -466,6 +468,7 @@
       "day": 4,
       "date": "2026-10-07",
       "title": "东京离船，前往京都",
+      "utcOffset": "+09:00",
       "locations": [
         "东京",
         "品川站",
@@ -475,7 +478,9 @@
         {
           "id": "cruise-arrive",
           "time": "05:30",
-          "text": "荣耀号抵达东京码头。",
+          "text": "荣耀号抵达东京码头，离船前通过自助机器或人工柜台结清船上消费。",
+          "nextTitle": "荣耀号抵达东京码头",
+          "nextDetail": "离船前结清船上消费（自助机器或人工柜台）。",
           "type": "boat",
           "placeId": "tokyo"
         },
@@ -483,6 +488,8 @@
           "id": "taxi-to-shinagawa",
           "time": "约07:30",
           "text": "打车前往品川 JR 站。",
+          "nextTitle": "打车",
+          "nextDetail": "定位：品川 JR 站",
           "type": "transfer",
           "placeId": "shinagawa-station"
         },
@@ -490,6 +497,8 @@
           "id": "shinkansen-tokyo-kyoto",
           "time": "现场决定",
           "text": "在品川 JR 站现场购买品川至京都的新干线车票，现场选择车次和时间，乘车前往京都。",
+          "nextTitle": "新干线前往京都",
+          "nextDetail": "路线：品川 → 京都\n购票：现场选车次与时间",
           "type": "train",
           "placeIds": [
             "shinagawa-station",
@@ -507,6 +516,8 @@
           "id": "lunch-kyoto-options",
           "time": "待安排",
           "text": "午餐可选 Sukiyaki Kimura（名代 キムラ すき焼），或在锦市场、京都日航公主酒店周边用餐；尚未预订。",
+          "nextTitle": "京都午餐",
+          "nextDetail": "候选：Sukiyaki Kimura（名代 キムラ すき焼）\n也可在锦市场或酒店周边就近用餐。",
           "type": "restaurant",
           "placeIds": [
             "restaurant-sukiyaki-kimura",
@@ -542,6 +553,8 @@
           "id": "dinner-kanegura",
           "time": "17:00",
           "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
+          "nextTitle": "KANEGURA 晚餐",
+          "nextDetail": "已预约 · 6人 · 桌席／禁烟\n仅订座，未指定套餐\n预约编号：QK9N9KSY6",
           "walkingEstimate": "祇园白川 → KANEGURA：约 1.6 公里，步行约 30 分钟。",
           "type": "restaurant",
           "placeId": "restaurant-kanegura"
@@ -550,6 +563,8 @@
           "id": "gion-evening-walk",
           "time": "晚餐后",
           "text": "晚餐后可到祇园白川、花见小路、八坂神社散步看夜景，之后返回京都日航公主酒店；视体力选择，不作为固定行程。",
+          "nextTitle": "祇园夜游（可选）",
+          "nextDetail": "路线：祇园白川 → 花见小路 → 八坂神社\n视体力选择，之后返回酒店。",
           "walkingEstimate": "KANEGURA → 祇园白川：约 1.6 公里，步行约 30 分钟；祇园白川 → 花见小路：约 0.5 公里，步行约 10 分钟；花见小路 → 八坂神社：约 0.6 公里，步行约 10 分钟；八坂神社 → 京都日航公主酒店：约 2.1 公里，步行约 35–40 分钟。",
           "type": "night-walk",
           "placeIds": [
@@ -565,6 +580,7 @@
       "day": 5,
       "date": "2026-10-08",
       "title": "包车游金阁寺与岚山",
+      "utcOffset": "+09:00",
       "locations": [
         "京都"
       ],
@@ -573,6 +589,8 @@
           "id": "kyoto-sightseeing-car",
           "time": "08:30",
           "text": "从京都日航公主酒店上车，包车出发前往金阁寺；车程预留约30分钟，按当日车流调整。当天用车10小时，车型和司机信息待补充。",
+          "nextTitle": "包车去金阁寺",
+          "nextDetail": "上车：京都日航公主酒店\n车程：预留约30分钟\n全天用车：10小时",
           "type": "transfer",
           "placeId": "kyoto-hotel"
         },
@@ -587,6 +605,8 @@
           "id": "kinkakuji-to-arashiyama",
           "time": "11:00后",
           "text": "乘包车前往岚山，车程预留约35—45分钟，按当日车流调整。",
+          "nextTitle": "包车去岚山",
+          "nextDetail": "车程：预留约35—45分钟",
           "type": "transfer"
         },
         {
@@ -600,6 +620,8 @@
           "id": "visit-tenryuji",
           "time": "午餐前后",
           "text": "天龙寺（寺院首选，慢走约1小时；依抵达时间与午餐灵活调整）",
+          "nextTitle": "天龙寺",
+          "nextDetail": "游览：慢走约1小时\n可按抵达和午餐时间调整。",
           "type": "attraction",
           "placeId": "tenryuji"
         },
@@ -607,6 +629,8 @@
           "id": "arashiyama-lunch",
           "time": "约12:30后",
           "text": "在岚山中心附近就近午餐，当天参考 Google 地图评分、营业情况和排队时间选店；尚未预订，不为找餐厅压缩游览和休息时间。",
+          "nextTitle": "岚山午餐",
+          "nextDetail": "地点：岚山中心附近\n选店：参考 Google 地图评分、营业情况与排队时间。",
           "type": "restaurant"
         },
         {
@@ -634,6 +658,8 @@
           "id": "visit-jojakkoji",
           "time": "体力允许时",
           "text": "备选 · 常寂光寺（台阶较多；也可改为河边休息，若前往请提前与司机确认接车点）",
+          "nextTitle": "常寂光寺（备选）",
+          "nextDetail": "台阶较多，视体力选择；也可在河边休息。\n前往时先与司机确认接车点。",
           "type": "attraction",
           "placeId": "jojakkoji"
         },
@@ -641,12 +667,16 @@
           "id": "arashiyama-return-car",
           "time": "约16:00",
           "text": "在与司机商定的地点上车返城，默认返回京都日航公主酒店；若提前结束岚山行程并考虑三十三间堂，请先与司机确认路线。景区内以短距离步行为主。",
+          "nextTitle": "包车返城",
+          "nextDetail": "上车：与司机商定的接车点\n默认返回：京都日航公主酒店",
           "type": "transfer"
         },
         {
           "id": "visit-sanjusangendo",
           "time": "晚餐前·备选",
           "text": "备选 · 三十三间堂（仅岚山行程提前结束、能在16:30前入场时考虑；否则直接回酒店休息）",
+          "nextTitle": "三十三间堂（备选）",
+          "nextDetail": "条件：岚山行程提前结束，且能在16:30前入场。\n否则直接回酒店休息。",
           "type": "attraction",
           "placeId": "sanjusangendo"
         },
@@ -654,6 +684,8 @@
           "id": "dinner-honke-1008",
           "time": "19:00",
           "text": "已预约天婦羅処京林泉晚餐；备注：本家（清桑）。进店报登记电话 07042277782，陈女士。",
+          "nextTitle": "天婦羅処京林泉晚餐",
+          "nextDetail": "已预约 · 备注：本家（清桑）\n登记电话：07042277782\n预约姓名：陈女士",
           "type": "restaurant",
           "placeId": "restaurant-kyorinsen"
         },
@@ -689,26 +721,25 @@
       "day": 6,
       "date": "2026-10-09",
       "title": "伏见稻荷与清水寺东山散步",
+      "utcOffset": "+09:00",
       "locations": [
         "京都"
       ],
       "schedule": [
         {
-          "id": "kyoto-breakfast-1009",
-          "time": "早餐",
-          "text": "在酒店吃早餐。",
-          "type": "meal"
-        },
-        {
           "id": "kyoto-hotel-to-inari-1009",
           "time": "约09:00",
           "text": "从酒店步行至地铁四条站，乘乌丸线到京都站，再换乘JR奈良线普通列车到稻荷站；全程预留约30分钟。",
+          "nextTitle": "地铁＋JR 去伏见稻荷",
+          "nextDetail": "路线：四条 → 京都 → 稻荷\n换乘：京都站换JR奈良线普通列车\n全程：预留约30分钟",
           "type": "transfer"
         },
         {
           "id": "visit-fushimi-inari-1009",
           "time": "上午至约11:00",
           "text": "伏见稻荷大社：参观本殿和山脚的千本鸟居，不登顶。",
+          "nextTitle": "伏见稻荷大社",
+          "nextDetail": "参观：本殿和山脚的千本鸟居\n不登顶。",
           "type": "attraction",
           "placeId": "fushimi-inari"
         },
@@ -716,12 +747,16 @@
           "id": "taxi-inari-to-kiyomizu-1009",
           "time": "约11:00后",
           "text": "伏见稻荷结束后打车前往清水寺门前停车场附近安全下车点，车程预留约30—45分钟，随拥堵调整；司机无需驶入停车场。给司机看：清水寺門前駐車場の近くで、安全に降ろしてください。",
+          "nextTitle": "打车",
+          "nextDetail": "定位：清水寺門前駐車場\n下车：停车场附近安全位置\n车程：预留约30—45分钟",
           "type": "transfer"
         },
         {
           "id": "kiyomizuzaka-lunch-1009",
           "time": "约11:30后",
           "text": "在清水坂一带就近找可坐下用餐的店吃午餐。",
+          "nextTitle": "清水坂午餐",
+          "nextDetail": "选店：就近找可坐下用餐的餐厅。",
           "type": "meal",
           "placeId": "kiyomizuzaka"
         },
@@ -736,6 +771,8 @@
           "id": "higashiyama-slope-walk-1009",
           "time": "下午",
           "text": "沿三年坂、二年坂缓缓下行；坡路和石板路较多，以舒适步行为主。",
+          "nextTitle": "东山散步",
+          "nextDetail": "路线：三年坂 → 二年坂\n坡路和石板路较多，缓慢下行。",
           "type": "walk",
           "placeIds": [
             "sannenzaka",
@@ -746,6 +783,8 @@
           "id": "higashiyama-extra-walk-1009",
           "time": "视体力",
           "text": "可继续走到八坂塔或祇园，不必勉强走完全程。",
+          "nextTitle": "八坂塔／祇园（可选）",
+          "nextDetail": "视体力继续散步，不必走完全程。",
           "type": "walk",
           "placeIds": [
             "yasaka-pagoda",
@@ -756,6 +795,8 @@
           "id": "kyoto-dinner-1009",
           "time": "17:00后",
           "text": "在祇园或四条一带自由晚餐，餐厅当天自选。",
+          "nextTitle": "自由晚餐",
+          "nextDetail": "地点：祇园或四条一带\n餐厅当天自选。",
           "type": "meal",
           "placeIds": [
             "gion",
@@ -766,6 +807,8 @@
           "id": "kyoto-evening-return-1009",
           "time": "晚餐后",
           "text": "若还有精力，可沿鸭川短走；累了直接回酒店。从祇园四条步行过四条大桥至阪急京都河原町站，乘阪急至乌丸站后步行回酒店；不想走时可直接打车。",
+          "nextTitle": "返回酒店",
+          "nextDetail": "路线：京都河原町 → 乌丸 → 酒店\n方式：阪急＋步行，或直接打车",
           "type": "transfer"
         },
         {
@@ -793,6 +836,7 @@
       "day": 7,
       "date": "2026-10-10",
       "title": "京都经神户前往大阪",
+      "utcOffset": "+09:00",
       "locations": [
         "京都",
         "神户",
@@ -803,6 +847,8 @@
           "id": "kyoto-kobe-osaka",
           "time": "待补充",
           "text": "从京都日航公主酒店上车，先逛神户三田奥特莱斯，再前往大阪；当天用车10小时。具体出发时间、车型分配、下车地点及订单信息待补充。",
+          "nextTitle": "包车去大阪",
+          "nextDetail": "上车：京都日航公主酒店\n途经：神户三田奥特莱斯\n用车：10小时",
           "type": "transfer",
           "placeIds": [
             "kyoto-hotel",
@@ -821,12 +867,16 @@
           "id": "dinner-wakko-shinkobe",
           "time": "17:30",
           "text": "已预约和黒 新神戸店晚餐，6人，吧台席、禁烟；仅订座，未指定套餐。预约编号：75WRVRLHP6。",
+          "nextTitle": "和黒 新神戸店晚餐",
+          "nextDetail": "已预约 · 6人 · 吧台席／禁烟\n仅订座，未指定套餐\n预约编号：75WRVRLHP6",
           "type": "restaurant"
         },
         {
           "id": "arrive-osaka",
           "time": "待补充",
           "text": "抵达大阪，入住大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。地址：日本大阪府大阪市中央区久太郎町4-1-15（南御堂境内）；房型和入住要求待补充。",
+          "nextTitle": "入住大阪东急卓越酒店",
+          "nextDetail": "地址：大阪市中央区久太郎町4-1-15（南御堂境内）",
           "type": "check-in",
           "placeId": "osaka"
         }
@@ -839,28 +889,120 @@
       "id": "day-8",
       "day": 8,
       "date": "2026-10-11",
-      "title": "大阪市区（初版）",
+      "title": "大阪自由活动",
+      "utcOffset": "+09:00",
       "locations": [
         "大阪"
       ],
       "schedule": [
         {
+          "id": "visit-osaka-castle-park",
+          "time": "游览可选",
+          "text": "大阪城公园",
+          "type": "attraction",
+          "placeId": "osaka-castle-park"
+        },
+        {
+          "id": "visit-shinsaibashi",
+          "time": "游览可选",
+          "text": "心斋桥筋商店街",
+          "type": "attraction",
+          "placeId": "shinsaibashi"
+        },
+        {
+          "id": "visit-hozenji-yokocho",
+          "time": "游览可选",
+          "text": "法善寺及横丁",
+          "type": "attraction",
+          "placeId": "hozenji-yokocho"
+        },
+        {
+          "id": "visit-dotonbori",
+          "time": "游览可选",
+          "text": "道顿堀与戎桥",
+          "type": "attraction",
+          "placeId": "dotonbori"
+        },
+        {
+          "id": "visit-namba-shopping",
+          "time": "游览可选",
+          "text": "难波商圈",
+          "type": "attraction",
+          "placeId": "namba-shopping"
+        },
+        {
           "id": "visit-umeda",
-          "time": "待安排",
-          "text": "梅田",
+          "time": "游览可选",
+          "text": "梅田商圈",
           "type": "attraction",
           "placeId": "umeda"
         },
         {
-          "id": "visit-shinsaibashi",
-          "time": "待安排",
-          "text": "心斋桥",
+          "id": "visit-daimaru-shinsaibashi",
+          "time": "采购可选",
+          "text": "大丸心斋桥店",
           "type": "attraction",
-          "placeId": "shinsaibashi"
+          "placeId": "daimaru-shinsaibashi"
+        },
+        {
+          "id": "visit-takashimaya-osaka",
+          "time": "采购可选",
+          "text": "大阪高岛屋",
+          "type": "attraction",
+          "placeId": "takashimaya-osaka"
+        },
+        {
+          "id": "visit-hankyu-umeda",
+          "time": "采购可选",
+          "text": "阪急梅田本店",
+          "type": "attraction",
+          "placeId": "hankyu-umeda"
+        },
+        {
+          "id": "visit-hands-shinsaibashi",
+          "time": "采购可选",
+          "text": "Hands心斋桥店",
+          "type": "attraction",
+          "placeId": "hands-shinsaibashi"
+        },
+        {
+          "id": "visit-sennichimae-doguyasuji",
+          "time": "采购可选",
+          "text": "千日前道具屋筋",
+          "type": "attraction",
+          "placeId": "sennichimae-doguyasuji"
+        },
+        {
+          "id": "visit-matsukiyo-shinsaibashi",
+          "time": "采购可选",
+          "text": "松本清心斋桥店",
+          "type": "attraction",
+          "placeId": "matsukiyo-shinsaibashi"
+        },
+        {
+          "id": "visit-life-sakaisuji-hommachi",
+          "time": "采购可选",
+          "text": "LIFE堺筋本町店",
+          "type": "attraction",
+          "placeId": "life-sakaisuji-hommachi"
+        },
+        {
+          "id": "visit-bic-camera-namba",
+          "time": "采购可选",
+          "text": "Bic Camera难波店",
+          "type": "attraction",
+          "placeId": "bic-camera-namba"
+        },
+        {
+          "id": "visit-donki-dotonbori",
+          "time": "采购可选",
+          "text": "唐吉诃德道顿堀店",
+          "type": "attraction",
+          "placeId": "donki-dotonbori"
         }
       ],
       "notes": [
-        "具体游览顺序和时间待安排。",
+        "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
     },
@@ -868,28 +1010,120 @@
       "id": "day-9",
       "day": 9,
       "date": "2026-10-12",
-      "title": "大阪市区（初版）",
+      "title": "大阪自由活动",
+      "utcOffset": "+09:00",
       "locations": [
         "大阪"
       ],
       "schedule": [
         {
+          "id": "visit-osaka-castle-park",
+          "time": "游览可选",
+          "text": "大阪城公园",
+          "type": "attraction",
+          "placeId": "osaka-castle-park"
+        },
+        {
+          "id": "visit-shinsaibashi",
+          "time": "游览可选",
+          "text": "心斋桥筋商店街",
+          "type": "attraction",
+          "placeId": "shinsaibashi"
+        },
+        {
+          "id": "visit-hozenji-yokocho",
+          "time": "游览可选",
+          "text": "法善寺及横丁",
+          "type": "attraction",
+          "placeId": "hozenji-yokocho"
+        },
+        {
+          "id": "visit-dotonbori",
+          "time": "游览可选",
+          "text": "道顿堀与戎桥",
+          "type": "attraction",
+          "placeId": "dotonbori"
+        },
+        {
+          "id": "visit-namba-shopping",
+          "time": "游览可选",
+          "text": "难波商圈",
+          "type": "attraction",
+          "placeId": "namba-shopping"
+        },
+        {
           "id": "visit-umeda",
-          "time": "待安排",
-          "text": "梅田",
+          "time": "游览可选",
+          "text": "梅田商圈",
           "type": "attraction",
           "placeId": "umeda"
         },
         {
-          "id": "visit-shinsaibashi",
-          "time": "待安排",
-          "text": "心斋桥",
+          "id": "visit-daimaru-shinsaibashi",
+          "time": "采购可选",
+          "text": "大丸心斋桥店",
           "type": "attraction",
-          "placeId": "shinsaibashi"
+          "placeId": "daimaru-shinsaibashi"
+        },
+        {
+          "id": "visit-takashimaya-osaka",
+          "time": "采购可选",
+          "text": "大阪高岛屋",
+          "type": "attraction",
+          "placeId": "takashimaya-osaka"
+        },
+        {
+          "id": "visit-hankyu-umeda",
+          "time": "采购可选",
+          "text": "阪急梅田本店",
+          "type": "attraction",
+          "placeId": "hankyu-umeda"
+        },
+        {
+          "id": "visit-hands-shinsaibashi",
+          "time": "采购可选",
+          "text": "Hands心斋桥店",
+          "type": "attraction",
+          "placeId": "hands-shinsaibashi"
+        },
+        {
+          "id": "visit-sennichimae-doguyasuji",
+          "time": "采购可选",
+          "text": "千日前道具屋筋",
+          "type": "attraction",
+          "placeId": "sennichimae-doguyasuji"
+        },
+        {
+          "id": "visit-matsukiyo-shinsaibashi",
+          "time": "采购可选",
+          "text": "松本清心斋桥店",
+          "type": "attraction",
+          "placeId": "matsukiyo-shinsaibashi"
+        },
+        {
+          "id": "visit-life-sakaisuji-hommachi",
+          "time": "采购可选",
+          "text": "LIFE堺筋本町店",
+          "type": "attraction",
+          "placeId": "life-sakaisuji-hommachi"
+        },
+        {
+          "id": "visit-bic-camera-namba",
+          "time": "采购可选",
+          "text": "Bic Camera难波店",
+          "type": "attraction",
+          "placeId": "bic-camera-namba"
+        },
+        {
+          "id": "visit-donki-dotonbori",
+          "time": "采购可选",
+          "text": "唐吉诃德道顿堀店",
+          "type": "attraction",
+          "placeId": "donki-dotonbori"
         }
       ],
       "notes": [
-        "具体游览顺序和时间待安排。",
+        "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
     },
@@ -898,6 +1132,7 @@
       "day": 10,
       "date": "2026-10-13",
       "title": "大阪返回上海",
+      "utcOffset": "+09:00",
       "locations": [
         "大阪东急卓越酒店",
         "关西机场 T1",
@@ -908,6 +1143,8 @@
           "id": "osaka-hotel-kix-car",
           "time": "13:00",
           "text": "乘坐携程专车从大阪东急卓越酒店前往关西国际机场 T1；具体车辆和订单信息待补充。",
+          "nextTitle": "专车去机场",
+          "nextDetail": "上车：大阪东急卓越酒店\n目的地：关西国际机场 T1",
           "type": "transfer",
           "placeId": "kix"
         },
@@ -921,6 +1158,7 @@
         {
           "id": "flight-arrive",
           "time": "18:30",
+          "utcOffset": "+08:00",
           "text": "抵达上海浦东机场 T2。",
           "type": "flight",
           "placeId": "pvg"
@@ -933,9 +1171,7 @@
           "amount": 8448
         }
       ],
-      "notes": [
-        "航班状态为“出票中”。"
-      ]
+      "notes": []
     }
   ],
   "places": [
@@ -1463,23 +1699,227 @@
       }
     },
     {
+      "id": "dotonbori",
+      "nameZh": "道顿堀与戎桥",
+      "nameJa": "道頓堀・戎橋",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "navigation": {
+        "query": "戎橋 大阪"
+      },
+      "geo": {
+        "lat": 34.6690672,
+        "lng": 135.5013046
+      }
+    },
+    {
+      "id": "osaka-hotel",
+      "nameZh": "大阪东急卓越酒店",
+      "nameJa": "大阪エクセルホテル東急",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "geo": {
+        "lat": 34.6805454,
+        "lng": 135.5001614
+      },
+      "navigation": {
+        "query": "大阪エクセルホテル東急 大阪市中央区久太郎町4-1-15"
+      }
+    },
+    {
+      "id": "osaka-castle-park",
+      "nameZh": "大阪城公园",
+      "nameJa": "大阪城公園",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "navigation": {
+        "query": "大阪城公園 大阪"
+      },
+      "geo": {
+        "lat": 34.686527,
+        "lng": 135.5272461
+      }
+    },
+    {
       "id": "umeda",
-      "nameZh": "梅田",
+      "nameZh": "梅田商圈",
       "nameJa": "梅田",
       "countryCode": "JP",
       "cityOrArea": "大阪",
       "navigation": {
         "query": "梅田 大阪"
+      },
+      "geo": {
+        "lat": 34.7034091,
+        "lng": 135.4975597
       }
     },
     {
       "id": "shinsaibashi",
-      "nameZh": "心斋桥",
-      "nameJa": "心斎橋",
+      "nameZh": "心斋桥筋商店街",
+      "nameJa": "心斎橋筋商店街",
       "countryCode": "JP",
       "cityOrArea": "大阪",
       "navigation": {
-        "query": "心斋桥 大阪"
+        "query": "心斎橋筋商店街 大阪"
+      },
+      "geo": {
+        "lat": 34.6706744,
+        "lng": 135.5013256
+      }
+    },
+    {
+      "id": "hozenji-yokocho",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "法善寺及横丁",
+      "nameJa": "法善寺・法善寺横丁",
+      "navigation": {
+        "query": "法善寺横丁 大阪"
+      },
+      "geo": {
+        "lat": 34.6681845,
+        "lng": 135.5026705
+      }
+    },
+    {
+      "id": "namba-shopping",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "难波商圈",
+      "nameJa": "難波",
+      "navigation": {
+        "query": "難波 大阪"
+      },
+      "geo": {
+        "lat": 34.6636625,
+        "lng": 135.5017751
+      }
+    },
+    {
+      "id": "daimaru-shinsaibashi",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "大丸心斋桥店",
+      "nameJa": "大丸心斎橋店",
+      "navigation": {
+        "query": "大丸心斎橋店 大阪"
+      },
+      "geo": {
+        "lat": 34.67319,
+        "lng": 135.500932
+      }
+    },
+    {
+      "id": "takashimaya-osaka",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "大阪高岛屋",
+      "nameJa": "大阪タカシマヤ",
+      "navigation": {
+        "query": "大阪タカシマヤ 大阪"
+      },
+      "geo": {
+        "lat": 34.6646286,
+        "lng": 135.5017961
+      }
+    },
+    {
+      "id": "hankyu-umeda",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "阪急梅田本店",
+      "nameJa": "阪急うめだ本店",
+      "navigation": {
+        "query": "阪急うめだ本店 大阪"
+      },
+      "geo": {
+        "lat": 34.7027128,
+        "lng": 135.4984322
+      }
+    },
+    {
+      "id": "hands-shinsaibashi",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "Hands心斋桥店",
+      "nameJa": "ハンズ心斎橋店",
+      "navigation": {
+        "query": "ハンズ心斎橋店 大阪"
+      },
+      "geo": {
+        "lat": 34.673847,
+        "lng": 135.500957
+      }
+    },
+    {
+      "id": "sennichimae-doguyasuji",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "千日前道具屋筋",
+      "nameJa": "千日前道具屋筋商店街",
+      "navigation": {
+        "query": "千日前道具屋筋商店街 大阪"
+      },
+      "geo": {
+        "lat": 34.6639349,
+        "lng": 135.5035168
+      }
+    },
+    {
+      "id": "matsukiyo-shinsaibashi",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "松本清心斋桥店",
+      "nameJa": "マツモトキヨシ 心斎橋店",
+      "navigation": {
+        "query": "マツモトキヨシ 心斎橋店 大阪"
+      },
+      "geo": {
+        "lat": 34.67156751,
+        "lng": 135.5016119
+      }
+    },
+    {
+      "id": "life-sakaisuji-hommachi",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "LIFE堺筋本町店",
+      "nameJa": "ライフ堺筋本町店",
+      "navigation": {
+        "query": "ライフ堺筋本町店 大阪"
+      },
+      "geo": {
+        "lat": 34.6805783,
+        "lng": 135.5075277
+      }
+    },
+    {
+      "id": "bic-camera-namba",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "Bic Camera难波店",
+      "nameJa": "ビックカメラなんば店",
+      "navigation": {
+        "query": "ビックカメラなんば店 大阪"
+      },
+      "geo": {
+        "lat": 34.6667204,
+        "lng": 135.5026467
+      }
+    },
+    {
+      "id": "donki-dotonbori",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "nameZh": "唐吉诃德道顿堀店",
+      "nameJa": "ドン・キホーテ道頓堀店",
+      "navigation": {
+        "query": "ドン・キホーテ道頓堀店 大阪"
+      },
+      "geo": {
+        "lat": 34.6692927,
+        "lng": 135.5027289
       }
     }
   ],
@@ -1676,26 +2116,169 @@
       "detail": "位于神户市北区的大型开放式奥特莱斯，汇集服饰、运动和生活方式品牌。当天还需转移到大阪，购物后请统一清点随身物品和行李。"
     },
     {
+      "id": "attraction-dotonbori",
+      "placeId": "dotonbori",
+      "name": "道顿堀与戎桥",
+      "nameJa": "道頓堀・戎橋",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "看格力高招牌、霓虹灯和河景，可沿河走一小段，不必把两岸走完。天黑后看灯光，走累了可就近吃饭。参考停留：45—60分钟，不含用餐。"
+    },
+    {
+      "id": "attraction-osaka-castle-park",
+      "placeId": "osaka-castle-park",
+      "name": "大阪城公园",
+      "nameJa": "大阪城公園",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "看护城河、石垣、城门和天守阁外观，不上楼。可走大手门、樱门、天守阁外观、日本庭园短线，不绕全园。参考停留：1.5—2小时。"
+    },
+    {
       "id": "attraction-umeda",
       "placeId": "umeda",
-      "name": "梅田",
+      "name": "梅田商圈",
       "nameJa": "梅田",
       "dates": [
         "2026-10-11",
         "2026-10-12"
       ],
-      "detail": "大阪站与梅田站周边的大型交通和商业中心，百货店、地下街及大型复合设施集中。车站结构复杂，集合时最好约定明确出口或地标。"
+      "detail": "以阪急梅田本店为主要采购目的地，服饰、化妆品和食品礼盒选择集中。车站和地下通道复杂，可只选一两家店；导航具体商场，并约定明确集合点。参考停留：2—3小时，以一家百货为主，另留找路时间。"
     },
     {
       "id": "attraction-shinsaibashi",
       "placeId": "shinsaibashi",
-      "name": "心斋桥",
-      "nameJa": "心斎橋",
+      "name": "心斋桥筋商店街",
+      "nameJa": "心斎橋筋商店街",
       "dates": [
         "2026-10-11",
         "2026-10-12"
       ],
-      "detail": "以心斋桥筋商店街为中心的大阪购物区，可步行连接道顿堀一带。主街人流较密集，六人同行宜提前约好走散后的会合点。"
+      "detail": "服装、鞋、药妆、日用品和小吃集中，商店街有顶棚。离酒店较近，可分两次逛，购物袋较多时先回酒店放下。参考停留：1—2小时，不含百货购物。"
+    },
+    {
+      "id": "attraction-hozenji-yokocho",
+      "placeId": "hozenji-yokocho",
+      "name": "法善寺及横丁",
+      "nameJa": "法善寺・法善寺横丁",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "小寺院、青苔覆盖的水挂不动尊和石板小巷，保留老大阪街巷的特点。可在难波吃饭时顺路看看，雨天注意石板路湿滑。参考停留：20—30分钟，不含用餐。"
+    },
+    {
+      "id": "attraction-namba-shopping",
+      "placeId": "namba-shopping",
+      "name": "难波商圈",
+      "nameJa": "難波",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "高岛屋、戎桥筋、千日前一带有百货、餐厅和采购店。可购物、坐下吃饭、喝茶休息，不必走遍整个商圈。参考停留：2—3小时，可含用餐。"
+    },
+    {
+      "id": "attraction-daimaru-shinsaibashi",
+      "placeId": "daimaru-shinsaibashi",
+      "name": "大丸心斋桥店",
+      "nameJa": "大丸心斎橋店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "品牌服装、化妆品及食品礼盒，可与心斋桥筋商店街一起逛，也方便吃饭和歇脚。参考停留：1.5—2小时。"
+    },
+    {
+      "id": "attraction-takashimaya-osaka",
+      "placeId": "takashimaya-osaka",
+      "name": "大阪高岛屋",
+      "nameJa": "大阪タカシマヤ",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "服饰、家居用品及食品伴手礼。位于难波，可与法善寺、用餐顺路组合；与大丸购买需求重合时可二选一。参考停留：1.5—2小时。"
+    },
+    {
+      "id": "attraction-hankyu-umeda",
+      "placeId": "hankyu-umeda",
+      "name": "阪急梅田本店",
+      "nameJa": "阪急うめだ本店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "梅田采购的主要目的地，服饰、化妆品和食品礼盒选择集中，适合有明确品牌或送礼需求时重点采购。导航直接输入“阪急うめだ本店”，从御堂筋线梅田站按阪急百货方向指示走。参考停留：2—3小时，首次到访另留15—20分钟找路。"
+    },
+    {
+      "id": "attraction-hands-shinsaibashi",
+      "placeId": "hands-shinsaibashi",
+      "name": "Hands心斋桥店",
+      "nameJa": "ハンズ心斎橋店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "厨房工具、收纳、清洁用品、文具和美容日用品，适合实用小物采购。位于心斋桥PARCO的9—11层。参考停留：45—90分钟。"
+    },
+    {
+      "id": "attraction-sennichimae-doguyasuji",
+      "placeId": "sennichimae-doguyasuji",
+      "name": "千日前道具屋筋",
+      "nameJa": "千日前道具屋筋商店街",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "碗盘、茶杯、筷子、锅具和厨房工具，适合喜欢做饭或餐具的人。买易碎物前考虑包装、重量与行李空间。参考停留：45—90分钟。"
+    },
+    {
+      "id": "attraction-matsukiyo-shinsaibashi",
+      "placeId": "matsukiyo-shinsaibashi",
+      "name": "松本清心斋桥店",
+      "nameJa": "マツモトキヨシ 心斎橋店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "药妆、护肤、防晒、洗护和日用品，适合带清单集中采购。参考停留：30—60分钟。"
+    },
+    {
+      "id": "attraction-life-sakaisuji-hommachi",
+      "placeId": "life-sakaisuji-hommachi",
+      "name": "LIFE堺筋本町店",
+      "nameJa": "ライフ堺筋本町店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "零食、茶、咖啡、调味料和超市食品，适合买自用食品，可在回酒店前补货。酒店步行过去按慢走预留约15—20分钟。参考停留：30—45分钟。"
+    },
+    {
+      "id": "attraction-bic-camera-namba",
+      "placeId": "bic-camera-namba",
+      "name": "Bic Camera难波店",
+      "nameJa": "ビックカメラなんば店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "剃须刀、电动牙刷、美容小家电、数码及旅行用品，有明确电器采购目标时再去。购买前确认国内使用兼容性和保修范围。参考停留：45—90分钟。"
+    },
+    {
+      "id": "attraction-donki-dotonbori",
+      "placeId": "donki-dotonbori",
+      "name": "唐吉诃德道顿堀店",
+      "nameJa": "ドン・キホーテ道頓堀店",
+      "dates": [
+        "2026-10-11",
+        "2026-10-12"
+      ],
+      "detail": "零食、日用品和杂货集中，适合带清单一次补齐缺项，可在白天顺路采购。参考停留：45—60分钟。"
     }
   ],
   "bookingsAndTickets": [
@@ -1721,7 +2304,7 @@
       "amount": 8448,
       "currency": "CNY",
       "bookedAt": "",
-      "status": "出票中"
+      "status": "已出票"
     },
     {
       "id": "kyoto-hotel",
@@ -1785,14 +2368,12 @@
       "time": "19:00",
       "title": "天婦羅処京林泉",
       "titleJa": "天婦羅処京林泉",
-      "detail": "备注：本家（清桑）；人数、席位和预约编号待补充",
-      "detailJa": "備考：本家（清桑）。人数・席種・予約番号は未確認",
+      "detail": "备注：本家（清桑）；进店报预约姓名「陈女士」及下方登记电话。",
+      "detailJa": "備考：本家（清桑）。入店時は予約名「陈女士」と下記の登録電話番号をお伝えください。",
       "schedule": "10月8日 19:00 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "",
       "reservationPhone": "07042277782",
-      "checkIn": "进店报登记电话 07042277782，陈女士。",
-      "checkInJa": "入店時は登録電話番号 07042277782 と予約名「陈女士」をお伝えください。",
       "status": "已预约"
     },
     {
@@ -2109,12 +2690,6 @@
       "title": "时间均为当地时间",
       "text": "邮轮及航班订单页面均注明按当地时间显示。",
       "tone": "info"
-    },
-    {
-      "id": "ticketing",
-      "title": "返程机票正在出票",
-      "text": "中国国航 CA858 的订单状态为“出票中”。",
-      "tone": "warning"
     },
     {
       "id": "middle-gap",

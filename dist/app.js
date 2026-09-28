@@ -534,11 +534,22 @@ function inlineTicketMarkup(ticket) {
     </div>`;
 }
 
+function itineraryDisplayText(value = "") {
+  return String(value)
+    .replace(/[^。；，]*(?:待补充|待安排|待确认|待定|未定|未确认|尚未预订)[^。；，]*[。；，]?/gu, "")
+    .replace(/[；，]+$/u, "。")
+    .trim();
+}
+
 function dayCard(day) {
   const today = todayForTrip();
-  const isToday = day.date === today;
+  const isToday = day.date <= today && today <= (day.endDate || day.date);
   const expanded = state.expandedDay === day.day;
-  const schedule = day.schedule.map((item) => {
+  const isFreeDay = ["2026-10-11", "2026-10-12"].includes(day.date);
+  const scheduleItems = day.schedule.map((item) => {
+    const text = itineraryDisplayText(item.text);
+    const time = itineraryDisplayText(item.time);
+    if (!text) return "";
     const destinations = item.type === "transfer" || ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item);
     const mapLinks = destinations.map((destination) => `
       <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
@@ -547,18 +558,29 @@ function dayCard(day) {
     const attraction = item.type === "attraction"
       ? (state.data.attractions || []).find((entry) => entry.placeId === item.placeId && entry.dates?.includes(day.date))
       : null;
+    if (isFreeDay) return `
+      <li class="optional-place">
+        <details>
+          <summary>${escapeHtml(text)}</summary>
+          <div class="optional-place__detail">
+            ${attraction?.nameJa ? `<span lang="ja">${escapeHtml(attraction.nameJa)}</span>` : ""}
+            ${attraction?.detail ? `<p>${escapeHtml(itineraryDisplayText(attraction.detail))}</p>` : ""}
+            ${mapLinks ? `<div class="schedule-map-links">${mapLinks}</div>` : ""}
+          </div>
+        </details>
+      </li>`;
     const scheduleText = attraction
       ? `<details class="schedule-attraction">
-          <summary class="schedule-text">${escapeHtml(item.text)}</summary>
+          <summary class="schedule-text">${escapeHtml(text)}</summary>
           <div class="schedule-attraction__detail">
             ${attraction.nameJa ? `<span lang="ja">${escapeHtml(attraction.nameJa)}</span>` : ""}
-            <p>${escapeHtml(attraction.detail || "介绍待补充。")}</p>
+            <p>${escapeHtml(itineraryDisplayText(attraction.detail || ""))}</p>
           </div>
         </details>`
-      : `<div class="schedule-text">${escapeHtml(item.text)}</div>`;
+      : `<div class="schedule-text">${escapeHtml(text)}</div>`;
     return `
       <li class="schedule-item">
-        <span class="schedule-time">${escapeHtml(item.time)}</span>
+        ${time ? `<span class="schedule-time">${escapeHtml(time)}</span>` : ""}
         <div class="schedule-content">
           ${scheduleText}
           ${item.walkingEstimate ? `<p class="schedule-walk">步行参考 · ${escapeHtml(item.walkingEstimate)}</p>` : ""}
@@ -567,8 +589,17 @@ function dayCard(day) {
         </div>
       </li>
     `;
-  }).join("");
-  const notes = [...(day.notes || []), ...(day.sourceDateLabelConflict ? [day.sourceDateLabelConflict] : [])];
+  });
+  const schedule = isFreeDay
+    ? [{ category: "游览可选", title: "游览地点" }, { category: "采购可选", title: "采购地点" }].map((group) => {
+        const items = scheduleItems.filter((markup, index) => markup && day.schedule[index].time === group.category);
+        return `<details class="optional-place-group">
+          <summary>${group.title}<span>${items.length}处</span></summary>
+          <ul class="optional-place-list">${items.join("")}</ul>
+        </details>`;
+      }).join("")
+    : `<ol class="schedule">${scheduleItems.join("")}</ol>`;
+  const notes = [...(day.notes || []), ...(day.sourceDateLabelConflict ? [day.sourceDateLabelConflict] : [])].map(itineraryDisplayText).filter(Boolean);
   const dayTickets = ticketsForDay(day);
   const pendingTicketCount = dayTickets.filter((ticket) => !isTicketPurchased(ticket)).length;
   const ticketSummary = dayTickets.length
@@ -577,25 +608,30 @@ function dayCard(day) {
   const dailyMap = day.date === "2026-10-07" ? `
     <section class="daily-map" aria-label="10月7日京都市内地图">
       <h3>10月7日 · 京都市内地图</h3>
-      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为未预订的午餐建议，紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
+      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为午餐建议，紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
       <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐建议与晚餐后可选夜游地点的位置地图"></div>
     </section>` : day.date === "2026-10-08" ? `
     <section class="daily-map" aria-label="10月8日金阁寺与岚山地图">
       <h3>10月8日 · 金阁寺与岚山地图</h3>
-      <p>编号标记为酒店出发、金阁寺、岚山景点及晚餐地点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。午餐未定具体餐厅，地图不标午餐点；紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
+      <p>编号标记为酒店出发、金阁寺、岚山景点及晚餐地点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
       <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
     </section>` : day.date === "2026-10-09" ? `
     <section class="daily-map" aria-label="10月9日伏见稻荷与东山地图">
       <h3>10月9日 · 伏见稻荷与东山地图</h3>
       <p>编号标记为酒店、伏见稻荷、清水坂午餐区域、清水寺、三年坂和二年坂；连线仅表示行程先后，不代表实际车行或步行道路。清水坂是街区参考位置，不是已选餐厅；紫色“选”为可继续散步的八坂塔，橙色“餐”为自由晚餐区域，均不加入连线。放大地图可查看东山相邻地点；平安神宫与京都御所仍为备选，可通过下方地点按钮查看。</p>
       <div class="daily-map__canvas" id="day-map-2026-10-09" role="region" aria-label="10月9日酒店、伏见稻荷、清水坂、清水寺、三年坂、二年坂与可选地点的位置地图"></div>
+    </section>` : isFreeDay ? `
+    <section class="daily-map" aria-label="大阪游览与采购地图">
+      <h3>${escapeHtml(formatCompactDate(day.date))} · 大阪地图</h3>
+      <p class="daily-map__legend"><span>游览</span><span class="daily-map__legend--shopping">采购</span><span class="daily-map__legend--hotel">酒店</span></p>
+      <div class="daily-map__canvas" id="day-map-${day.date}" role="region" aria-label="大阪酒店、可选游览及采购地点的位置地图"></div>
     </section>` : "";
   return `
     <article class="day-card${isToday ? " is-today" : ""}" data-day="${day.day}">
       <span class="day-dot" aria-hidden="true"></span>
       <button class="day-toggle" type="button" aria-expanded="${expanded}" aria-controls="day-detail-${day.day}">
         <span>
-          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")}<br>${escapeHtml(formatCompactDate(day.date))}${isToday ? " · 今天" : ""}</span>
+          <span class="day-meta">DAY ${String(day.day).padStart(2, "0")}${day.endDay ? `–${String(day.endDay).padStart(2, "0")}` : ""}<br>${escapeHtml(day.dateLabel || formatCompactDate(day.date))}${isToday ? " · 今天" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           <span class="day-locations">${escapeHtml(day.locations.join(" → "))}</span>
           ${ticketSummary}
@@ -604,7 +640,7 @@ function dayCard(day) {
       </button>
       <div class="day-detail" id="day-detail-${day.day}" ${expanded ? "" : "hidden"}>
         ${dailyMap}
-        <ol class="schedule">${schedule}</ol>
+        ${schedule}
         ${notes.map((note) => `<p class="detail-note">${escapeHtml(note)}</p>`).join("")}
       </div>
     </article>
@@ -622,7 +658,7 @@ function showSampleDayMap() {
       extras: [
         { id: "hanamikoji-street", label: "夜", kind: "evening", caption: "饭后可选" },
         { id: "yasaka-shrine", label: "夜", kind: "evening", caption: "饭后可选" },
-        { id: "restaurant-sukiyaki-kimura", label: "午", kind: "suggested", caption: "午餐建议（未预订）" }
+        { id: "restaurant-sukiyaki-kimura", label: "午", kind: "suggested", caption: "午餐建议" }
       ]
     },
     5: {
@@ -645,7 +681,18 @@ function showSampleDayMap() {
       ]
     }
   };
-  const config = maps[state.expandedDay];
+  const day = state.data.days.find((entry) => entry.day === state.expandedDay);
+  const config = maps[state.expandedDay] || (["2026-10-11", "2026-10-12"].includes(day?.date) ? {
+    date: day.date,
+    routeIds: [],
+    highlightedIds: [],
+    extras: [{ id: "osaka-hotel", label: "宿", kind: "hotel", caption: "酒店" }, ...day.schedule.map((item) => ({
+      id: item.placeId,
+      label: item.time === "采购可选" ? "购" : "游",
+      kind: item.time === "采购可选" ? "suggested" : "visit",
+      caption: item.time === "采购可选" ? "采购" : "游览"
+    }))]
+  } : null);
   if (!config) return;
   const canvas = $(`#day-map-${config.date}`);
   if (!canvas || canvas.closest(".day-detail").hidden) return;
@@ -671,7 +718,7 @@ function showSampleDayMap() {
     maxZoom: 19,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
   }).addTo(sampleDayMap);
-  window.L.polyline(points, { color: "#187f8b", weight: 3, opacity: 0.7, dashArray: "5 7" }).addTo(sampleDayMap);
+  if (points.length > 1) window.L.polyline(points, { color: "#187f8b", weight: 3, opacity: 0.7, dashArray: "5 7" }).addTo(sampleDayMap);
   const marked = new Set();
   places.forEach((place) => {
     if (marked.has(place.id)) return;
@@ -766,16 +813,31 @@ function navigationDestinations(item) {
   return destinations;
 }
 
+function itineraryDays() {
+  const first = state.data.days.find((day) => day.date === "2026-10-05");
+  const second = state.data.days.find((day) => day.date === "2026-10-06");
+  if (!first || !second) return state.data.days;
+  return state.data.days.filter((day) => day !== second).map((day) => day !== first ? day : {
+    ...first,
+    endDate: second.date,
+    endDay: second.day,
+    dateLabel: "10月5–6日",
+    locations: [...new Set([...first.locations, ...second.locations])],
+    schedule: [...first.schedule, ...second.schedule],
+    notes: [...new Set([...(first.notes || []), ...(second.notes || [])])]
+  });
+}
+
 function currentTripDay() {
   const today = todayForTrip();
-  return state.data.days.find((day) => day.date === today)?.day || null;
+  return itineraryDays().find((day) => day.date <= today && today <= (day.endDate || day.date))?.day || null;
 }
 
 function renderTimeline() {
   const today = currentTripDay();
   state.expandedDay = today;
   $("#day-count").textContent = `${state.data.days.length} DAYS`;
-  $("#timeline").innerHTML = state.data.days.map(dayCard).join("");
+  $("#timeline").innerHTML = itineraryDays().map(dayCard).join("");
   $("#timeline").onclick = (event) => {
     const ticketButton = event.target.closest("[data-ticket-open]");
     if (ticketButton) {
@@ -787,16 +849,24 @@ function renderTimeline() {
     const card = toggle.closest(".day-card");
     const dayNumber = Number(card.dataset.day);
     const wasExpanded = toggle.getAttribute("aria-expanded") === "true";
+    const toggleTop = toggle.getBoundingClientRect().top;
     $$(".day-toggle", $("#timeline")).forEach((button) => button.setAttribute("aria-expanded", "false"));
     $$(".day-detail", $("#timeline")).forEach((detail) => { detail.hidden = true; });
     if (!wasExpanded) {
       toggle.setAttribute("aria-expanded", "true");
       $(`#day-detail-${dayNumber}`).hidden = false;
       state.expandedDay = dayNumber;
-      if (dayNumber === 4 || dayNumber === 5 || dayNumber === 6) requestAnimationFrame(showSampleDayMap);
+      if ([4, 5, 6, 8, 9].includes(dayNumber)) requestAnimationFrame(showSampleDayMap);
     } else {
       state.expandedDay = null;
     }
+    if (event.isTrusted) requestAnimationFrame(() => {
+      const pageStyle = document.documentElement.style;
+      const scrollBehavior = pageStyle.scrollBehavior;
+      pageStyle.scrollBehavior = "auto";
+      window.scrollBy(0, toggle.getBoundingClientRect().top - toggleTop);
+      pageStyle.scrollBehavior = scrollBehavior;
+    });
   };
   $("#timeline").onchange = (event) => {
     const checkbox = event.target.closest(".schedule-ticket input[type='checkbox']");
@@ -806,7 +876,7 @@ function renderTimeline() {
     saveTicketState(checkbox.value, checkbox.checked);
     updateInlineTicketState(checkbox.value, checkbox.checked);
   };
-  if (state.expandedDay === 4 || state.expandedDay === 5 || state.expandedDay === 6) requestAnimationFrame(showSampleDayMap);
+  if ([4, 5, 6, 8, 9].includes(state.expandedDay)) requestAnimationFrame(showSampleDayMap);
 }
 
 function updateInlineTicketState(ticketId, purchased) {

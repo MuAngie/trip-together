@@ -3,3 +3,6 @@ import "./worker-d1.test.mjs";
 import "./wallet.test.cjs";
 import "./mobile-startup.test.cjs";
 import "./map-picker.test.cjs";
+import "./itinerary-scroll.test.cjs";
+import "./osaka-map.test.cjs";
+import "./next-clock.test.cjs";
