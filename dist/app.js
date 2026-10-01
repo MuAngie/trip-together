@@ -355,6 +355,27 @@ function carTransferCard(transfer, index, total) {
     </article>`;
 }
 
+function transitPassCard(pass, index, total) {
+  return `
+    <article class="flight-card transit-pass-card" data-transit-pass="${escapeHtml(pass.id)}">
+      <div class="flight-card__top transit-pass-card__top">
+        <span>交通 ${String(index + 1).padStart(2, "0")} / ${String(total).padStart(2, "0")}</span>
+        <b>购票参考</b>
+      </div>
+      <div class="transit-pass-card__dates">${escapeHtml(formatCompactDate(pass.date))}—${escapeHtml(formatCompactDate(pass.endDate))}</div>
+      <h3>${escapeHtml(pass.title)}</h3>
+      <p class="transit-pass-card__name-ja" lang="ja">${escapeHtml(pass.nameJa)}</p>
+      <p class="transit-pass-card__price">${escapeHtml(pass.price)}日元 <span>每人／每天</span></p>
+      <dl class="transit-pass-card__facts">
+        <div><dt>购买</dt><dd>${escapeHtml(pass.purchase)}</dd></div>
+        <div><dt>使用</dt><dd>${escapeHtml(pass.usage)}</dd></div>
+        <div><dt>范围</dt><dd>${escapeHtml(pass.coverage)}</dd></div>
+      </dl>
+      <p class="transit-pass-card__tip">${escapeHtml(pass.tip)}</p>
+      <a class="transit-pass-card__link" href="${escapeHtml(pass.officialUrl)}" target="_blank" rel="noopener noreferrer">查看大阪 Metro 官方说明 ↗</a>
+    </article>`;
+}
+
 function hotelStayCard(hotel, index, total) {
   return `
     <article class="flight-card hotel-stay-card" data-accommodation="${escapeHtml(hotel.id)}">
@@ -403,6 +424,7 @@ function diningCard(booking, index, total) {
 function renderFlights() {
   const journeys = state.data.flightJourneys;
   const carTransfers = state.data.groundTransport?.carTransfers || [];
+  const transitPasses = state.data.groundTransport?.publicTransitAndRail || [];
   const hotels = (state.data.accommodations || []).filter((item) => item.type === "hotel");
   const diningBookings = (state.data.bookingsAndTickets || []).filter((item) => item.type === "restaurant");
   const cards = [
@@ -415,6 +437,12 @@ function renderFlights() {
       priority: 0,
       time: transfer.time || "12:00",
       markup: carTransferCard(transfer, index, carTransfers.length)
+    })),
+    ...transitPasses.map((pass, index) => ({
+      date: pass.date,
+      priority: 0,
+      time: "12:00",
+      markup: transitPassCard(pass, index, transitPasses.length)
     })),
     ...hotels.map((hotel, index) => ({
       date: hotel.checkInDate || "9999-12-31",

@@ -345,7 +345,21 @@
     "drivingNotes": [],
     "drivingReferenceLinks": [],
     "plannedRoadLegs": [],
-    "publicTransitAndRail": [],
+    "publicTransitAndRail": [
+      {
+        "id": "osaka-metro-day-pass",
+        "date": "2026-10-11",
+        "endDate": "2026-10-12",
+        "title": "大阪地铁一日券",
+        "nameJa": "エンジョイエコカード",
+        "price": 620,
+        "purchase": "本町站自动售票机；10月11日、12日各买一张。",
+        "usage": "首次进闸当天生效，当天可无限乘坐 Osaka Metro。",
+        "coverage": "心斋桥、难波、梅田、大阪城公园附近的地铁站；不含JR、阪急。",
+        "tip": "当日预计乘坐大阪 Metro 超过3次，建议购买；心斋桥到道顿堀可步行。",
+        "officialUrl": "https://subway.osakametro.co.jp/cn/guide/page/enjoy-eco.php/information_service/index.php"
+      }
+    ],
     "carTransfers": [
       {
         "id": "kyoto-sightseeing-car",
@@ -1010,6 +1024,7 @@
       ],
       "notes": [
         "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
+        "大阪 Metro 一日券（Enjoy Eco Card）：在酒店附近的本町站自动售票机购买。10月11日周日成人620日元，首次进闸当天生效；可到心斋桥、难波（道顿堀）、梅田和大阪城公园附近的地铁站，不含JR、阪急。心斋桥与道顿堀可步行连逛，出门前按当天乘车安排决定是否购买。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
     },
@@ -1131,6 +1146,7 @@
       ],
       "notes": [
         "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
+        "大阪 Metro 一日券（Enjoy Eco Card）：在酒店附近的本町站自动售票机购买。10月12日节假日成人620日元，首次进闸当天生效；可到心斋桥、难波（道顿堀）、梅田和大阪城公园附近的地铁站，不含JR、阪急。心斋桥与道顿堀可步行连逛，出门前按当天乘车安排决定是否购买。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
     },
