@@ -634,6 +634,7 @@ function dayCard(day) {
           <span class="day-meta">DAY ${String(day.day).padStart(2, "0")}${day.endDay ? `–${String(day.endDay).padStart(2, "0")}` : ""}<br>${escapeHtml(day.dateLabel || formatCompactDate(day.date))}${isToday ? " · 今天" : ""}</span>
           <span class="day-title">${escapeHtml(day.title)}</span>
           <span class="day-locations">${escapeHtml(day.locations.join(" → "))}</span>
+          <span class="day-weather" data-weather-date="${escapeHtml(day.date)}" hidden></span>
           ${ticketSummary}
         </span>
         <span class="day-chevron" aria-hidden="true">+</span>
@@ -1235,7 +1236,10 @@ async function init() {
         state.purchasedTickets = new Set();
       }
     }
-    if (moduleEnabled("itinerary")) renderTimeline();
+    if (moduleEnabled("itinerary")) {
+      renderTimeline();
+      window.TravelWeather?.load(state.data);
+    }
     if (moduleEnabled("driving")) renderRental();
     if (moduleEnabled("todo")) renderTravelPrep();
     if (moduleEnabled("ledger")) {

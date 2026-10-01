@@ -91,6 +91,7 @@
     if (cardKey === nextCardKey) return;
     nextCardKey = cardKey;
     document.querySelector("#next-date").textContent = item.dateLabel || "待补充";
+    window.TravelWeather?.showNext(item.date);
     const place = placeById(data, item.placeId);
     host.innerHTML = `
       <div class="next-action__time">${escapeHtml(item.time || "时间待补充")}</div>
