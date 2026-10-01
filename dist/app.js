@@ -608,13 +608,13 @@ function dayCard(day) {
   const dailyMap = day.date === "2026-10-07" ? `
     <section class="daily-map" aria-label="10月7日京都市内地图">
       <h3>10月7日 · 京都市内地图</h3>
-      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为午餐建议，紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
-      <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐建议与晚餐后可选夜游地点的位置地图"></div>
+      <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为午餐建议、“歇”为鸭川后的休憩建议，均不加入连线。紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
+      <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐与休憩建议、晚餐后可选夜游地点的位置地图"></div>
     </section>` : day.date === "2026-10-08" ? `
     <section class="daily-map" aria-label="10月8日金阁寺与岚山地图">
       <h3>10月8日 · 金阁寺与岚山地图</h3>
       <p>编号标记为酒店出发、金阁寺、岚山景点及晚餐地点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
-      <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
+      <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、大河内山庄庭院、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
     </section>` : day.date === "2026-10-09" ? `
     <section class="daily-map" aria-label="10月9日伏见稻荷与东山地图">
       <h3>10月9日 · 伏见稻荷与东山地图</h3>
@@ -654,17 +654,19 @@ function showSampleDayMap() {
   const maps = {
     4: {
       date: "2026-10-07",
-      routeIds: ["kyoto-station", "kyoto-hotel", "nishiki-market", "shijo-kamo-river", "kyoto-shirakawa", "restaurant-kanegura"],
-      highlightedIds: ["kyoto-shirakawa"],
+      routeIds: ["kyoto-station", "kyoto-hotel", "nishiki-market", "shijo-kamo-river", "restaurant-kanegura"],
+      highlightedIds: [],
       extras: [
+        { id: "kyoto-shirakawa", label: "夜", kind: "evening", caption: "饭后可选" },
         { id: "hanamikoji-street", label: "夜", kind: "evening", caption: "饭后可选" },
         { id: "yasaka-shrine", label: "夜", kind: "evening", caption: "饭后可选" },
-        { id: "restaurant-sukiyaki-kimura", label: "午", kind: "suggested", caption: "午餐建议" }
+        { id: "restaurant-sukiyaki-kimura", label: "午", kind: "suggested", caption: "午餐建议" },
+        { id: "the-terminal-kyoto", label: "歇", kind: "suggested", caption: "休憩建议" }
       ]
     },
     5: {
       date: "2026-10-08",
-      routeIds: ["kyoto-hotel", "kinkakuji", "arashiyama", "tenryuji", "arashiyama-bamboo", "nonomiya-shrine", "togetsukyo", "kyoto-hotel", "restaurant-kyorinsen"],
+      routeIds: ["kyoto-hotel", "kinkakuji", "arashiyama", "tenryuji", "arashiyama-bamboo", "okochi-sanso-garden", "nonomiya-shrine", "togetsukyo", "kyoto-hotel", "restaurant-kyorinsen"],
       highlightedIds: [],
       extras: [
         { id: "jojakkoji", label: "选", kind: "evening", caption: "体力允许时备选" },

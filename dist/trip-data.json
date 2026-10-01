@@ -542,12 +542,13 @@
           "placeId": "shijo-kamo-river"
         },
         {
-          "id": "visit-shirakawa",
-          "time": "待安排",
-          "text": "祇园白川",
-          "walkingEstimate": "四条鸭川 → 祇园白川：约 0.5 公里，步行约 10 分钟。",
-          "type": "attraction",
-          "placeId": "kyoto-shirakawa"
+          "id": "rest-the-terminal-kyoto",
+          "time": "鸭川后·建议",
+          "text": "如果有兴趣可以尝试去 THE TERMINAL KYOTO（近百年京町屋茶室）休憩。",
+          "nextTitle": "THE TERMINAL KYOTO（可选）",
+          "nextDetail": "近百年京町屋茶室 · 休憩建议",
+          "type": "restaurant",
+          "placeId": "the-terminal-kyoto"
         },
         {
           "id": "dinner-kanegura",
@@ -555,7 +556,6 @@
           "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
           "nextTitle": "KANEGURA 晚餐",
           "nextDetail": "已预约 · 6人 · 桌席／禁烟\n仅订座，未指定套餐\n预约编号：QK9N9KSY6",
-          "walkingEstimate": "祇园白川 → KANEGURA：约 1.6 公里，步行约 30 分钟。",
           "type": "restaurant",
           "placeId": "restaurant-kanegura"
         },
@@ -639,6 +639,13 @@
           "text": "竹林小径",
           "type": "attraction",
           "placeId": "arashiyama-bamboo"
+        },
+        {
+          "id": "visit-okochi-sanso-garden",
+          "time": "下午",
+          "text": "大河内山庄庭院",
+          "type": "attraction",
+          "placeId": "okochi-sanso-garden"
         },
         {
           "id": "visit-nonomiya-shrine",
@@ -1327,6 +1334,20 @@
       }
     },
     {
+      "id": "the-terminal-kyoto",
+      "nameZh": "THE TERMINAL KYOTO",
+      "nameJa": "THE TERMINAL KYOTO",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.0007069,
+        "lng": 135.7568866
+      },
+      "navigation": {
+        "query": "THE TERMINAL KYOTO 京都市下京区岩戸山町424"
+      }
+    },
+    {
       "id": "kyoto-shirakawa",
       "nameZh": "祇园白川",
       "nameJa": "祇園白川",
@@ -1436,6 +1457,20 @@
       },
       "navigation": {
         "query": "竹林の小径 京都 嵐山"
+      }
+    },
+    {
+      "id": "okochi-sanso-garden",
+      "nameZh": "大河内山庄庭院",
+      "nameJa": "大河内山荘庭園",
+      "countryCode": "JP",
+      "cityOrArea": "京都·岚山",
+      "geo": {
+        "lat": 35.01666,
+        "lng": 135.66967
+      },
+      "navigation": {
+        "query": "大河内山荘庭園 京都市右京区嵯峨小倉山田淵山町8"
       }
     },
     {
@@ -1943,7 +1978,7 @@
       "dates": [
         "2026-10-07"
       ],
-      "detail": "祇园白川一带，计划在晚餐前散步；具体路线和停留时间待安排。"
+      "detail": "祇园白川一带，可在晚餐后散步看夜景；按体力决定是否前往。"
     },
     {
       "id": "attraction-nishiki-market",
@@ -1984,6 +2019,16 @@
         "2026-10-08"
       ],
       "detail": "午餐后可沿竹林一带择舒适路线散步，不以走完全程为目标。"
+    },
+    {
+      "id": "attraction-okochi-sanso-garden",
+      "placeId": "okochi-sanso-garden",
+      "name": "大河内山庄庭院",
+      "nameJa": "大河内山荘庭園",
+      "dates": [
+        "2026-10-08"
+      ],
+      "detail": "位于竹林小径尽头附近的庭园，可沿园内小路慢走，欣赏岚山与京都方向的景色。"
     },
     {
       "id": "attraction-nonomiya-shrine",
