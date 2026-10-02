@@ -2021,6 +2021,7 @@
       "placeId": "tenryuji",
       "name": "天龙寺",
       "nameJa": "天龍寺",
+      "admission": "庭园门票 ¥500 · 诸堂另加 ¥300",
       "dates": [
         "2026-10-08"
       ],
@@ -2041,6 +2042,7 @@
       "placeId": "okochi-sanso-garden",
       "name": "大河内山庄庭院",
       "nameJa": "大河内山荘庭園",
+      "admission": "门票 ¥1,000",
       "dates": [
         "2026-10-08"
       ],
@@ -2071,6 +2073,7 @@
       "placeId": "jojakkoji",
       "name": "常寂光寺",
       "nameJa": "常寂光寺",
+      "admission": "门票 ¥600",
       "dates": [
         "2026-10-08"
       ],
@@ -2081,6 +2084,7 @@
       "placeId": "kinkakuji",
       "name": "金阁寺",
       "nameJa": "金閣寺（鹿苑寺）",
+      "admission": "门票 ¥500",
       "dates": [
         "2026-10-08"
       ],
@@ -2091,6 +2095,7 @@
       "placeId": "sanjusangendo",
       "name": "三十三间堂",
       "nameJa": "三十三間堂（蓮華王院）",
+      "admission": "门票 ¥600",
       "dates": [
         "2026-10-08"
       ],
@@ -2111,6 +2116,7 @@
       "placeId": "rurikoin",
       "name": "琉璃光院",
       "nameJa": "瑠璃光院",
+      "admission": "门票 ¥2,000",
       "dates": [
         "2026-10-08"
       ],
@@ -2121,6 +2127,7 @@
       "placeId": "tofukuji",
       "name": "东福寺",
       "nameJa": "東福寺",
+      "admission": "方丈 ¥500 · 通天桥 ¥600 · 共通券 ¥1,000",
       "dates": [
         "2026-10-08"
       ],
@@ -2141,6 +2148,7 @@
       "placeId": "kiyomizu-dera",
       "name": "清水寺",
       "nameJa": "清水寺",
+      "admission": "门票 ¥500",
       "dates": [
         "2026-10-09"
       ],
@@ -2151,6 +2159,7 @@
       "placeId": "heian-shrine",
       "name": "平安神宫",
       "nameJa": "平安神宮",
+      "admission": "仅神苑门票 ¥600",
       "dates": [
         "2026-10-09"
       ],

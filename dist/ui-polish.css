@@ -60,6 +60,7 @@ button, input, select, textarea { font-family: inherit; }
 .weather-source { display: inline-block; margin: 14px 0 0 48px; color: var(--muted); font-size: 12px; }
 .day-detail { margin: 12px -12px 0; padding: 18px 12px 26px; border-radius: 14px; background: var(--surface); }
 .day-detail .schedule-item::after { background: var(--surface); }
+.schedule-admission { display: block; margin: 2px 0 4px; color: var(--muted); font-size: 14px; font-weight: 500; line-height: 1.45; }
 .day-locations, .schedule-map-link, .detail-note { font-size: 15px; }
 .schedule-ticket__status, .schedule-ticket__content small, .schedule-ticket__open { font-size: 13px; }
 .schedule-ticket__content strong { font-size: 15px; }

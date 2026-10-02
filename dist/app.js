@@ -611,6 +611,7 @@ function dayCard(day) {
         ${time ? `<span class="schedule-time">${escapeHtml(time)}</span>` : ""}
         <div class="schedule-content">
           ${scheduleText}
+          ${attraction?.admission ? `<span class="schedule-admission">${escapeHtml(attraction.admission)}</span>` : ""}
           ${item.walkingEstimate ? `<p class="schedule-walk">步行参考 · ${escapeHtml(item.walkingEstimate)}</p>` : ""}
           ${scheduleTickets}
           ${mapLinks ? `<div class="schedule-map-links">${mapLinks}</div>` : ""}
