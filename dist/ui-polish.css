@@ -84,6 +84,14 @@ button, input, select, textarea { font-family: inherit; }
 .wallet-form, .ledger-entry-card { padding: 20px; }
 .wallet-form { gap: 18px; }
 .wallet-entry, .wallet-details, .wallet-records { margin-top: 24px; }
+.ledger-fold { margin-top: 24px; padding: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+.ledger-fold > summary { min-height: 64px; padding: 16px 20px; box-sizing: border-box; cursor: pointer; font-size: 20px; font-weight: 700; line-height: 1.35; }
+.ledger-fold > summary small { font-size: 15px; font-weight: 400; }
+.ledger-fold > summary:focus-visible { outline: 3px solid var(--terracotta); outline-offset: 3px; border-radius: 16px; }
+.ledger-fold[open] > summary { border-bottom: 1px solid var(--line); }
+.ledger-fold-body { padding: 20px; }
+.ledger-fold .ledger-bill-form, .ledger-fold .ledger-known-cost-list { margin-top: 0; }
+.ledger-fold .ledger-transfer-list, .ledger-fold .ledger-member-stats-list { margin-top: 0; border: 0; box-shadow: none; }
 .wallet button, .wallet input, .wallet select,
 .ledger-input, .ledger-select, .ledger-currency-dropdown summary,
 .ledger-field-amount .ledger-amount-input { min-height: var(--ui-control); font-size: 16px; }

@@ -142,6 +142,7 @@
   let ledgerData = null;
   let initialized = false;
   let activeTab = "entry";
+  const openFolds = new Set();
   let editingBillId = null;
   let openDialogName = null;
   let currencyPickerMode = "common";
@@ -514,6 +515,7 @@
     return [...new Set([
       ledgerData.settings.baseCurrency,
       "JPY",
+      "USD",
       ...ledgerData.settings.commonCurrencies,
       extraCode
     ].filter((code) => CURRENCY_BY_CODE.has(code)))];
@@ -648,14 +650,10 @@
     const selectedPayerId = editingBill?.payerId || draft?.payerId || "";
     const selectedCategory = editingBill?.category || draft?.category || "餐饮";
     return `
-      <section class="ledger-entry-card" aria-labelledby="ledger-bill-form-title">
-        <div class="ledger-section-heading">
-          <div>
-            <p class="ledger-section-kicker">${editingBill ? "编辑账单" : "记一笔"}</p>
-            <h2 id="ledger-bill-form-title">${editingBill ? "修改这笔账" : "记录本次花费"}</h2>
-          </div>
+      <details class="ledger-entry-card ledger-fold" data-ledger-fold="entry" ${editingBill || openFolds.has("entry") ? "open" : ""}>
+        <summary id="ledger-bill-form-title">${editingBill ? "修改这笔账" : "记一笔"}</summary>
+        <div class="ledger-fold-body">
           ${editingBill ? `<button class="ledger-text-button" type="button" data-ledger-action="cancel-edit">取消编辑</button>` : ""}
-        </div>
         ${ledgerData.travelers.length ? `
           <form class="ledger-bill-form" data-ledger-form="bill" novalidate>
             <div class="ledger-amount-block">
@@ -727,7 +725,8 @@
             <p>先添加本次同行人，再开始记账。</p>
             <button class="ledger-primary-button" type="button" data-ledger-action="open-members">添加同行人</button>
           </div>`}
-      </section>`;
+        </div>
+      </details>`;
   }
 
   function formatBillDate(value) {
@@ -886,12 +885,9 @@
       return secondDate.localeCompare(firstDate);
     });
     return `
-      <section class="ledger-list-section" aria-labelledby="ledger-list-title">
+      <details class="ledger-list-section ledger-fold" data-ledger-fold="bills" ${openFolds.has("bills") ? "open" : ""}>
+        <summary id="ledger-list-title">账单明细 <small>${bills.length} 笔</small></summary>
         <div class="ledger-section-heading ledger-list-heading">
-          <div>
-            <p class="ledger-section-kicker">账单明细</p>
-            <h2 id="ledger-list-title">${bills.length ? `${bills.length} 笔账单` : "还没有账单"}</h2>
-          </div>
           <div class="ledger-list-total">
             <span>总支出</span>
             <strong>${escapeHtml(formatMoney(totalCents, baseCurrency))}</strong>
@@ -900,22 +896,24 @@
         ${bills.length
           ? `<div class="ledger-bill-list">${bills.map(renderBillRow).join("")}</div>`
           : `<div class="ledger-empty-state"><p>记下第一笔花费后，账单会显示在这里。</p></div>`}
-      </section>`;
+      </details>`;
   }
 
   function renderEntryPage() {
     return `
       <section class="ledger-tab-panel" data-ledger-panel="entry" role="tabpanel" aria-labelledby="ledger-entry-tab" ${activeTab === "entry" ? "" : "hidden"}>
-        <section class="ledger-members-strip" aria-label="本次同行人">
+        <details class="ledger-members-strip ledger-fold" data-ledger-fold="members" ${openFolds.has("members") ? "open" : ""}>
+          <summary>同行人 <small>${ledgerData.travelers.length} 人</small></summary>
+          <div class="ledger-fold-body">
           <div class="ledger-members-strip-heading">
-            <div><strong>同行人</strong><span>${ledgerData.travelers.length} 人</span></div>
             <button class="ledger-text-button" type="button" data-ledger-action="open-members">管理</button>
           </div>
           <div class="ledger-members-inline">
             ${ledgerData.travelers.map((traveler) => `<div class="ledger-person-static">${renderAvatar(traveler)}<span>${escapeHtml(traveler.name)}</span></div>`).join("")}
             <button class="ledger-add-person" type="button" data-ledger-action="open-members" aria-label="添加同行人"><span aria-hidden="true">＋</span><small>添加</small></button>
           </div>
-        </section>
+          </div>
+        </details>
         ${renderBillForm()}
         ${renderBillList()}
       </section>`;
@@ -963,14 +961,9 @@
     if (!count) return "";
 
     return `
-      <section class="ledger-known-costs" aria-labelledby="ledger-known-costs-title">
-        <div class="ledger-section-heading">
-          <div>
-            <p class="ledger-section-kicker">行程资料带入</p>
-            <h2 id="ledger-known-costs-title">已知固定费用</h2>
-          </div>
-          <span class="ledger-soft-count">${count} 项</span>
-        </div>
+      <details class="ledger-known-costs ledger-fold" data-ledger-fold="costs" ${openFolds.has("costs") ? "open" : ""}>
+        <summary id="ledger-known-costs-title">已知固定费用 <small>${count} 项</small></summary>
+        <div class="ledger-fold-body">
         <div class="ledger-known-cost-list">
           ${bookings.map((item) => `
             <div class="ledger-known-cost-row">
@@ -983,7 +976,8 @@
               <b>${escapeHtml(referenceMoney(item.referencePrice.amount, item.referencePrice.currency))}</b>
             </div>`).join("")}
         </div>
-      </section>`;
+        </div>
+      </details>`;
   }
 
   function renderStatsPage() {
@@ -999,14 +993,9 @@
 
         ${renderKnownCosts()}
 
-        <section class="ledger-settlement-section" aria-labelledby="ledger-settlement-title">
-          <div class="ledger-section-heading">
-            <div>
-              <p class="ledger-section-kicker">结算方案</p>
-              <h2 id="ledger-settlement-title">谁需要转给谁</h2>
-            </div>
-            <span class="ledger-soft-count">${stats.transfers.length} 笔转账</span>
-          </div>
+        <details class="ledger-settlement-section ledger-fold" data-ledger-fold="settlement" ${openFolds.has("settlement") ? "open" : ""}>
+          <summary id="ledger-settlement-title">谁需要转给谁 <small>${stats.transfers.length} 笔转账</small></summary>
+          <div class="ledger-fold-body">
           ${stats.transfers.length ? `
             <div class="ledger-transfer-list">
               ${stats.transfers.map((transfer) => {
@@ -1023,19 +1012,16 @@
               }).join("")}
             </div>` : `
             <div class="ledger-empty-state"><p>${ledgerData.bills.length ? "大家已经结清，无需转账。" : "添加账单后，这里会自动生成结算单。"}</p></div>`}
-        </section>
-
-        <section class="ledger-member-stats-section" aria-labelledby="ledger-member-stats-title">
-          <div class="ledger-section-heading">
-            <div>
-              <p class="ledger-section-kicker">成员消费明细</p>
-              <h2 id="ledger-member-stats-title">每个人的收支</h2>
-            </div>
           </div>
+        </details>
+
+        <details class="ledger-member-stats-section ledger-fold" data-ledger-fold="member-stats" ${openFolds.has("member-stats") ? "open" : ""}>
+          <summary id="ledger-member-stats-title">每个人的收支</summary>
+          <div class="ledger-fold-body">
           ${stats.members.length ? `
             <div class="ledger-member-stats-list">
               ${stats.members.map((member) => `
-                <details class="ledger-member-stat" open>
+                <details class="ledger-member-stat">
                   <summary class="ledger-member-stat-summary">
                     <span class="ledger-member-identity">${renderAvatar(member.traveler)}<strong>${escapeHtml(member.traveler.name)}</strong></span>
                     <span class="ledger-member-chevron" aria-hidden="true">›</span>
@@ -1050,7 +1036,8 @@
                   </div>
                 </details>`).join("")}
             </div>` : `<div class="ledger-empty-state"><p>添加同行人后，这里会显示每个人的收支。</p></div>`}
-        </section>
+          </div>
+        </details>
       </section>`;
   }
 
@@ -1216,6 +1203,10 @@
 
   function renderApp() {
     if (!ledgerRoot || !ledgerData) return;
+    ledgerRoot.querySelectorAll("[data-ledger-fold]").forEach((fold) => {
+      if (fold.open) openFolds.add(fold.dataset.ledgerFold);
+      else openFolds.delete(fold.dataset.ledgerFold);
+    });
     ledgerRoot.innerHTML = `
       <div class="ledger-app" data-ledger-trip-id="${escapeAttribute(ledgerTripId)}">
         <header class="ledger-page-header">

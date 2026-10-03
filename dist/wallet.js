@@ -85,7 +85,7 @@
 
     function acceptSnapshot(snapshot) {
       if (!snapshot.walletEntries.some((entry) => entry.id === INITIALIZED_ID)) {
-        throw new Error("初始缴款记录尚未就绪，请联系管理者完成设置后刷新。行前费用仍可查看。");
+        throw new Error("初始缴款记录尚未就绪，请联系管理者完成设置后刷新。分散支付费用仍可查看。");
       }
       calculate(snapshot.walletEntries, families);
       entries = snapshot.walletEntries;
@@ -155,7 +155,7 @@
       form.querySelector("[data-wallet-family]").hidden = !familyTransaction;
       form.querySelector("[data-wallet-category]").hidden = kind !== "expense";
       form.querySelector("[data-wallet-help]").textContent = {
-        expense: "从公共钱包扣款，默认三家均摊。人民币行前费用请在下方独立记账。",
+        expense: "从公共钱包扣款，默认三家均摊。人民币分散支付费用请在下方独立记账。",
         contribution: "家庭交入公共钱包的钱，增加余额，不算旅行消费。",
         refund: "商家实际退回公共钱包的钱，增加余额并冲减集体支出。",
         return: "实际退还给某一家的钱，减少余额，不重复计入消费。"

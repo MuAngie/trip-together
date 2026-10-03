@@ -1284,7 +1284,7 @@ async function init() {
         await window.TravelLedger?.init?.({ tripId: state.data.metadata.tripId, config: state.config });
       } catch (error) {
         console.error("Pre-trip ledger could not be loaded", error);
-        $("#ledger-root").textContent = "行前费用暂时无法载入，请刷新页面重试。";
+        $("#ledger-root").textContent = "分散支付费用暂时无法载入，请刷新页面重试。";
         $("#ledger-root").removeAttribute("aria-busy");
       }
     }
