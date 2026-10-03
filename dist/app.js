@@ -569,16 +569,22 @@ function itineraryDisplayText(value = "") {
     .trim();
 }
 
-function dayCard(day) {
+function dayCard(day, shownHotels) {
   const today = todayForTrip();
   const isToday = day.date <= today && today <= (day.endDate || day.date);
   const expanded = state.expandedDay === day.day;
   const isFreeDay = ["2026-10-11", "2026-10-12"].includes(day.date);
+  const hotelNames = new Set((state.data.accommodations || []).filter((stay) => stay.type === "hotel").map((stay) => stay.name));
   const scheduleItems = day.schedule.map((item) => {
     const text = itineraryDisplayText(item.text);
     const time = itineraryDisplayText(item.time);
     if (!text) return "";
-    const destinations = item.type === "transfer" || ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item);
+    const destinations = (item.type === "transfer" || ["cruise-arrive", "taxi-to-shinagawa"].includes(item.id) ? [] : navigationDestinations(item)).filter((destination) => {
+      if (!hotelNames.has(destination.label)) return true;
+      if (shownHotels.has(destination.id)) return false;
+      shownHotels.add(destination.id);
+      return true;
+    });
     const mapLinks = destinations.map((destination) => `
       <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
     `).join("");
@@ -869,7 +875,8 @@ function renderTimeline() {
   const today = currentTripDay();
   state.expandedDay = today;
   $("#day-count").textContent = `${state.data.days.length} DAYS`;
-  $("#timeline").innerHTML = itineraryDays().map(dayCard).join("");
+  const shownHotels = new Set();
+  $("#timeline").innerHTML = itineraryDays().map((day) => dayCard(day, shownHotels)).join("");
   $("#timeline").onclick = (event) => {
     const ticketButton = event.target.closest("[data-ticket-open]");
     if (ticketButton) {

@@ -528,20 +528,28 @@
         },
         {
           "id": "lunch-kyoto-options",
-          "time": "待安排",
+          "time": "午餐可选",
           "text": "午餐可选 Sukiyaki Kimura（名代 キムラ すき焼），或在锦市场、京都日航公主酒店周边用餐；尚未预订。",
           "nextTitle": "京都午餐",
           "nextDetail": "候选：Sukiyaki Kimura（名代 キムラ すき焼）\n也可在锦市场或酒店周边就近用餐。",
           "type": "restaurant",
           "placeIds": [
             "restaurant-sukiyaki-kimura",
-            "nishiki-market",
             "kyoto-hotel"
           ]
         },
         {
+          "id": "lunch-onimaru-option",
+          "time": "午餐可选",
+          "text": "Onimaru Kyoto Shijo Kawaramachi（ごちそう焼むすび おにまる 京都四条河原町店），主营各种好吃的饭团。",
+          "nextTitle": "Onimaru 饭团（可选）",
+          "nextDetail": "主营各种好吃的饭团。",
+          "type": "restaurant",
+          "placeId": "restaurant-onimaru-kyoto"
+        },
+        {
           "id": "visit-nishiki-market",
-          "time": "待安排",
+          "time": "午餐可选",
           "text": "锦市场",
           "walkingEstimate": "京都日航公主酒店 → 锦市场：约 0.9 公里，步行约 15 分钟。",
           "type": "attraction",
@@ -1333,6 +1341,16 @@
       },
       "navigation": {
         "query": "名代 キムラ すき焼 京都"
+      }
+    },
+    {
+      "id": "restaurant-onimaru-kyoto",
+      "nameZh": "Onimaru Kyoto Shijo Kawaramachi",
+      "nameJa": "ごちそう焼むすび おにまる 京都四条河原町店",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "navigation": {
+        "query": "ごちそう焼むすび おにまる 京都四条河原町店"
       }
     },
     {
