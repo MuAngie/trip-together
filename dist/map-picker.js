@@ -8,6 +8,10 @@
   let copiedTrigger = null;
   let copyStatusTimer = null;
 
+  function isWeChat() {
+    return /MicroMessenger/i.test(globalThis.navigator?.userAgent || "");
+  }
+
   function searchText(value) {
     const raw = String(value || "").trim();
     if (!/^https?:\/\//i.test(raw)) return raw;
@@ -88,15 +92,29 @@
     if (!text) return;
     let copied = false;
     try {
-      if (globalThis.navigator?.clipboard?.writeText) {
+      if (isWeChat()) copied = legacyCopy(text);
+      else if (globalThis.navigator?.clipboard?.writeText) {
         await navigator.clipboard.writeText(text);
         copied = true;
       } else copied = legacyCopy(text);
     } catch {
       copied = legacyCopy(text);
     }
+    if (!copied) {
+      if (document.querySelector("#place-map").hidden) open({
+        label: trigger.dataset.mapLabel,
+        query: trigger.dataset.mapQuery || text,
+        queryZh: trigger.dataset.mapQueryZh,
+        address: text,
+        url: trigger.dataset.mapUrl
+      }, trigger);
+      const field = document.querySelector("#place-map-address");
+      field.focus();
+      field.select();
+      field.setSelectionRange(0, text.length);
+    }
     const status = document.querySelector("#map-copy-status");
-    status.textContent = copied ? "已复制地点" : "复制失败，请检查浏览器的剪贴板权限。";
+    status.textContent = copied ? "已复制地点" : "请长按地点文字，选择“复制”";
     status.hidden = false;
     clearTimeout(copyStatusTimer);
     copyStatusTimer = setTimeout(() => { status.hidden = true; }, 2400);
@@ -111,7 +129,14 @@
       ? document.querySelector('[data-place-id][aria-expanded="true"]') || trigger
       : trigger;
     panel.querySelector("#place-map-title").textContent = place.label || searchText(place.query);
-    panel.querySelector(".place-map-sheet__intro").textContent = links.google.startsWith("https:") ? "选择地图查看地点" : "选择地图 App 查看地点";
+    panel.querySelector(".place-map-sheet__intro").textContent = isWeChat()
+      ? "微信内无法直接打开地图 App。请点右上角“…”→“在浏览器打开”，再选择地图。"
+      : links.google.startsWith("https:") ? "选择地图查看地点" : "选择地图 App 查看地点";
+    panel.querySelector(".place-map-providers").hidden = isWeChat();
+    const address = searchText(place.address) || searchText(place.query) || searchText(place.queryZh) || place.label || "";
+    panel.querySelector("#place-map-address").value = address;
+    panel.querySelector("#place-map-copy").dataset.mapAddress = address;
+    panel.querySelector("#place-map-copy").dataset.mapLabel = place.label || address;
     providers.forEach((provider) => {
       const link = panel.querySelector(`[data-map-provider="${provider}"]`);
       link.href = links[provider];
@@ -167,13 +192,14 @@
         url: trigger.dataset.mapUrl
       }, trigger);
     }, true);
+    panel.querySelector("#place-map-copy").addEventListener("click", (event) => { void copyLocation(event.currentTarget); });
     panel.querySelector("#place-map-close").addEventListener("click", close);
     panel.addEventListener("click", (event) => { if (event.target === panel) close(); });
     panel.addEventListener("keydown", (event) => {
       if (event.key === "Escape") { event.preventDefault(); close(); }
       if (event.key !== "Tab") return;
       const first = panel.querySelector("#place-map-close");
-      const last = panel.querySelector('[data-map-provider="baidu"]');
+      const last = panel.querySelector("#place-map-copy");
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });

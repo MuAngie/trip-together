@@ -70,12 +70,14 @@ test("mobile picker uses native links in the current tab so launching leaves no 
   const links = Object.fromEntries(["google", "amap", "baidu"].map((provider) => [provider, {}]));
   const title = {};
   const intro = {};
+  const extra = { ".place-map-providers": {}, "#place-map-address": {}, "#place-map-copy": { dataset: {} } };
   const panel = {
     hidden: true,
     querySelector(selector) {
       if (selector === "#place-map-title") return title;
       if (selector === ".place-map-sheet__intro") return intro;
       if (selector === "#place-map-close") return { focus() {} };
+      if (extra[selector]) return extra[selector];
       return links[selector.match(/data-map-provider="(.*?)"/)[1]];
     }
   };
@@ -95,17 +97,20 @@ test("mobile picker uses native links in the current tab so launching leaves no 
   }
 });
 
-function gesturePicker(clipboardMode = "available", legacyResult = true) {
+function gesturePicker(clipboardMode = "available", legacyResult = true, userAgent = "iPhone") {
   const handlers = new Map();
   const copied = [];
   const fields = [];
   const status = { hidden: true };
   const trigger = { dataset: { mapQuery: "京都市下京区高橋町630番地", mapLabel: "京都酒店" }, closest() { return null; } };
-  const nodes = Object.fromEntries(["#place-map-title", ".place-map-sheet__intro", "#place-map-close", '[data-map-provider="google"]', '[data-map-provider="amap"]', '[data-map-provider="baidu"]'].map(key => [key, { focus() {}, addEventListener() {} }]));
+  const nodes = Object.fromEntries(["#place-map-title", ".place-map-sheet__intro", ".place-map-providers", "#place-map-address", "#place-map-copy", "#place-map-close", '[data-map-provider="google"]', '[data-map-provider="amap"]', '[data-map-provider="baidu"]'].map(key => [key, {
+    dataset: {}, focus() {}, select() { this.selected = true; }, setSelectionRange() {},
+    addEventListener(name, handler) { handlers.set(`${key}:${name}`, { handler }); }
+  }]));
   const panel = { hidden: true, querySelector: selector => nodes[selector], addEventListener() {} };
   const document = {
     addEventListener(name, handler, capture) { handlers.set(name, { handler, capture }); },
-    querySelector: selector => selector === "#map-copy-status" ? status : panel,
+    querySelector: selector => selector === "#map-copy-status" ? status : nodes[selector] || panel,
     body: { style: {}, append(field) { fields.push(field); } },
     createElement() { return { style: {}, select() {}, setSelectionRange() {}, remove() { this.removed = true; } }; },
     execCommand(command) {
@@ -114,7 +119,7 @@ function gesturePicker(clipboardMode = "available", legacyResult = true) {
       return legacyResult;
     }
   };
-  const navigator = { userAgent: "iPhone" };
+  const navigator = { userAgent };
   if (clipboardMode !== "missing") navigator.clipboard = { async writeText(text) {
     if (clipboardMode === "rejected") throw new Error("NotAllowedError");
     copied.push(text);
@@ -122,7 +127,7 @@ function gesturePicker(clipboardMode = "available", legacyResult = true) {
   vm.runInNewContext(source, { document, navigator, window: {}, URL, encodeURIComponent, setTimeout() { return 1; }, clearTimeout() {} });
   handlers.get("DOMContentLoaded").handler();
   return {
-    copied, status, panel, fields, trigger,
+    copied, status, panel, fields, trigger, nodes,
     async emit(type, timeStamp, overrides = {}) {
       const event = { target: { closest: () => trigger }, button: 0, isPrimary: true, pointerId: 1, clientX: 20, clientY: 20, detail: 1, timeStamp,
         preventDefault() { this.prevented = true; }, stopImmediatePropagation() { this.stopped = true; }, ...overrides };
@@ -175,12 +180,49 @@ test("clipboard fallback supports local HTTP previews and rejected clipboard acc
   }
 });
 
-test("failed copying reports failure without opening the map or claiming success", async () => {
+test("failed copying exposes selected text for manual copying without claiming success", async () => {
   const picker = gesturePicker("rejected", false);
   await picker.emit("pointerdown", 0);
   await picker.emit("pointerup", 700);
   await picker.emit("click", 700);
   assert.deepEqual(picker.copied, []);
-  assert.match(picker.status.textContent, /复制失败/);
-  assert.equal(picker.panel.hidden, true);
+  assert.match(picker.status.textContent, /长按地点文字/);
+  assert.equal(picker.panel.hidden, false);
+  assert.equal(picker.nodes["#place-map-address"].value, picker.trigger.dataset.mapQuery);
+  assert.equal(picker.nodes["#place-map-address"].selected, true);
+});
+
+test("WeChat shows external browser instructions and selectable location text instead of blocked app links", async () => {
+  for (const userAgent of ["iPhone MicroMessenger/8.0", "Android MicroMessenger/8.0"]) {
+    const picker = gesturePicker("rejected", false, userAgent);
+    await picker.emit("click", 0);
+    assert.equal(picker.nodes[".place-map-providers"].hidden, true);
+    assert.match(picker.nodes[".place-map-sheet__intro"].textContent, /右上角.*在浏览器打开/);
+    assert.equal(picker.nodes["#place-map-address"].value, picker.trigger.dataset.mapQuery);
+    await picker.emit("#place-map-copy:click", 1, { currentTarget: picker.nodes["#place-map-copy"] });
+    assert.deepEqual(picker.copied, []);
+    assert.equal(picker.nodes["#place-map-address"].selected, true);
+    assert.match(picker.status.textContent, /长按地点文字/);
+  }
+});
+
+test("WeChat tries synchronous copying while the touch gesture is active", async () => {
+  const picker = gesturePicker("rejected", true, "Android MicroMessenger/8.0");
+  await picker.emit("pointerdown", 0);
+  await picker.emit("pointerup", 700);
+  assert.deepEqual(picker.copied, [picker.trigger.dataset.mapQuery]);
+  assert.equal(picker.fields.length, 1);
+  assert.equal(picker.fields[0].removed, true);
+  assert.equal(picker.status.textContent, "已复制地点");
+});
+
+test("a location with only a direct URL exposes its name for manual copying", async () => {
+  const picker = gesturePicker("rejected", false, "iPhone MicroMessenger/8.0");
+  picker.trigger.dataset.mapQuery = "https://www.amap.com/place/B00156EFOR";
+  picker.trigger.dataset.mapQueryZh = "京都酒店";
+  await picker.emit("click", 0);
+  assert.equal(picker.nodes["#place-map-address"].value, "京都酒店");
+  await picker.emit("pointerdown", 100);
+  await picker.emit("pointerup", 800);
+  assert.equal(picker.nodes["#place-map-address"].value, "京都酒店");
 });
