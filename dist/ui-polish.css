@@ -133,6 +133,9 @@ button, input, select, textarea { font-family: inherit; }
 .place-map-providers a { min-height: 56px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; border: 1px solid var(--line); border-radius: 13px; color: var(--ink); background: var(--surface); font-size: 18px; font-weight: 700; text-decoration: none; }
 .place-map-providers a:focus-visible, .place-map-providers a:hover { border-color: var(--lake); background: var(--lake-soft); }
 .place-map-sheet__note { margin: 16px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+button[data-map-query] { -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+.map-copy-status { position: fixed; z-index: 100; bottom: calc(24px + var(--safe-bottom)); left: 50%; transform: translateX(-50%); max-width: calc(100vw - 36px); padding: 12px 20px; border-radius: 12px; background: var(--ink); color: var(--surface); font-size: 16px; text-align: center; pointer-events: none; }
+.map-copy-status[hidden] { display: none; }
 .map-place-action { min-height: 44px; padding: 6px 10px; border: 1px solid currentColor; border-radius: 10px; color: inherit; background: transparent; cursor: pointer; font-size: 14px; font-weight: 700; }
 .flight-airport-maps { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 .flight-airport-maps .map-place-action { border-color: rgba(255,255,255,.5); }

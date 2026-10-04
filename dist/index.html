@@ -13,10 +13,10 @@
   <link rel="stylesheet" href="senior.css?v=20260928-2">
   <link rel="stylesheet" href="wallet.css?v=20260926-3">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-  <link rel="stylesheet" href="ui-polish.css?v=20261003-1">
+  <link rel="stylesheet" href="ui-polish.css?v=20261004-1">
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
   <script src="runtime-storage.js?v=20260925-1" defer></script>
-  <script src="map-picker.js?v=20260926-1" defer></script>
+  <script src="map-picker.js?v=20261004-2" defer></script>
   <script src="wallet.js?v=20261003-1" defer></script>
   <script src="overview-map.js?v=20260914-1" defer></script>
   <script src="route-ui.js?v=20260926-1" defer></script>
@@ -158,6 +158,7 @@
       <p class="place-map-sheet__note">地图按已知名称或地址搜索；境外地点请核对搜索结果。</p>
     </section>
   </div>
+  <div class="map-copy-status" id="map-copy-status" role="status" aria-live="polite" hidden></div>
   <div class="loading-error" id="loading-error" hidden><strong>行程暂时无法载入</strong><span>请检查本地预览服务或行程数据，再刷新页面。</span></div>
 </body>
 </html>
