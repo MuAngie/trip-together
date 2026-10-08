@@ -24,11 +24,11 @@
   function nextItems(data) {
     const freeDates = ["2026-10-11", "2026-10-12"];
     const scheduled = (data.days || []).flatMap((day) => (freeDates.includes(day.date)
-      ? [{ id: `osaka-free-${day.date}`, time: "自由安排", text: "大阪购物／游览" }]
+      ? [{ id: `osaka-free-${day.date}`, time: "自由安排", text: "大阪购物／游览" }, ...(day.schedule || []).filter((entry) => entry.type === "restaurant")]
       : day.date === "2026-10-05" ? [{ id: "cruise-at-sea", time: "全天", text: day.title, endDate: "2026-10-06" }]
       : day.date === "2026-10-06" ? []
       : (day.schedule || []))
-      .filter((entry) => entry.type !== "note")
+      .filter((entry) => !["note", "breakfast-options"].includes(entry.type))
       .map((entry) => {
         const offset = day.utcOffset || "+08:00";
         const time = String(entry.time || "").match(/^(?:约)?(\d{1,2})[:：](\d{2})/);
@@ -171,7 +171,7 @@
       (first.date || "9999-12-31").localeCompare(second.date || "9999-12-31") || priority(first) - priority(second)
     );
     const locations = (item) => {
-      if (item.type === "restaurant") return [{ nameZh: item.title, nameJa: item.titleJa }];
+      if (item.type === "restaurant") return [placeById(data, item.placeId) || { nameZh: item.title, nameJa: item.titleJa }];
       const hotel = (data.accommodations || []).find((place) => place.type === "hotel" && place.name === item.title);
       if (hotel) return [{ ...hotel, nameZh: hotel.name, navigation: { query: hotel.addressJa || hotel.nameJa || hotel.name } }];
       if (item.id === "cruise-order") return [placeById(data, data.nextItem?.placeId)].filter(Boolean);
@@ -192,7 +192,7 @@
         <p>${escapeHtml(item.schedule || "")}</p>
         ${item.checkIn ? `<p>${escapeHtml(item.checkIn)}</p>` : ""}
         ${item.checkInJa ? `<p lang="ja">${escapeHtml(item.checkInJa)}</p>` : ""}
-        <dl><div><dt>${escapeHtml(item.orderLabel || "订单号")}</dt><dd>${escapeHtml(item.orderNo || "待补充")}</dd></div>${item.reservationPhone ? `<div><dt>登记电话</dt><dd>${escapeHtml(item.reservationPhone)}</dd></div>` : ""}${item.bookedAt ? `<div><dt>预订时间</dt><dd>${escapeHtml(item.bookedAt)}</dd></div>` : ""}</dl>
+        <dl>${item.type !== "restaurant" || item.orderNo ? `<div><dt>${escapeHtml(item.orderLabel || "订单号")}</dt><dd>${escapeHtml(item.orderNo || "待补充")}</dd></div>` : ""}${item.reservationPhone ? `<div><dt>登记电话</dt><dd>${escapeHtml(item.reservationPhone)}</dd></div>` : ""}${item.bookedAt ? `<div><dt>预订时间</dt><dd>${escapeHtml(item.bookedAt)}</dd></div>` : ""}</dl>
         ${mapButtons ? `<div class="booking-row__maps">${mapButtons}</div>` : ""}
       </article>`;
     }).join("") : '<p class="empty-panel">尚未提供预订资料。</p>';

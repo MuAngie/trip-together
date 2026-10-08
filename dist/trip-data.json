@@ -574,12 +574,13 @@
         },
         {
           "id": "dinner-kanegura",
-          "time": "17:00",
-          "text": "已预约 KANEGURA 晚餐，6人，桌席、禁烟；仅订座，未指定套餐。预约编号：QK9N9KSY6。",
-          "nextTitle": "KANEGURA 晚餐",
-          "nextDetail": "已预约 · 6人 · 桌席／禁烟\n仅订座，未指定套餐\n预约编号：QK9N9KSY6",
+          "time": "17:30",
+          "text": "已预约 KANEGURA 寿喜锅晚餐；6人桌席、禁烟，到店点餐。",
+          "nextTitle": "伖（KANEGURA）晚餐",
+          "nextDetail": "已预约 · 6人 · 桌席／禁烟\n到店点餐，可选套餐\n预约编号：QK9N9KSY6",
           "type": "restaurant",
-          "placeId": "restaurant-kanegura"
+          "placeId": "restaurant-kanegura",
+          "bookingId": "restaurant-kanegura"
         },
         {
           "id": "gion-evening-walk",
@@ -607,6 +608,20 @@
         "京都"
       ],
       "schedule": [
+        {
+          "id": "breakfast-options-2026-10-08",
+          "time": "早餐",
+          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-takagi-coffee",
+            "breakfast-coffee-unzen",
+            "breakfast-kyoto-itookashi",
+            "breakfast-nomura-karasuma",
+            "breakfast-miyako-yasai-kamo",
+            "restaurant-onimaru-kyoto"
+          ]
+        },
         {
           "id": "kyoto-sightseeing-car",
           "time": "08:30",
@@ -711,12 +726,13 @@
         },
         {
           "id": "dinner-honke-1008",
-          "time": "19:00",
-          "text": "已预约天婦羅処京林泉晚餐；备注：本家（清桑）。进店报登记电话 07042277782，陈女士。",
+          "time": "18:30",
+          "text": "已预约京林泉天妇罗晚餐；套餐15,000日元×3、12,000日元×3。1位客人不吃生食，已告知餐厅；备注：本家（清桑）。",
           "nextTitle": "天婦羅処京林泉晚餐",
-          "nextDetail": "已预约 · 备注：本家（清桑）\n登记电话：07042277782\n预约姓名：陈女士",
+          "nextDetail": "已订套餐：15,000日元×3、12,000日元×3\n1位客人不吃生食，已告知餐厅\n备注：本家（清桑）",
           "type": "restaurant",
-          "placeId": "restaurant-kyorinsen"
+          "placeId": "restaurant-kyorinsen",
+          "bookingId": "restaurant-honke-1008"
         },
         {
           "id": "visit-kifune-shrine",
@@ -755,6 +771,20 @@
         "京都"
       ],
       "schedule": [
+        {
+          "id": "breakfast-options-2026-10-09",
+          "time": "早餐",
+          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-takagi-coffee",
+            "breakfast-coffee-unzen",
+            "breakfast-kyoto-itookashi",
+            "breakfast-nomura-karasuma",
+            "breakfast-miyako-yasai-kamo",
+            "restaurant-onimaru-kyoto"
+          ]
+        },
         {
           "id": "kyoto-hotel-to-inari-1009",
           "time": "约09:00",
@@ -822,22 +852,20 @@
         },
         {
           "id": "kyoto-dinner-1009",
-          "time": "17:00后",
-          "text": "在祇园或四条一带自由晚餐，餐厅当天自选。",
-          "nextTitle": "自由晚餐",
-          "nextDetail": "地点：祇园或四条一带\n餐厅当天自选。",
-          "type": "meal",
-          "placeIds": [
-            "gion",
-            "shijo"
-          ]
+          "time": "18:30",
+          "text": "已预约藤むら（大宫）烤肉晚餐；到店点餐。",
+          "nextTitle": "藤むら（大宫）晚餐",
+          "nextDetail": "已预约 · 烤肉 · 到店点餐\n四条站6号出口步行约11分钟",
+          "type": "restaurant",
+          "placeId": "restaurant-fujimura",
+          "bookingId": "restaurant-fujimura"
         },
         {
           "id": "kyoto-evening-return-1009",
           "time": "晚餐后",
-          "text": "若还有精力，可沿鸭川短走；累了直接回酒店。从祇园四条步行过四条大桥至阪急京都河原町站，乘阪急至乌丸站后步行回酒店；不想走时可直接打车。",
+          "text": "晚餐后返回京都日航公主酒店；按体力选择步行或打车。",
           "nextTitle": "返回酒店",
-          "nextDetail": "路线：京都河原町 → 乌丸 → 酒店\n方式：阪急＋步行，或直接打车",
+          "nextDetail": "晚餐后返回京都日航公主酒店\n按体力选择步行或打车",
           "type": "transfer"
         },
         {
@@ -873,6 +901,20 @@
       ],
       "schedule": [
         {
+          "id": "breakfast-options-2026-10-10",
+          "time": "早餐",
+          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-takagi-coffee",
+            "breakfast-coffee-unzen",
+            "breakfast-kyoto-itookashi",
+            "breakfast-nomura-karasuma",
+            "breakfast-miyako-yasai-kamo",
+            "restaurant-onimaru-kyoto"
+          ]
+        },
+        {
           "id": "kyoto-kobe-osaka",
           "time": "待补充",
           "text": "从京都日航公主酒店上车，先逛神户三田奥特莱斯，再前往大阪；当天用车10小时。具体出发时间、车型分配、下车地点及订单信息待补充。",
@@ -895,10 +937,12 @@
         {
           "id": "dinner-wakko-shinkobe",
           "time": "17:30",
-          "text": "已预约和黒 新神戸店晚餐，6人，吧台席、禁烟；仅订座，未指定套餐。预约编号：75WRVRLHP6。",
-          "nextTitle": "和黒 新神戸店晚餐",
-          "nextDetail": "已预约 · 6人 · 吧台席／禁烟\n仅订座，未指定套餐\n预约编号：75WRVRLHP6",
-          "type": "restaurant"
+          "text": "已预约和黒新神户店神户牛铁板烧；6人吧台席、禁烟，到店点餐，另收10%服务费。",
+          "nextTitle": "和黑 新神户店晚餐",
+          "nextDetail": "已预约 · 6人 · 吧台席／禁烟\n到店点餐，另收10%服务费\n预约编号：75WRVRLHP6",
+          "type": "restaurant",
+          "placeId": "restaurant-wakko-shinkobe",
+          "bookingId": "restaurant-wakko-shinkobe"
         },
         {
           "id": "arrive-osaka",
@@ -925,6 +969,19 @@
       ],
       "schedule": [
         {
+          "id": "breakfast-options-2026-10-11",
+          "time": "早餐",
+          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-udon-kyutaro",
+            "breakfast-b-portland-coffee",
+            "breakfast-hori-kan",
+            "breakfast-ware-ware-wa",
+            "breakfast-victoire-shinsaibashi"
+          ]
+        },
+        {
           "id": "visit-osaka-castle-park",
           "time": "游览可选",
           "text": "大阪城公园",
@@ -1028,10 +1085,20 @@
           "text": "唐吉诃德道顿堀店",
           "type": "attraction",
           "placeId": "donki-dotonbori"
+        },
+        {
+          "id": "dinner-osaka-manpukudo",
+          "time": "18:00",
+          "text": "已预约酒肴 大阪まんぷく堂（今里）晚餐；鱼料理Omakase，1位客人不吃生食，已告知餐厅。",
+          "nextTitle": "酒肴 大阪まんぷく堂（今里）晚餐",
+          "nextDetail": "鱼料理Omakase · 已预约\n1位客人不吃生食，已告知餐厅\n酒店出发：公共交通约30分钟／打车约20分钟",
+          "type": "restaurant",
+          "placeId": "restaurant-osaka-manpukudo",
+          "bookingId": "restaurant-osaka-manpukudo"
         }
       ],
       "notes": [
-        "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
+        "白天按采购目标、天气和体力自由选择，不设固定时间或顺序；晚餐按预约时间前往。",
         "大阪 Metro 一日券（Enjoy Eco Card）：在酒店附近的本町站自动售票机购买。10月11日周日成人620日元，首次进闸当天生效；可到心斋桥、难波（道顿堀）、梅田和大阪城公园附近的地铁站，不含JR、阪急。心斋桥与道顿堀可步行连逛，出门前按当天乘车安排决定是否购买。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
@@ -1047,6 +1114,19 @@
       ],
       "schedule": [
         {
+          "id": "breakfast-options-2026-10-12",
+          "time": "早餐",
+          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-udon-kyutaro",
+            "breakfast-b-portland-coffee",
+            "breakfast-hori-kan",
+            "breakfast-ware-ware-wa",
+            "breakfast-victoire-shinsaibashi"
+          ]
+        },
+        {
           "id": "visit-osaka-castle-park",
           "time": "游览可选",
           "text": "大阪城公园",
@@ -1150,10 +1230,20 @@
           "text": "唐吉诃德道顿堀店",
           "type": "attraction",
           "placeId": "donki-dotonbori"
+        },
+        {
+          "id": "dinner-unafuji-umeda",
+          "time": "18:00",
+          "text": "已预约うな富士（梅田）鳗鱼晚餐；包间，到店点餐，包间另收2,000日元使用费。",
+          "nextTitle": "うな富士（梅田）晚餐",
+          "nextDetail": "已预约 · 鳗鱼 · 包间\n到店点餐，包间使用费2,000日元\n酒店出发：公共交通约20分钟／打车约10分钟",
+          "type": "restaurant",
+          "placeId": "restaurant-unafuji-umeda",
+          "bookingId": "restaurant-unafuji-umeda"
         }
       ],
       "notes": [
-        "两天按采购目标、天气和体力自由选择，不设固定时间或顺序。",
+        "白天按采购目标、天气和体力自由选择，不设固定时间或顺序；晚餐按预约时间前往。",
         "大阪 Metro 一日券（Enjoy Eco Card）：在酒店附近的本町站自动售票机购买。10月12日节假日成人620日元，首次进闸当天生效；可到心斋桥、难波（道顿堀）、梅田和大阪城公园附近的地铁站，不含JR、阪急。心斋桥与道顿堀可步行连逛，出门前按当天乘车安排决定是否购买。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
@@ -1170,6 +1260,19 @@
         "浦东机场 T2"
       ],
       "schedule": [
+        {
+          "id": "breakfast-options-2026-10-13",
+          "time": "早餐",
+          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "type": "breakfast-options",
+          "placeIds": [
+            "breakfast-udon-kyutaro",
+            "breakfast-b-portland-coffee",
+            "breakfast-hori-kan",
+            "breakfast-ware-ware-wa",
+            "breakfast-victoire-shinsaibashi"
+          ]
+        },
         {
           "id": "osaka-hotel-kix-car",
           "time": "13:00",
@@ -1349,8 +1452,13 @@
       "nameJa": "ごちそう焼むすび おにまる 京都四条河原町店",
       "countryCode": "JP",
       "cityOrArea": "京都",
+      "addressJa": "京都府京都市下京区御旅宮本町7",
       "navigation": {
-        "query": "ごちそう焼むすび おにまる 京都四条河原町店"
+        "query": "ごちそう焼むすび おにまる 京都四条河原町店 京都府京都市下京区御旅宮本町7"
+      },
+      "geo": {
+        "lat": 35.0038403,
+        "lng": 135.767389
       }
     },
     {
@@ -1448,8 +1556,9 @@
         "lng": 135.7641398
       },
       "navigation": {
-        "query": "伖 カネグラ 京都"
-      }
+        "query": "伖（カネグラ） 京都府京都市下京区柳馬場通仏光寺下ル万里小路町187"
+      },
+      "addressJa": "京都府京都市下京区柳馬場通仏光寺下ル万里小路町187"
     },
     {
       "id": "arashiyama",
@@ -1546,8 +1655,9 @@
         "lng": 135.75877
       },
       "navigation": {
-        "query": "天婦羅処 京林泉 ホテルグランヴィア京都 M3F"
-      }
+        "query": "天婦羅処 京林泉 京都府京都市下京区烏丸通塩小路下ル JR京都駅中央口 ホテルグランヴィア京都 M3F"
+      },
+      "addressJa": "京都府京都市下京区烏丸通塩小路下ル JR京都駅中央口 ホテルグランヴィア京都 M3F"
     },
     {
       "id": "jojakkoji",
@@ -1989,6 +2099,212 @@
       "geo": {
         "lat": 34.6692927,
         "lng": 135.5027289
+      }
+    },
+    {
+      "id": "restaurant-fujimura",
+      "nameZh": "藤むら（大宫）",
+      "nameJa": "藤むら（大宮）",
+      "countryCode": "JP",
+      "cityOrArea": "京都大宫",
+      "addressJa": "京都府京都市下京区仏光寺通油小路西入ル",
+      "navigation": {
+        "query": "藤むら（大宮） 京都府京都市下京区仏光寺通油小路西入ル"
+      },
+      "geo": {
+        "lat": 35.0014036,
+        "lng": 135.75324901
+      }
+    },
+    {
+      "id": "restaurant-wakko-shinkobe",
+      "nameZh": "和黑 新神户店",
+      "nameJa": "和黒 新神戸店",
+      "countryCode": "JP",
+      "cityOrArea": "神户新神户",
+      "addressJa": "兵庫県神戸市中央区北野町1-1 コトノハコ神戸 3F",
+      "navigation": {
+        "query": "和黒 新神戸店 兵庫県神戸市中央区北野町1-1 コトノハコ神戸 3F"
+      }
+    },
+    {
+      "id": "restaurant-osaka-manpukudo",
+      "nameZh": "酒肴 大阪まんぷく堂（今里）",
+      "nameJa": "酒肴 大阪まんぷく堂",
+      "countryCode": "JP",
+      "cityOrArea": "大阪今里",
+      "addressJa": "大阪府大阪市東成区大今里西3-4-14",
+      "navigation": {
+        "query": "酒肴 大阪まんぷく堂 大阪府大阪市東成区大今里西3-4-14"
+      },
+      "geo": {
+        "lat": 34.668292,
+        "lng": 135.541988
+      }
+    },
+    {
+      "id": "restaurant-unafuji-umeda",
+      "nameZh": "うな富士（梅田）",
+      "nameJa": "うな富士（梅田）",
+      "countryCode": "JP",
+      "cityOrArea": "大阪梅田",
+      "addressJa": "大阪府大阪市北区大深町5-54 グラングリーン大阪南館 3F",
+      "navigation": {
+        "query": "うな富士（梅田） 大阪府大阪市北区大深町5-54 グラングリーン大阪南館 3F"
+      },
+      "geo": {
+        "lat": 34.7027,
+        "lng": 135.491754
+      }
+    },
+    {
+      "id": "breakfast-takagi-coffee",
+      "nameZh": "高木珈琲 高辻本店",
+      "nameJa": "高木珈琲店 高辻本店",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "addressJa": "京都府京都市下京区高辻通室町東入ル骨屋町175",
+      "navigation": {
+        "query": "高木珈琲店 高辻本店 京都府京都市下京区高辻通室町東入ル骨屋町175"
+      },
+      "geo": {
+        "lat": 35.00021584,
+        "lng": 135.75839826
+      }
+    },
+    {
+      "id": "breakfast-coffee-unzen",
+      "nameZh": "珈琲の店 雲仙",
+      "nameJa": "珈琲の店 雲仙",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "addressJa": "京都府京都市下京区西洞院通綾小路下ル",
+      "navigation": {
+        "query": "珈琲の店 雲仙 京都府京都市下京区西洞院通綾小路下ル"
+      },
+      "geo": {
+        "lat": 35.00241715,
+        "lng": 135.75529156
+      }
+    },
+    {
+      "id": "breakfast-kyoto-itookashi",
+      "nameZh": "京都 いとおかし",
+      "nameJa": "京都 いとおかし",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "addressJa": "京都府京都市下京区高辻通油小路東入永養寺町224",
+      "navigation": {
+        "query": "京都 いとおかし 京都府京都市下京区高辻通油小路東入永養寺町224"
+      },
+      "geo": {
+        "lat": 35.0000276,
+        "lng": 135.7539017
+      }
+    },
+    {
+      "id": "breakfast-nomura-karasuma",
+      "nameZh": "京菜味のむら 烏丸本店",
+      "nameJa": "京菜味のむら 烏丸本店",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "addressJa": "京都府京都市中京区蛸薬師通烏丸西入橋弁慶町224",
+      "navigation": {
+        "query": "京菜味のむら 烏丸本店 京都府京都市中京区蛸薬師通烏丸西入橋弁慶町224"
+      },
+      "geo": {
+        "lat": 35.0060471,
+        "lng": 135.7587177
+      }
+    },
+    {
+      "id": "breakfast-miyako-yasai-kamo",
+      "nameZh": "都野菜 賀茂 烏丸店",
+      "nameJa": "都野菜 賀茂 烏丸店",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "addressJa": "京都府京都市下京区東洞院通綾小路下る扇酒屋町276",
+      "navigation": {
+        "query": "都野菜 賀茂 烏丸店 京都府京都市下京区東洞院通綾小路下る扇酒屋町276"
+      },
+      "geo": {
+        "lat": 35.00243803,
+        "lng": 135.7611794
+      }
+    },
+    {
+      "id": "breakfast-udon-kyutaro",
+      "nameZh": "Udon Kyutaro",
+      "nameJa": "Udon Kyutaro",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "addressJa": "大阪府大阪市中央区久太郎町3-1-16 丼池繊維会館 1F",
+      "navigation": {
+        "query": "Udon Kyutaro 大阪府大阪市中央区久太郎町3-1-16 丼池繊維会館 1F"
+      },
+      "geo": {
+        "lat": 34.68087665,
+        "lng": 135.50256886
+      }
+    },
+    {
+      "id": "breakfast-b-portland-coffee",
+      "nameZh": "B portland coffee roastery",
+      "nameJa": "B portland coffee roastery",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "addressJa": "大阪府大阪市中央区南船場4-8-3 サクラブルービル 1F",
+      "navigation": {
+        "query": "B portland coffee roastery 大阪府大阪市中央区南船場4-8-3 サクラブルービル 1F"
+      },
+      "geo": {
+        "lat": 34.6776677,
+        "lng": 135.49944359
+      }
+    },
+    {
+      "id": "breakfast-hori-kan",
+      "nameZh": "穂里館",
+      "nameJa": "穂里館",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "addressJa": "大阪府大阪市西区新町1-11-11 スカイハイツSAWA 1",
+      "navigation": {
+        "query": "穂里館 大阪府大阪市西区新町1-11-11 スカイハイツSAWA 1"
+      },
+      "geo": {
+        "lat": 34.67807203,
+        "lng": 135.49615014
+      }
+    },
+    {
+      "id": "breakfast-ware-ware-wa",
+      "nameZh": "和レ和レ和",
+      "nameJa": "和レ和レ和",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "addressJa": "大阪府大阪市中央区久太郎町3-1-20 1F",
+      "navigation": {
+        "query": "和レ和レ和 大阪府大阪市中央区久太郎町3-1-20 1F"
+      },
+      "geo": {
+        "lat": 34.6811489,
+        "lng": 135.5026104
+      }
+    },
+    {
+      "id": "breakfast-victoire-shinsaibashi",
+      "nameZh": "ヴィクトワール 心斋桥店",
+      "nameJa": "ヴィクトワール 大阪心斎橋店",
+      "countryCode": "JP",
+      "cityOrArea": "大阪",
+      "addressJa": "大阪府大阪市中央区南船場4 クリスタ長堀 WEST TOWN",
+      "navigation": {
+        "query": "ヴィクトワール 大阪心斎橋店 大阪府大阪市中央区南船場4 クリスタ長堀 WEST TOWN"
+      },
+      "geo": {
+        "lat": 34.67498385,
+        "lng": 135.49958531
       }
     }
   ],
@@ -2438,31 +2754,43 @@
       "id": "restaurant-kanegura",
       "type": "restaurant",
       "date": "2026-10-07",
-      "time": "17:00",
+      "time": "17:30",
       "title": "伖（KANEGURA）",
       "titleJa": "伖（カネグラ）",
-      "detail": "6人 · 桌席 / 禁烟 · 仅订座，未指定套餐",
-      "detailJa": "6名 · テーブル席 / 禁煙 · 席のみ予約、コース指定なし",
-      "schedule": "10月7日 17:00",
+      "detail": "寿喜锅 · 6人 · 桌席／禁烟 · 到店点餐，可选套餐",
+      "detailJa": "すき焼き · 6名 · テーブル席／禁煙 · 当日注文、コース選択可",
+      "schedule": "10月7日 17:30 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "QK9N9KSY6",
       "reservationPhone": "07042277782",
-      "status": "已预约"
+      "status": "已预约",
+      "placeId": "restaurant-kanegura",
+      "addressJa": "京都府京都市下京区柳馬場通仏光寺下ル万里小路町187",
+      "access": "酒店步行约4分钟；四条站5号出口约6分钟；京都河原町站11号出口约10分钟。",
+      "bookingChannel": "Tabelog",
+      "restaurantPhone": "+81 75-344-8810",
+      "reservationName": "陈女士"
     },
     {
       "id": "restaurant-honke-1008",
       "type": "restaurant",
       "date": "2026-10-08",
-      "time": "19:00",
+      "time": "18:30",
       "title": "天婦羅処京林泉",
-      "titleJa": "天婦羅処京林泉",
-      "detail": "备注：本家（清桑）；进店报预约姓名「陈女士」及下方登记电话。",
-      "detailJa": "備考：本家（清桑）。入店時は予約名「陈女士」と下記の登録電話番号をお伝えください。",
-      "schedule": "10月8日 19:00 晚餐",
+      "titleJa": "天婦羅処 京林泉",
+      "detail": "天妇罗 · 已订套餐：15,000日元×3、12,000日元×3 · 1位客人不吃生食，已告知餐厅 · 备注：本家（清桑）",
+      "detailJa": "天ぷら · 予約済み：15,000円×3、12,000円×3 · 1名は生もの不可、店に連絡済み · 備考：本家（清桑）",
+      "schedule": "10月8日 18:30 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "",
       "reservationPhone": "07042277782",
-      "status": "已预约"
+      "status": "已预约",
+      "placeId": "restaurant-kyorinsen",
+      "addressJa": "京都府京都市下京区烏丸通塩小路下ル JR京都駅中央口 ホテルグランヴィア京都 M3F",
+      "access": "京都站直通格兰维亚京都酒店M3层；中央或西检票口步行约1分钟。",
+      "bookingChannel": "电话预约",
+      "restaurantPhone": "+81 50-3628-7377",
+      "reservationName": "陈女士"
     },
     {
       "id": "restaurant-wakko-shinkobe",
@@ -2472,13 +2800,82 @@
       "time": "17:30",
       "title": "和黑 新神户店",
       "titleJa": "和黒 新神戸店",
-      "detail": "6人 · 吧台席 / 禁烟 · 仅订座，未指定套餐",
-      "detailJa": "6名 · カウンター席 / 禁煙 · 席のみ予約、コース指定なし",
-      "schedule": "10月10日 17:30",
+      "detail": "神户牛铁板烧 · 6人 · 吧台席／禁烟 · 到店点餐，可选套餐 · 另收10%服务费",
+      "detailJa": "神戸牛鉄板焼き · 6名 · カウンター席／禁煙 · 当日注文、コース選択可 · サービス料10%別途",
+      "schedule": "10月10日 17:30 晚餐",
       "orderLabel": "预约编号",
       "orderNo": "75WRVRLHP6",
       "reservationPhone": "07042277782",
-      "status": "已预约"
+      "status": "已预约",
+      "placeId": "restaurant-wakko-shinkobe",
+      "addressJa": "兵庫県神戸市中央区北野町1-1 コトノハコ神戸 3F",
+      "access": "地铁山手线新神户站步行约1分钟；JR新干线新神户站约2分钟。",
+      "bookingChannel": "Tabelog",
+      "restaurantPhone": "+81 78-262-2838",
+      "reservationName": "陈女士"
+    },
+    {
+      "id": "restaurant-fujimura",
+      "type": "restaurant",
+      "orderLabel": "预约编号",
+      "orderNo": "",
+      "status": "已预约",
+      "date": "2026-10-09",
+      "time": "18:30",
+      "placeId": "restaurant-fujimura",
+      "title": "藤むら（大宫）",
+      "titleJa": "藤むら（大宮）",
+      "detail": "烤肉 · 电话预约 · 到店点餐",
+      "detailJa": "焼肉 · 電話予約 · 当日注文",
+      "addressJa": "京都府京都市下京区仏光寺通油小路西入ル",
+      "access": "四条站6号出口步行约11分钟。",
+      "bookingChannel": "电话预约",
+      "restaurantPhone": "+81 75-341-1489",
+      "schedule": "10月9日 18:30 晚餐",
+      "reservationPhone": "07042277782",
+      "reservationName": "陈女士"
+    },
+    {
+      "id": "restaurant-osaka-manpukudo",
+      "type": "restaurant",
+      "orderLabel": "预约编号",
+      "orderNo": "",
+      "status": "已预约",
+      "date": "2026-10-11",
+      "time": "18:00",
+      "placeId": "restaurant-osaka-manpukudo",
+      "title": "酒肴 大阪まんぷく堂（今里）",
+      "titleJa": "酒肴 大阪まんぷく堂",
+      "detail": "日式主厨搭配（Omakase），主打鱼料理 · 1位客人不吃生食，已告知餐厅",
+      "detailJa": "魚料理中心のおまかせ · 1名は生もの不可、店に連絡済み",
+      "addressJa": "大阪府大阪市東成区大今里西3-4-14",
+      "access": "今里站2号出口步行约2分钟（千日前线／今里筋线）；酒店出发公共交通约30分钟、打车约20分钟。",
+      "bookingChannel": "电话预约",
+      "restaurantPhone": "+81 6-6972-1199",
+      "schedule": "10月11日 18:00 晚餐",
+      "reservationPhone": "07042277782",
+      "reservationName": "陈女士"
+    },
+    {
+      "id": "restaurant-unafuji-umeda",
+      "type": "restaurant",
+      "orderLabel": "预约编号",
+      "orderNo": "",
+      "status": "已预约",
+      "date": "2026-10-12",
+      "time": "18:00",
+      "placeId": "restaurant-unafuji-umeda",
+      "title": "うな富士（梅田）",
+      "titleJa": "うな富士（梅田）",
+      "detail": "鳗鱼 · 包间 · 到店点餐，可选套餐 · 包间另收2,000日元使用费",
+      "detailJa": "うなぎ · 個室 · 当日注文、コース選択可 · 個室利用料2,000円別途",
+      "addressJa": "大阪府大阪市北区大深町5-54 グラングリーン大阪南館 3F",
+      "access": "JR大阪站步行约3分钟，梅田／西梅田站约4分钟；JR大阪站2楼中庭广场经梅北2楼平台前往南馆3楼。酒店出发公共交通约20分钟、打车约10分钟。",
+      "bookingChannel": "Tabelog",
+      "restaurantPhone": "+81 6-4300-6988",
+      "schedule": "10月12日 18:00 晚餐",
+      "reservationPhone": "07042277782",
+      "reservationName": "陈女士"
     }
   ],
   "feesAndTaxes": [

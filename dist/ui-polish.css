@@ -147,15 +147,19 @@ button[data-map-query] { -webkit-touch-callout: none; -webkit-user-select: none;
 .daily-map { margin: 0 0 24px; }
 .daily-map h3 { margin: 0 0 6px; font-size: 18px; line-height: 1.4; }
 .daily-map p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
-.daily-map__legend { display: flex; gap: 18px; }
+.daily-map__legend { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .daily-map__legend span::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 50%; background: #087988; }
 .daily-map__legend .daily-map__legend--shopping::before { background: #f1a950; }
 .daily-map__legend .daily-map__legend--hotel::before { background: #7550a3; }
+.daily-map__legend .daily-map__legend--breakfast::before { background: #426f45; }
+.daily-map__legend .daily-map__legend--dinner::before { background: #a74f29; }
 .daily-map__canvas { height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
 .daily-map__marker { display: grid; place-items: center; border: 2px solid white; border-radius: 50%; color: white; background: #087988; box-shadow: 0 2px 8px rgba(0, 35, 43, .3); font-size: 15px; font-weight: 700; }
 .daily-map__marker--suggested { color: #1b2527; background: #f1a950; }
 .daily-map__marker--evening { background: #7550a3; }
 .daily-map__marker--hotel { background: #7550a3; }
+.daily-map__marker--breakfast { background: #426f45; }
+.daily-map__marker--dinner { background: #a74f29; }
 .daily-map__marker span { line-height: 28px; }
 .schedule-walk { margin: 7px 0 0; color: #277281; font-size: 13px; line-height: 1.5; font-weight: 600; }
 .optional-place-group { border-top: 1px solid var(--line); }

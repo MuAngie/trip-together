@@ -412,12 +412,16 @@ function diningCard(booking, index, total) {
       <p class="dining-card__detail">${escapeHtml(booking.detail || "")}</p>
       ${booking.detailJa ? `<p class="dining-card__detail dining-card__detail--ja" lang="ja">${escapeHtml(booking.detailJa)}</p>` : ""}
       <dl class="dining-card__facts">
-        <div><dt>预约编号 <span lang="ja">/ 予約番号</span></dt><dd>${escapeHtml(booking.orderNo || "待补充")}</dd></div>
+        ${booking.orderNo ? `<div><dt>预约编号 <span lang="ja">/ 予約番号</span></dt><dd>${escapeHtml(booking.orderNo)}</dd></div>` : ""}
+        ${booking.reservationName ? `<div><dt>预约姓名</dt><dd>${escapeHtml(booking.reservationName)}</dd></div>` : ""}
         ${booking.reservationPhone ? `<div><dt>登记电话 <span lang="ja">/ 登録電話番号</span></dt><dd>${escapeHtml(booking.reservationPhone)}</dd></div>` : ""}
+        ${booking.restaurantPhone ? `<div><dt>餐厅电话</dt><dd>${escapeHtml(booking.restaurantPhone)}</dd></div>` : ""}
       </dl>
+      ${booking.addressJa ? `<p class="dining-card__detail" lang="ja">地址：${escapeHtml(booking.addressJa)}</p>` : ""}
+      ${booking.access ? `<p class="dining-card__detail">交通：${escapeHtml(booking.access)}</p>` : ""}
       ${booking.checkIn ? `<p class="dining-card__check-in">${escapeHtml(booking.checkIn)}</p>` : ""}
       ${booking.checkInJa ? `<p class="dining-card__check-in dining-card__check-in--ja" lang="ja">${escapeHtml(booking.checkInJa)}</p>` : ""}
-      <div class="dining-card__map">${mapButton(booking.title, booking.titleJa || booking.title, booking.title)}</div>
+      <div class="dining-card__map">${mapButton(booking.title, [booking.titleJa || booking.title, booking.addressJa].filter(Boolean).join(" "), booking.title)}</div>
     </article>`;
 }
 
@@ -426,7 +430,8 @@ function renderFlights() {
   const carTransfers = state.data.groundTransport?.carTransfers || [];
   const transitPasses = state.data.groundTransport?.publicTransitAndRail || [];
   const hotels = (state.data.accommodations || []).filter((item) => item.type === "hotel");
-  const diningBookings = (state.data.bookingsAndTickets || []).filter((item) => item.type === "restaurant");
+  const diningBookings = (state.data.bookingsAndTickets || []).filter((item) => item.type === "restaurant")
+    .sort((first, second) => (first.date || "").localeCompare(second.date || ""));
   const cards = [
     ...journeys.map((journey, index) => {
       const firstFlight = journeyFlights(journey.id)[0];
@@ -592,7 +597,20 @@ function dayCard(day, shownHotels) {
     const attraction = item.type === "attraction"
       ? (state.data.attractions || []).find((entry) => entry.placeId === item.placeId && entry.dates?.includes(day.date))
       : null;
-    if (isFreeDay) return `
+    const booking = (state.data.bookingsAndTickets || []).find((entry) => entry.id === item.bookingId);
+    const reservationDetails = booking ? `
+      <details class="schedule-attraction">
+        <summary class="schedule-text">预约详情</summary>
+        <div class="schedule-attraction__detail">
+          <p>${escapeHtml(booking.detail)}</p>
+          ${booking.orderNo ? `<p>预约编号：${escapeHtml(booking.orderNo)}</p>` : ""}
+          <p>${escapeHtml(booking.bookingChannel)} · 预约姓名：${escapeHtml(booking.reservationName)} · 登记电话：${escapeHtml(booking.reservationPhone)}</p>
+          <p>地址：<span lang="ja">${escapeHtml(booking.addressJa)}</span></p>
+          <p>交通：${escapeHtml(booking.access)}</p>
+          <p>餐厅电话：${escapeHtml(booking.restaurantPhone)}</p>
+        </div>
+      </details>` : "";
+    if (isFreeDay && ["游览可选", "采购可选"].includes(item.time)) return `
       <li class="optional-place">
         <details>
           <summary>${escapeHtml(text)}</summary>
@@ -617,6 +635,7 @@ function dayCard(day, shownHotels) {
         ${time ? `<span class="schedule-time">${escapeHtml(time)}</span>` : ""}
         <div class="schedule-content">
           ${scheduleText}
+          ${reservationDetails}
           ${attraction?.admission ? `<span class="schedule-admission">${escapeHtml(attraction.admission)}</span>` : ""}
           ${item.walkingEstimate ? `<p class="schedule-walk">步行参考 · ${escapeHtml(item.walkingEstimate)}</p>` : ""}
           ${scheduleTickets}
@@ -626,13 +645,14 @@ function dayCard(day, shownHotels) {
     `;
   });
   const schedule = isFreeDay
-    ? [{ category: "游览可选", title: "游览地点" }, { category: "采购可选", title: "采购地点" }].map((group) => {
+    ? `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && day.schedule[index].time === "早餐").join("")}</ol>`
+      + [{ category: "游览可选", title: "游览地点" }, { category: "采购可选", title: "采购地点" }].map((group) => {
         const items = scheduleItems.filter((markup, index) => markup && day.schedule[index].time === group.category);
         return `<details class="optional-place-group">
           <summary>${group.title}<span>${items.length}处</span></summary>
           <ul class="optional-place-list">${items.join("")}</ul>
         </details>`;
-      }).join("")
+      }).join("") + `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && !["早餐", "游览可选", "采购可选"].includes(day.schedule[index].time)).join("")}</ol>`
     : `<ol class="schedule">${scheduleItems.join("")}</ol>`;
   const notes = [...(day.notes || []), ...(day.sourceDateLabelConflict ? [day.sourceDateLabelConflict] : [])].map(itineraryDisplayText).filter(Boolean);
   const dayTickets = ticketsForDay(day);
@@ -644,21 +664,24 @@ function dayCard(day, shownHotels) {
     <section class="daily-map" aria-label="10月7日京都市内地图">
       <h3>10月7日 · 京都市内地图</h3>
       <p>编号标记为京都段行程，连线仅表示先后；橙色“午”为午餐建议、“歇”为鸭川后的休憩建议，均不加入连线。紫色为晚餐后可选的祇园白川、花见小路和八坂神社，不加入额外连线。各段步行参考见下方行程，按地点坐标与街区距离、约 3.5 公里/小时估算，非导航实测；午餐另选时距离会变化。</p>
+      <p class="daily-map__legend"><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
       <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐与休憩建议、晚餐后可选夜游地点的位置地图"></div>
     </section>` : day.date === "2026-10-08" ? `
     <section class="daily-map" aria-label="10月8日金阁寺与岚山地图">
       <h3>10月8日 · 金阁寺与岚山地图</h3>
-      <p>编号标记为酒店出发、金阁寺、岚山景点及晚餐地点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
+      <p>编号标记为酒店出发、金阁寺及岚山景点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
+      <p class="daily-map__legend"><span class="daily-map__legend--breakfast">早餐 · 早</span><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
       <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、大河内山庄庭院、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
     </section>` : day.date === "2026-10-09" ? `
     <section class="daily-map" aria-label="10月9日伏见稻荷与东山地图">
       <h3>10月9日 · 伏见稻荷与东山地图</h3>
-      <p>编号标记为酒店、伏见稻荷、清水坂午餐区域、清水寺、三年坂和二年坂；连线仅表示行程先后，不代表实际车行或步行道路。清水坂是街区参考位置，不是已选餐厅；紫色“选”为可继续散步的八坂塔，橙色“餐”为自由晚餐区域，均不加入连线。放大地图可查看东山相邻地点；平安神宫与京都御所仍为备选，可通过下方地点按钮查看。</p>
+      <p>编号标记为酒店、伏见稻荷、清水坂午餐区域、清水寺、三年坂和二年坂；连线仅表示行程先后，不代表实际车行或步行道路。清水坂是街区参考位置，不是已选餐厅；紫色“选”为可继续散步的八坂塔，不加入连线。放大地图可查看东山相邻地点；平安神宫与京都御所仍为备选，可通过下方地点按钮查看。</p>
+      <p class="daily-map__legend"><span class="daily-map__legend--breakfast">早餐 · 早</span><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
       <div class="daily-map__canvas" id="day-map-2026-10-09" role="region" aria-label="10月9日酒店、伏见稻荷、清水坂、清水寺、三年坂、二年坂与可选地点的位置地图"></div>
     </section>` : isFreeDay ? `
     <section class="daily-map" aria-label="大阪游览与采购地图">
       <h3>${escapeHtml(formatCompactDate(day.date))} · 大阪地图</h3>
-      <p class="daily-map__legend"><span>游览</span><span class="daily-map__legend--shopping">采购</span><span class="daily-map__legend--hotel">酒店</span></p>
+      <p class="daily-map__legend"><span>游览</span><span class="daily-map__legend--shopping">采购</span><span class="daily-map__legend--hotel">酒店</span><span class="daily-map__legend--breakfast">早餐 · 早</span><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
       <div class="daily-map__canvas" id="day-map-${day.date}" role="region" aria-label="大阪酒店、可选游览及采购地点的位置地图"></div>
     </section>` : "";
   return `
@@ -713,9 +736,7 @@ function showSampleDayMap() {
       routeIds: ["kyoto-hotel", "fushimi-inari", "kiyomizuzaka", "kiyomizu-dera", "sannenzaka", "ninenzaka"],
       highlightedIds: [],
       extras: [
-        { id: "yasaka-pagoda", label: "选", kind: "evening", caption: "体力允许时可选" },
-        { id: "gion", label: "餐", kind: "suggested", caption: "自由晚餐区域" },
-        { id: "shijo", label: "餐", kind: "suggested", caption: "自由晚餐区域" }
+        { id: "yasaka-pagoda", label: "选", kind: "evening", caption: "体力允许时可选" }
       ]
     }
   };
@@ -724,7 +745,7 @@ function showSampleDayMap() {
     date: day.date,
     routeIds: [],
     highlightedIds: [],
-    extras: [{ id: "osaka-hotel", label: "宿", kind: "hotel", caption: "酒店" }, ...day.schedule.map((item) => ({
+    extras: [{ id: "osaka-hotel", label: "宿", kind: "hotel", caption: "酒店" }, ...day.schedule.filter((item) => ["游览可选", "采购可选"].includes(item.time)).map((item) => ({
       id: item.placeId,
       label: item.time === "采购可选" ? "购" : "游",
       kind: item.time === "采购可选" ? "suggested" : "visit",
@@ -732,6 +753,11 @@ function showSampleDayMap() {
     }))]
   } : null);
   if (!config) return;
+  config.extras.push(...(day.schedule || []).filter((item) => item.type === "breakfast-options")
+    .flatMap((item) => (item.placeIds || []).map((id) => ({ id, label: "早", kind: "breakfast", caption: "早餐可选" }))));
+  const dinners = (day.schedule || []).filter((item) => item.type === "restaurant" && item.bookingId && item.placeId);
+  config.extras.push(...dinners.filter((item) => !config.routeIds.includes(item.placeId))
+    .map((item) => ({ id: item.placeId, label: "晚", kind: "dinner", caption: `晚餐 · ${item.time}` })));
   const canvas = $(`#day-map-${config.date}`);
   if (!canvas || canvas.closest(".day-detail").hidden) return;
   if (!window.L) {
@@ -762,14 +788,16 @@ function showSampleDayMap() {
     if (marked.has(place.id)) return;
     marked.add(place.id);
     const number = marked.size;
+    const dinner = dinners.find((item) => item.placeId === place.id);
     const icon = window.L.divIcon({
-      className: `daily-map__marker${config.highlightedIds.includes(place.id) ? " daily-map__marker--evening" : ""}`,
-      html: `<span>${number}</span>`,
+      className: `daily-map__marker${dinner ? " daily-map__marker--dinner" : config.highlightedIds.includes(place.id) ? " daily-map__marker--evening" : ""}`,
+      html: `<span>${dinner ? "晚" : number}</span>`,
       iconSize: [32, 32],
       iconAnchor: [16, 16]
     });
     const label = place.id === "kyoto-hotel" && config.date === "2026-10-08" ? `${place.nameZh}（出发／返回）` : place.nameZh;
-    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: label }).bindPopup(`${number}. ${escapeHtml(label)}`).addTo(sampleDayMap);
+    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: label, zIndexOffset: dinner ? 500 : 0 })
+      .bindPopup(dinner ? `晚餐 · ${escapeHtml(dinner.time)}：${escapeHtml(label)}` : `${number}. ${escapeHtml(label)}`).addTo(sampleDayMap);
   });
   extras.forEach(({ place, label, kind, caption }) => {
     const icon = window.L.divIcon({
@@ -778,8 +806,8 @@ function showSampleDayMap() {
       iconSize: [32, 32],
       iconAnchor: [16, 16]
     });
-    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: `${place.nameZh}（${caption}）` })
-      .bindPopup(`${caption}：${escapeHtml(place.nameZh)}`)
+    window.L.marker([place.geo.lat, place.geo.lng], { icon, title: `${place.nameZh}（${caption}）`, zIndexOffset: kind === "dinner" ? 500 : 0 })
+      .bindPopup(`${escapeHtml(caption)}：${escapeHtml(place.nameZh)}`)
       .addTo(sampleDayMap);
   });
 }

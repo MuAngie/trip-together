@@ -76,31 +76,35 @@ test("clock selects itinerary starts in each day's local timezone", () => {
     ["2026-10-07T05:30:00+09:00", "cruise-arrive"],
     ["2026-10-07T07:29:59+09:00", "cruise-arrive"],
     ["2026-10-07T07:30:00+09:00", "taxi-to-shinagawa"],
-    ["2026-10-07T17:00:00+09:00", "dinner-kanegura"],
+    ["2026-10-07T17:30:00+09:00", "dinner-kanegura"],
     ["2026-10-08T08:30:00+09:00", "kyoto-sightseeing-car"],
     ["2026-10-08T09:00:00+09:00", "visit-kinkakuji"],
     ["2026-10-08T11:00:00+09:00", "kinkakuji-to-arashiyama"],
     ["2026-10-08T12:30:00+09:00", "arashiyama-lunch"],
     ["2026-10-08T16:00:00+09:00", "arashiyama-return-car"],
-    ["2026-10-08T19:00:00+09:00", "dinner-honke-1008"],
+    ["2026-10-08T18:30:00+09:00", "dinner-honke-1008"],
     ["2026-10-09T09:00:00+09:00", "kyoto-hotel-to-inari-1009"],
     ["2026-10-09T11:00:00+09:00", "taxi-inari-to-kiyomizu-1009"],
+    ["2026-10-09T18:30:00+09:00", "kyoto-dinner-1009"],
     ["2026-10-10T17:30:00+09:00", "dinner-wakko-shinkobe"]
   ];
   for (const [time, id] of cases) assert.equal(h.currentId(time), id, time);
 });
 
-test("sea days stay merged and Osaka free days each expose just one next item", () => {
+test("Osaka keeps one daytime item and switches to the booked dinner at 18:00", () => {
   const h = harness("2026-10-11T10:00:00+09:00");
   assert.equal(h.items.filter((item) => ["2026-10-05", "2026-10-06"].includes(item.date)).length, 1);
   assert.equal(h.items.find((item) => item.id === "cruise-at-sea").dateLabel, "10月5–6日");
+  assert.ok(h.items.every((item) => item.type !== "breakfast-options"), "breakfast suggestions stay in the daily itinerary");
   for (const date of ["2026-10-11", "2026-10-12"]) {
     const items = h.items.filter((item) => item.date === date);
-    assert.equal(items.length, 1);
+    assert.equal(items.length, 2);
     assert.equal(items[0].title, "大阪购物／游览");
     assert.equal(h.currentId(`${date}T12:00:00+09:00`), `osaka-free-${date}`);
+    assert.equal(h.currentId(`${date}T17:59:59+09:00`), `osaka-free-${date}`);
+    assert.equal(h.currentId(`${date}T18:00:00+09:00`), items[1].id);
   }
-  assert.equal(h.currentId("2026-10-11T23:59:59+09:00"), "osaka-free-2026-10-11");
+  assert.equal(h.currentId("2026-10-11T23:59:59+09:00"), "dinner-osaka-manpukudo");
   assert.equal(h.currentId("2026-10-12T00:00:00+09:00"), "osaka-free-2026-10-12");
 });
 
@@ -130,16 +134,16 @@ test("clock sleeps until the next itinerary time and pauses while the page is hi
   const h = harness("2026-10-08T18:00:00+09:00");
   h.start();
   assert.equal(h.timers.size, 1);
-  assert.equal([...h.timers.values()][0].delay, 60 * 60 * 1000);
+  assert.equal([...h.timers.values()][0].delay, 30 * 60 * 1000);
   assert.match(h.host.markup, /包车返城/);
   const writes = h.host.writes;
-  h.setTime("2026-10-08T18:30:00+09:00");
+  h.setTime("2026-10-08T18:29:59+09:00");
   h.tick();
   assert.equal(h.host.writes, writes);
-  h.setTime("2026-10-08T19:00:00+09:00");
+  h.setTime("2026-10-08T18:30:00+09:00");
   h.tick();
   assert.match(h.host.markup, /天婦羅処京林泉/);
-  assert.equal([...h.timers.values()][0].delay, 5 * 60 * 60 * 1000);
+  assert.equal([...h.timers.values()][0].delay, 5.5 * 60 * 60 * 1000);
   h.document.visibilityState = "hidden";
   h.visibility();
   assert.equal(h.timers.size, 0);
@@ -163,15 +167,19 @@ test("restoring a cached page catches up immediately without duplicate timers", 
   assert.equal(h.timers.size, 1);
 });
 
-test("free days schedule only the next date transition", () => {
+test("Osaka timers wait for dinner and then the next date transition", () => {
   const h = harness("2026-10-11T12:00:00+09:00");
   h.start();
-  assert.equal([...h.timers.values()][0].delay, 12 * 60 * 60 * 1000);
+  assert.equal([...h.timers.values()][0].delay, 6 * 60 * 60 * 1000);
+  h.setTime("2026-10-11T18:00:00+09:00");
+  h.tick();
+  assert.match(h.host.markup, /大阪まんぷく堂/);
+  assert.equal([...h.timers.values()][0].delay, 6 * 60 * 60 * 1000);
   h.setTime("2026-10-12T00:00:00+09:00");
   h.tick();
   assert.equal(h.date.textContent, "10月12日");
   assert.match(h.host.markup, /大阪购物／游览/);
-  assert.equal([...h.timers.values()][0].delay, 24 * 60 * 60 * 1000);
+  assert.equal([...h.timers.values()][0].delay, 18 * 60 * 60 * 1000);
 });
 
 test("manual browsing stays put through a clock change and can return to the current item", () => {
