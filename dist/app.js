@@ -590,9 +590,13 @@ function dayCard(day, shownHotels) {
       shownHotels.add(destination.id);
       return true;
     });
-    const mapLinks = destinations.map((destination) => `
-      <button type="button" class="schedule-map-link" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">📍 ${escapeHtml(destination.label)}</button>
-    `).join("");
+    const mapLinks = destinations.map((destination) => {
+      const breakfastMenu = item.type === "breakfast-options"
+        ? state.data.places.find((place) => place.id === destination.id)?.breakfastMenu : "";
+      return `
+        <button type="button" class="schedule-map-link${breakfastMenu ? " schedule-map-link--breakfast" : ""}" data-map-query="${escapeHtml(destination.query)}" data-map-query-zh="${escapeHtml(destination.label)}" data-map-url="${escapeHtml(destination.url || "")}" data-map-label="${escapeHtml(destination.label)}" aria-haspopup="dialog" aria-controls="place-map" aria-label="选择地图查看${escapeHtml(destination.label)}">${breakfastMenu ? `<span>📍 ${escapeHtml(destination.label)}</span><small>${escapeHtml(breakfastMenu)}</small>` : `📍 ${escapeHtml(destination.label)}`}</button>
+      `;
+    }).join("");
     const scheduleTickets = ticketsForSchedule(day, item).map(inlineTicketMarkup).join("");
     const attraction = item.type === "attraction"
       ? (state.data.attractions || []).find((entry) => entry.placeId === item.placeId && entry.dates?.includes(day.date))

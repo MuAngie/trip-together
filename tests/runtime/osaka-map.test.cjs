@@ -117,8 +117,12 @@ test("both Osaka dates initialize all optional places without a fixed route and 
     const breakfast = day.schedule.find((item) => item.type === "breakfast-options");
     const breakfastMarkup = markup.slice(markup.indexOf('<ol class="schedule">'), markup.indexOf('<details class="optional-place-group">'));
     assert.match(breakfastMarkup, /早餐可选/);
-    assert.equal((breakfastMarkup.match(/class="schedule-map-link"/g) || []).length, 5);
-    for (const id of breakfast.placeIds) assert.ok(breakfastMarkup.includes(trip.places.find((place) => place.id === id).addressJa));
+    assert.equal((breakfastMarkup.match(/class="schedule-map-link schedule-map-link--breakfast"/g) || []).length, 5);
+    for (const id of breakfast.placeIds) {
+      const place = trip.places.find((place) => place.id === id);
+      assert.ok(breakfastMarkup.includes(place.addressJa));
+      assert.ok(breakfastMarkup.includes(`<small>${place.breakfastMenu}</small>`));
+    }
     assert.match(markup, /<ol class="schedule">\s*<li class="schedule-item">\s*<span class="schedule-time">18:00<\/span>/);
     assert.ok(markup.includes(dinner.text));
     assert.ok(markup.includes(booking.addressJa));

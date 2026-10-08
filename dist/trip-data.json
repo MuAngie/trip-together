@@ -611,7 +611,7 @@
         {
           "id": "breakfast-options-2026-10-08",
           "time": "早餐",
-          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-takagi-coffee",
@@ -774,7 +774,7 @@
         {
           "id": "breakfast-options-2026-10-09",
           "time": "早餐",
-          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-takagi-coffee",
@@ -903,7 +903,7 @@
         {
           "id": "breakfast-options-2026-10-10",
           "time": "早餐",
-          "text": "早餐可选：咖啡简餐、日式食堂／小菜或轻食自助；Onimaru 主营各种好吃的饭团（10:00起营业）。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-takagi-coffee",
@@ -971,7 +971,7 @@
         {
           "id": "breakfast-options-2026-10-11",
           "time": "早餐",
-          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-udon-kyutaro",
@@ -1116,7 +1116,7 @@
         {
           "id": "breakfast-options-2026-10-12",
           "time": "早餐",
-          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-udon-kyutaro",
@@ -1263,7 +1263,7 @@
         {
           "id": "breakfast-options-2026-10-13",
           "time": "早餐",
-          "text": "早餐可选：乌冬面、咖啡简餐或日式食堂。",
+          "text": "早餐可选。",
           "type": "breakfast-options",
           "placeIds": [
             "breakfast-udon-kyutaro",
@@ -1448,6 +1448,7 @@
     },
     {
       "id": "restaurant-onimaru-kyoto",
+      "breakfastMenu": "各式好吃的饭团 · 10:00起营业",
       "nameZh": "Onimaru Kyoto Shijo Kawaramachi",
       "nameJa": "ごちそう焼むすび おにまる 京都四条河原町店",
       "countryCode": "JP",
@@ -2159,6 +2160,7 @@
     },
     {
       "id": "breakfast-takagi-coffee",
+      "breakfastMenu": "咖啡／三明治",
       "nameZh": "高木珈琲 高辻本店",
       "nameJa": "高木珈琲店 高辻本店",
       "countryCode": "JP",
@@ -2174,6 +2176,7 @@
     },
     {
       "id": "breakfast-coffee-unzen",
+      "breakfastMenu": "咖啡／三明治",
       "nameZh": "珈琲の店 雲仙",
       "nameJa": "珈琲の店 雲仙",
       "countryCode": "JP",
@@ -2189,6 +2192,7 @@
     },
     {
       "id": "breakfast-kyoto-itookashi",
+      "breakfastMenu": "日式食堂",
       "nameZh": "京都 いとおかし",
       "nameJa": "京都 いとおかし",
       "countryCode": "JP",
@@ -2204,6 +2208,7 @@
     },
     {
       "id": "breakfast-nomura-karasuma",
+      "breakfastMenu": "日式小菜／蔬菜／豆腐料理／咖啡",
       "nameZh": "京菜味のむら 烏丸本店",
       "nameJa": "京菜味のむら 烏丸本店",
       "countryCode": "JP",
@@ -2219,6 +2224,7 @@
     },
     {
       "id": "breakfast-miyako-yasai-kamo",
+      "breakfastMenu": "轻食日式自助",
       "nameZh": "都野菜 賀茂 烏丸店",
       "nameJa": "都野菜 賀茂 烏丸店",
       "countryCode": "JP",
@@ -2234,6 +2240,7 @@
     },
     {
       "id": "breakfast-udon-kyutaro",
+      "breakfastMenu": "乌冬面",
       "nameZh": "Udon Kyutaro",
       "nameJa": "Udon Kyutaro",
       "countryCode": "JP",
@@ -2249,6 +2256,7 @@
     },
     {
       "id": "breakfast-b-portland-coffee",
+      "breakfastMenu": "咖啡／三明治",
       "nameZh": "B portland coffee roastery",
       "nameJa": "B portland coffee roastery",
       "countryCode": "JP",
@@ -2264,6 +2272,7 @@
     },
     {
       "id": "breakfast-hori-kan",
+      "breakfastMenu": "日式食堂",
       "nameZh": "穂里館",
       "nameJa": "穂里館",
       "countryCode": "JP",
@@ -2279,6 +2288,7 @@
     },
     {
       "id": "breakfast-ware-ware-wa",
+      "breakfastMenu": "咖啡／三明治",
       "nameZh": "和レ和レ和",
       "nameJa": "和レ和レ和",
       "countryCode": "JP",
@@ -2294,6 +2304,7 @@
     },
     {
       "id": "breakfast-victoire-shinsaibashi",
+      "breakfastMenu": "咖啡／三明治",
       "nameZh": "ヴィクトワール 心斋桥店",
       "nameJa": "ヴィクトワール 大阪心斎橋店",
       "countryCode": "JP",

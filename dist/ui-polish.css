@@ -62,6 +62,8 @@ button, input, select, textarea { font-family: inherit; }
 .day-detail .schedule-item::after { background: var(--surface); }
 .schedule-admission { display: block; margin: 2px 0 4px; color: var(--muted); font-size: 14px; font-weight: 500; line-height: 1.45; }
 .day-locations, .schedule-map-link, .detail-note { font-size: 15px; }
+.schedule-map-link--breakfast { flex-direction: column; gap: 3px; }
+.schedule-map-link--breakfast small { color: var(--muted); font-size: 13px; line-height: 1.4; font-weight: 400; }
 .schedule-ticket__status, .schedule-ticket__content small, .schedule-ticket__open { font-size: 13px; }
 .schedule-ticket__content strong { font-size: 15px; }
 .schedule-ticket__open { min-height: var(--ui-control); }
@@ -153,7 +155,7 @@ button[data-map-query] { -webkit-touch-callout: none; -webkit-user-select: none;
 .daily-map__legend .daily-map__legend--hotel::before { background: #7550a3; }
 .daily-map__legend .daily-map__legend--breakfast::before { background: #426f45; }
 .daily-map__legend .daily-map__legend--dinner::before { background: #a74f29; }
-.daily-map__canvas { height: 300px; overflow: hidden; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
+.daily-map__canvas { height: 300px; overflow: hidden; isolation: isolate; border: 1px solid var(--line); border-radius: 14px; background: #e8f0ec; }
 .daily-map__marker { display: grid; place-items: center; border: 2px solid white; border-radius: 50%; color: white; background: #087988; box-shadow: 0 2px 8px rgba(0, 35, 43, .3); font-size: 15px; font-weight: 700; }
 .daily-map__marker--suggested { color: #1b2527; background: #f1a950; }
 .daily-map__marker--evening { background: #7550a3; }
