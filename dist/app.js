@@ -410,19 +410,31 @@ function diningCard(booking, index, total) {
       <h3>${escapeHtml(booking.title)}</h3>
       <p class="dining-card__ja"${booking.titleJa ? ' lang="ja"' : ""}>${escapeHtml(booking.titleJa || "日文店名待补充")}</p>
       <p class="dining-card__detail">${escapeHtml(booking.detail || "")}</p>
-      ${booking.detailJa ? `<p class="dining-card__detail dining-card__detail--ja" lang="ja">${escapeHtml(booking.detailJa)}</p>` : ""}
       <dl class="dining-card__facts">
         ${booking.orderNo ? `<div><dt>预约编号 <span lang="ja">/ 予約番号</span></dt><dd>${escapeHtml(booking.orderNo)}</dd></div>` : ""}
         ${booking.reservationName ? `<div><dt>预约姓名</dt><dd>${escapeHtml(booking.reservationName)}</dd></div>` : ""}
         ${booking.reservationPhone ? `<div><dt>登记电话 <span lang="ja">/ 登録電話番号</span></dt><dd>${escapeHtml(booking.reservationPhone)}</dd></div>` : ""}
-        ${booking.restaurantPhone ? `<div><dt>餐厅电话</dt><dd>${escapeHtml(booking.restaurantPhone)}</dd></div>` : ""}
       </dl>
       ${booking.addressJa ? `<p class="dining-card__detail" lang="ja">地址：${escapeHtml(booking.addressJa)}</p>` : ""}
-      ${booking.access ? `<p class="dining-card__detail">交通：${escapeHtml(booking.access)}</p>` : ""}
       ${booking.checkIn ? `<p class="dining-card__check-in">${escapeHtml(booking.checkIn)}</p>` : ""}
       ${booking.checkInJa ? `<p class="dining-card__check-in dining-card__check-in--ja" lang="ja">${escapeHtml(booking.checkInJa)}</p>` : ""}
       <div class="dining-card__map">${mapButton(booking.title, [booking.titleJa || booking.title, booking.addressJa].filter(Boolean).join(" "), booking.title)}</div>
     </article>`;
+}
+
+function currentTravelCardIndex(cards, now = Date.now()) {
+  const dated = cards.map((card, index) => ({
+    index,
+    start: Date.parse(`${card.date}T00:00:00${card.utcOffset}`),
+    trigger: /^\d{2}:\d{2}$/.test(card.triggerTime || "")
+      ? Date.parse(`${card.date}T${card.triggerTime}:00${card.utcOffset}`) : NaN
+  })).filter((card) => Number.isFinite(card.start) && cards[card.index].date !== "9999-12-31");
+  const today = dated.filter((card) => now >= card.start && now < card.start + 86400000);
+  if (today.length) {
+    const reached = today.filter((card) => card.trigger <= now).sort((first, second) => second.trigger - first.trigger);
+    return (reached[0] || today[0]).index;
+  }
+  return (dated.find((card) => card.start > now) || dated.at(-1))?.index ?? 0;
 }
 
 function renderFlights() {
@@ -435,12 +447,13 @@ function renderFlights() {
   const cards = [
     ...journeys.map((journey, index) => {
       const firstFlight = journeyFlights(journey.id)[0];
-      return { date: firstFlight?.departure?.date || "9999-12-31", priority: 0, time: firstFlight?.departure?.time || "23:59", markup: flightCard(journey, index) };
+      return { date: firstFlight?.departure?.date || "9999-12-31", priority: 0, time: firstFlight?.departure?.time || "23:59", triggerTime: firstFlight?.departure?.time, utcOffset: firstFlight?.departure?.utcOffset, markup: flightCard(journey, index) };
     }),
     ...carTransfers.map((transfer, index) => ({
       date: transfer.date || "9999-12-31",
       priority: 0,
       time: transfer.time || "12:00",
+      triggerTime: transfer.time,
       markup: carTransferCard(transfer, index, carTransfers.length)
     })),
     ...transitPasses.map((pass, index) => ({
@@ -459,14 +472,38 @@ function renderFlights() {
       date: booking.date || "9999-12-31",
       priority: booking.displayPriority ?? 2,
       time: booking.time || "23:59",
+      triggerTime: booking.time,
       markup: diningCard(booking, index, diningBookings.length)
     }))
   ].sort((first, second) => first.date.localeCompare(second.date) || first.priority - second.priority || first.time.localeCompare(second.time));
+  cards.forEach((card) => {
+    card.utcOffset ||= state.data.days.find((day) => day.date === card.date)?.utcOffset || "+08:00";
+  });
   $("#flight-carousel").innerHTML = cards.map((card) => card.markup).join("");
   $("#flight-dots").innerHTML = cards.map((_, index) => `<span class="carousel-dot${index === 0 ? " is-active" : ""}"></span>`).join("");
   $("#flight-index").textContent = `1 / ${cards.length}`;
 
   const carousel = $("#flight-carousel");
+  function setActiveCard(index) {
+    $$(".carousel-dot", $("#flight-dots")).forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === index));
+    $("#flight-index").textContent = `${index + 1} / ${cards.length}`;
+  }
+  function positionForTime() {
+    if (document.visibilityState === "hidden" || !carousel.clientWidth) return;
+    const index = currentTravelCardIndex(cards);
+    const target = $$(".flight-card", carousel)[index];
+    if (!target) return;
+    const left = carousel.scrollLeft + target.getBoundingClientRect().left - carousel.getBoundingClientRect().left
+      - (carousel.clientWidth - target.offsetWidth) / 2;
+    carousel.scrollTo({ left: Math.max(0, left), behavior: "instant" });
+    setActiveCard(index);
+  }
+  requestAnimationFrame(positionForTime);
+  document.addEventListener("visibilitychange", positionForTime);
+  window.addEventListener("pageshow", () => requestAnimationFrame(positionForTime));
+  document.addEventListener("travel-section-open", (event) => {
+    if (event.detail === "flights") requestAnimationFrame(positionForTime);
+  });
   let scheduled = false;
   carousel.addEventListener("scroll", () => {
     if (scheduled) return;
@@ -483,8 +520,7 @@ function renderFlights() {
           activeIndex = index;
         }
       });
-      $$(".carousel-dot", $("#flight-dots")).forEach((dot, index) => dot.classList.toggle("is-active", index === activeIndex));
-      $("#flight-index").textContent = `${activeIndex + 1} / ${cards.length}`;
+      setActiveCard(activeIndex);
       scheduled = false;
     });
   }, { passive: true });

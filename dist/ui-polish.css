@@ -41,7 +41,7 @@ button, input, select, textarea { font-family: inherit; }
 .car-transfer-card h3 { margin: 14px 0 0; }
 .car-transfer-card__provider { margin-top: 7px; font-size: 14px; font-weight: 400; line-height: 1.5; }
 .hotel-stay-location dd, .car-transfer-route strong, .dining-card__detail, .dining-card__facts dd, .dining-card__check-in { font-size: 15px; font-weight: 400; line-height: 1.55; }
-.hotel-stay-card__ja, .hotel-stay-card__en, .dining-card__ja, .dining-card__detail--ja, .dining-card__check-in--ja, .hotel-stay-location div[lang="ja"] dd, .car-transfer-card__note { font-size: 14px; font-weight: 400; line-height: 1.55; }
+.hotel-stay-card__ja, .hotel-stay-card__en, .dining-card__ja, .dining-card__check-in--ja, .hotel-stay-location div[lang="ja"] dd, .car-transfer-card__note { font-size: 14px; font-weight: 400; line-height: 1.55; }
 .hotel-stay-location dt, .car-transfer-route span, .dining-card__facts dt { font-size: 13px; font-weight: 600; line-height: 1.5; }
 .hotel-stay-location div { grid-template-columns: 72px minmax(0, 1fr); }
 .hotel-stay-card__footer a { min-height: var(--ui-control); padding-inline: 14px; font-size: 14px; }

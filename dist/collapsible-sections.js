@@ -34,6 +34,7 @@
     toggle.setAttribute("aria-label", `${expanded ? "收起" : "展开"}${title}`);
     if (hint) hint.textContent = expanded ? "收起" : "展开";
     content.hidden = !expanded;
+    if (expanded) document.dispatchEvent(new CustomEvent("travel-section-open", { detail: section.id }));
 
     if (expanded) openSectionIds.add(section.id);
     else openSectionIds.delete(section.id);

@@ -853,8 +853,8 @@
         {
           "id": "kyoto-dinner-1009",
           "time": "18:30",
-          "text": "已预约藤むら（大宫）烤肉晚餐；到店点餐。",
-          "nextTitle": "藤むら（大宫）晚餐",
+          "text": "已预约藤村烤肉（Fujimura，大宫）晚餐；到店点餐。",
+          "nextTitle": "藤村烤肉（Fujimura，大宫）晚餐",
           "nextDetail": "已预约 · 烤肉 · 到店点餐\n四条站6号出口步行约11分钟",
           "type": "restaurant",
           "placeId": "restaurant-fujimura",
@@ -2104,7 +2104,7 @@
     },
     {
       "id": "restaurant-fujimura",
-      "nameZh": "藤むら（大宫）",
+      "nameZh": "藤村烤肉（Fujimura，大宫）",
       "nameJa": "藤むら（大宮）",
       "countryCode": "JP",
       "cityOrArea": "京都大宫",
@@ -2834,7 +2834,7 @@
       "date": "2026-10-09",
       "time": "18:30",
       "placeId": "restaurant-fujimura",
-      "title": "藤むら（大宫）",
+      "title": "藤村烤肉（Fujimura，大宫）",
       "titleJa": "藤むら（大宮）",
       "detail": "烤肉 · 电话预约 · 到店点餐",
       "detailJa": "焼肉 · 電話予約 · 当日注文",

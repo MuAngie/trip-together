@@ -194,7 +194,6 @@ main { overflow: hidden; }
 .dining-card h3 { margin: 15px 0 0; color: #eff8f8; font-size: 24px; line-height: 1.25; }
 .dining-card__ja { margin: 5px 0 0; color: #d5e6e7; font-size: 15px; }
 .dining-card__detail { margin: 16px 0 0; color: #d5e6e7; font-size: 15px; line-height: 1.5; }
-.dining-card__detail--ja { margin-top: 5px; }
 .dining-card__facts { margin: 18px 0 0; }
 .dining-card__facts div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(255,255,255,.16); }
 .dining-card__facts dt { color: #8fc6d0; font-size: 13px; }
