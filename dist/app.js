@@ -685,14 +685,14 @@ function dayCard(day, shownHotels) {
     `;
   });
   const schedule = isFreeDay
-    ? `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && day.schedule[index].time === "早餐").join("")}</ol>`
+    ? `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && (day.date === "2026-10-11" ? !["游览可选", "采购可选"].includes(day.schedule[index].time) : day.schedule[index].time === "早餐")).join("")}</ol>`
       + [{ category: "游览可选", title: "游览地点" }, { category: "采购可选", title: "采购地点" }].map((group) => {
         const items = scheduleItems.filter((markup, index) => markup && day.schedule[index].time === group.category);
         return `<details class="optional-place-group">
           <summary>${group.title}<span>${items.length}处</span></summary>
           <ul class="optional-place-list">${items.join("")}</ul>
         </details>`;
-      }).join("") + `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && !["早餐", "游览可选", "采购可选"].includes(day.schedule[index].time)).join("")}</ol>`
+      }).join("") + (day.date === "2026-10-11" ? "" : `<ol class="schedule">${scheduleItems.filter((markup, index) => markup && !["早餐", "游览可选", "采购可选"].includes(day.schedule[index].time)).join("")}</ol>`)
     : `<ol class="schedule">${scheduleItems.join("")}</ol>`;
   const notes = [...(day.notes || []), ...(day.sourceDateLabelConflict ? [day.sourceDateLabelConflict] : [])].map(itineraryDisplayText).filter(Boolean);
   const dayTickets = ticketsForDay(day);
@@ -707,17 +707,17 @@ function dayCard(day, shownHotels) {
       <p class="daily-map__legend"><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
       <div class="daily-map__canvas" id="day-map-2026-10-07" role="region" aria-label="京都段行程、午餐与休憩建议、晚餐后可选夜游地点的位置地图"></div>
     </section>` : day.date === "2026-10-08" ? `
-    <section class="daily-map" aria-label="10月8日金阁寺与岚山地图">
-      <h3>10月8日 · 金阁寺与岚山地图</h3>
-      <p>编号标记为酒店出发、金阁寺及岚山景点；酒店标记也代表返程。连线仅表示先后，不代表实际行车或步行道路。紫色“选”为常寂光寺和三十三间堂备选，不加入连线。放大地图可查看岚山各点。</p>
+    <section class="daily-map" aria-label="10月8日京都行程地图">
+      <h3>10月8日 · 京都行程地图</h3>
+      <p>三千院 → 金阁寺 → 岚山 → 伏见稻荷。连线仅表示行程先后；紫色“选”为备选地点，不加入连线。</p>
       <p class="daily-map__legend"><span class="daily-map__legend--breakfast">早餐 · 早</span><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
-      <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日金阁寺、岚山、大河内山庄庭院、酒店、晚餐与常寂光寺、三十三间堂备选地点的位置地图"></div>
+      <div class="daily-map__canvas" id="day-map-2026-10-08" role="region" aria-label="10月8日三千院、金阁寺、岚山、伏见稻荷与餐饮酒店地图"></div>
     </section>` : day.date === "2026-10-09" ? `
-    <section class="daily-map" aria-label="10月9日伏见稻荷与东山地图">
-      <h3>10月9日 · 伏见稻荷与东山地图</h3>
-      <p>编号标记为酒店、伏见稻荷、清水坂午餐区域、清水寺、三年坂和二年坂；连线仅表示行程先后，不代表实际车行或步行道路。清水坂是街区参考位置，不是已选餐厅；紫色“选”为可继续散步的八坂塔，不加入连线。放大地图可查看东山相邻地点；平安神宫与京都御所仍为备选，可通过下方地点按钮查看。</p>
+    <section class="daily-map" aria-label="10月9日京都御苑与锦市场地图">
+      <h3>10月9日 · 京都御苑与锦市场地图</h3>
+      <p>京都御苑 → 锦市场。连线仅表示行程先后；午餐与备选地点单独标记。</p>
       <p class="daily-map__legend"><span class="daily-map__legend--breakfast">早餐 · 早</span><span class="daily-map__legend--dinner">晚餐 · 晚</span></p>
-      <div class="daily-map__canvas" id="day-map-2026-10-09" role="region" aria-label="10月9日酒店、伏见稻荷、清水坂、清水寺、三年坂、二年坂与可选地点的位置地图"></div>
+      <div class="daily-map__canvas" id="day-map-2026-10-09" role="region" aria-label="10月9日京都御苑、锦市场与餐饮酒店地图"></div>
     </section>` : isFreeDay ? `
     <section class="daily-map" aria-label="大阪游览与采购地图">
       <h3>${escapeHtml(formatCompactDate(day.date))} · 大阪地图</h3>
@@ -764,7 +764,7 @@ function showSampleDayMap() {
     },
     5: {
       date: "2026-10-08",
-      routeIds: ["kyoto-hotel", "kinkakuji", "arashiyama", "tenryuji", "arashiyama-bamboo", "okochi-sanso-garden", "nonomiya-shrine", "togetsukyo", "kyoto-hotel", "restaurant-kyorinsen"],
+      routeIds: ["kyoto-hotel", "sanzenin", "kinkakuji", "arashiyama", "tenryuji", "arashiyama-bamboo", "okochi-sanso-garden", "nonomiya-shrine", "togetsukyo", "fushimi-inari", "restaurant-kyorinsen"],
       highlightedIds: [],
       extras: [
         { id: "jojakkoji", label: "选", kind: "evening", caption: "体力允许时备选" },
@@ -773,9 +773,11 @@ function showSampleDayMap() {
     },
     6: {
       date: "2026-10-09",
-      routeIds: ["kyoto-hotel", "fushimi-inari", "kiyomizuzaka", "kiyomizu-dera", "sannenzaka", "ninenzaka"],
+      routeIds: ["kyoto-hotel", "kyoto-gyoen", "nishiki-market"],
       highlightedIds: [],
       extras: [
+        { id: "kiyomizuzaka", label: "午", kind: "suggested", caption: "午餐区域" },
+        { id: "kiyomizu-dera", label: "选", kind: "evening", caption: "备选" },
         { id: "yasaka-pagoda", label: "选", kind: "evening", caption: "体力允许时可选" }
       ]
     }
@@ -783,9 +785,9 @@ function showSampleDayMap() {
   const day = state.data.days.find((entry) => entry.day === state.expandedDay);
   const config = maps[state.expandedDay] || (["2026-10-11", "2026-10-12"].includes(day?.date) ? {
     date: day.date,
-    routeIds: [],
+    routeIds: day.date === "2026-10-11" ? ["osaka-hotel", "shinsaibashi", "osaka-castle-park", "restaurant-osaka-manpukudo", "dotonbori"] : [],
     highlightedIds: [],
-    extras: [{ id: "osaka-hotel", label: "宿", kind: "hotel", caption: "酒店" }, ...day.schedule.filter((item) => ["游览可选", "采购可选"].includes(item.time)).map((item) => ({
+    extras: [...(day.date === "2026-10-12" ? [{ id: "osaka-hotel", label: "宿", kind: "hotel", caption: "酒店" }] : []), ...day.schedule.filter((item) => ["游览可选", "采购可选"].includes(item.time)).map((item) => ({
       id: item.placeId,
       label: item.time === "采购可选" ? "购" : "游",
       kind: item.time === "采购可选" ? "suggested" : "visit",

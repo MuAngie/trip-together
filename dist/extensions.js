@@ -22,7 +22,7 @@
   let nextPlan = null;
 
   function nextItems(data) {
-    const freeDates = ["2026-10-11", "2026-10-12"];
+    const freeDates = ["2026-10-12"];
     const scheduled = (data.days || []).flatMap((day) => (freeDates.includes(day.date)
       ? [{ id: `osaka-free-${day.date}`, time: "自由安排", text: "大阪购物／游览" }, ...(day.schedule || []).filter((entry) => entry.type === "restaurant")]
       : day.date === "2026-10-05" ? [{ id: "cruise-at-sea", time: "全天", text: day.title, endDate: "2026-10-06" }]

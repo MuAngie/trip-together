@@ -602,7 +602,7 @@
       "id": "day-5",
       "day": 5,
       "date": "2026-10-08",
-      "title": "包车游金阁寺与岚山",
+      "title": "三千院、金阁寺、岚山与伏见稻荷",
       "utcOffset": "+09:00",
       "locations": [
         "京都"
@@ -625,22 +625,29 @@
         {
           "id": "kyoto-sightseeing-car",
           "time": "08:30",
-          "text": "从京都日航公主酒店上车，包车出发前往金阁寺；车程预留约30分钟，按当日车流调整。当天用车10小时，车型和司机信息待补充。",
-          "nextTitle": "包车去金阁寺",
-          "nextDetail": "上车：京都日航公主酒店\n车程：预留约30分钟\n全天用车：10小时",
+          "text": "从京都日航公主酒店上车，包车前往三千院；当天用车10小时。",
+          "nextTitle": "包车去三千院",
+          "nextDetail": "上车：京都日航公主酒店\n全天用车：10小时",
           "type": "transfer",
           "placeId": "kyoto-hotel"
         },
         {
+          "id": "visit-sanzenin",
+          "time": "上午",
+          "text": "三千院",
+          "type": "attraction",
+          "placeId": "sanzenin"
+        },
+        {
           "id": "visit-kinkakuji",
-          "time": "约09:00—11:00",
+          "time": "三千院之后",
           "text": "金阁寺",
           "type": "attraction",
           "placeId": "kinkakuji"
         },
         {
           "id": "kinkakuji-to-arashiyama",
-          "time": "11:00后",
+          "time": "金阁寺之后",
           "text": "乘包车前往岚山，车程预留约35—45分钟，按当日车流调整。",
           "nextTitle": "包车去岚山",
           "nextDetail": "车程：预留约35—45分钟",
@@ -709,20 +716,20 @@
         },
         {
           "id": "arashiyama-return-car",
-          "time": "约16:00",
-          "text": "在与司机商定的地点上车返城，默认返回京都日航公主酒店；若提前结束岚山行程并考虑三十三间堂，请先与司机确认路线。景区内以短距离步行为主。",
-          "nextTitle": "包车返城",
-          "nextDetail": "上车：与司机商定的接车点\n默认返回：京都日航公主酒店",
+          "time": "岚山之后",
+          "text": "在与司机商定的地点上车，乘包车前往伏见稻荷大社。",
+          "nextTitle": "包车去伏见稻荷",
+          "nextDetail": "上车：与司机商定的接车点\n目的地：伏见稻荷大社",
           "type": "transfer"
         },
         {
-          "id": "visit-sanjusangendo",
-          "time": "晚餐前·备选",
-          "text": "备选 · 三十三间堂（仅岚山行程提前结束、能在16:30前入场时考虑；否则直接回酒店休息）",
-          "nextTitle": "三十三间堂（备选）",
-          "nextDetail": "条件：岚山行程提前结束，且能在16:30前入场。\n否则直接回酒店休息。",
+          "id": "visit-fushimi-inari-1008",
+          "time": "岚山之后",
+          "text": "伏见稻荷大社：参观本殿和山脚的千本鸟居，不登顶。",
+          "nextTitle": "伏见稻荷大社",
+          "nextDetail": "参观：本殿和山脚的千本鸟居\n不登顶。",
           "type": "attraction",
-          "placeId": "sanjusangendo"
+          "placeId": "fushimi-inari"
         },
         {
           "id": "dinner-honke-1008",
@@ -754,10 +761,18 @@
           "text": "备选 · 东福寺（不纳入当日主线）",
           "type": "attraction",
           "placeId": "tofukuji"
+        },
+        {
+          "id": "visit-sanjusangendo",
+          "time": "备选",
+          "text": "备选 · 三十三间堂（不纳入当日主线）",
+          "nextTitle": "三十三间堂（备选）",
+          "type": "attraction",
+          "placeId": "sanjusangendo"
         }
       ],
       "notes": [
-        "上午约08:30—12:15、下午约12:30—16:30；金阁寺与岚山为主线，不以走完所有景点为目标。常寂光寺、三十三间堂及末尾三处景点均为备选；三十三间堂10月开放至17:00、16:30停止入场，能否前往取决于岚山返程时间。",
+        "主线：三千院 → 金阁寺 → 岚山 → 伏见稻荷大社。岚山各点按时间和体力选择；常寂光寺、三十三间堂、贵船神社、琉璃光院和东福寺为备选。",
         "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
       ]
     },
@@ -765,7 +780,7 @@
       "id": "day-6",
       "day": 6,
       "date": "2026-10-09",
-      "title": "伏见稻荷与清水寺东山散步",
+      "title": "京都御苑与锦市场",
       "utcOffset": "+09:00",
       "locations": [
         "京都"
@@ -786,29 +801,18 @@
           ]
         },
         {
-          "id": "kyoto-hotel-to-inari-1009",
-          "time": "约09:00",
-          "text": "从酒店步行至地铁四条站，乘乌丸线到京都站，再换乘JR奈良线普通列车到稻荷站；全程预留约30分钟。",
-          "nextTitle": "地铁＋JR 去伏见稻荷",
-          "nextDetail": "路线：四条 → 京都 → 稻荷\n换乘：京都站换JR奈良线普通列车\n全程：预留约30分钟",
-          "type": "transfer"
-        },
-        {
-          "id": "visit-fushimi-inari-1009",
-          "time": "上午至约11:00",
-          "text": "伏见稻荷大社：参观本殿和山脚的千本鸟居，不登顶。",
-          "nextTitle": "伏见稻荷大社",
-          "nextDetail": "参观：本殿和山脚的千本鸟居\n不登顶。",
+          "id": "visit-kyoto-gyoen",
+          "time": "上午",
+          "text": "京都御苑",
           "type": "attraction",
-          "placeId": "fushimi-inari"
+          "placeId": "kyoto-gyoen"
         },
         {
-          "id": "taxi-inari-to-kiyomizu-1009",
-          "time": "约11:00后",
-          "text": "伏见稻荷结束后打车前往清水寺门前停车场附近安全下车点，车程预留约30—45分钟，随拥堵调整；司机无需驶入停车场。给司机看：清水寺門前駐車場の近くで、安全に降ろしてください。",
-          "nextTitle": "打车",
-          "nextDetail": "定位：清水寺門前駐車場\n下车：停车场附近安全位置\n车程：预留约30—45分钟",
-          "type": "transfer"
+          "id": "visit-nishiki-market-1009",
+          "time": "京都御苑之后",
+          "text": "锦市场",
+          "type": "attraction",
+          "placeId": "nishiki-market"
         },
         {
           "id": "kiyomizuzaka-lunch-1009",
@@ -818,37 +822,6 @@
           "nextDetail": "选店：就近找可坐下用餐的餐厅。",
           "type": "meal",
           "placeId": "kiyomizuzaka"
-        },
-        {
-          "id": "visit-kiyomizu-dera",
-          "time": "午餐后",
-          "text": "参观清水寺。",
-          "type": "attraction",
-          "placeId": "kiyomizu-dera"
-        },
-        {
-          "id": "higashiyama-slope-walk-1009",
-          "time": "下午",
-          "text": "沿三年坂、二年坂缓缓下行；坡路和石板路较多，以舒适步行为主。",
-          "nextTitle": "东山散步",
-          "nextDetail": "路线：三年坂 → 二年坂\n坡路和石板路较多，缓慢下行。",
-          "type": "walk",
-          "placeIds": [
-            "sannenzaka",
-            "ninenzaka"
-          ]
-        },
-        {
-          "id": "higashiyama-extra-walk-1009",
-          "time": "视体力",
-          "text": "可继续走到八坂塔或祇园，不必勉强走完全程。",
-          "nextTitle": "八坂塔／祇园（可选）",
-          "nextDetail": "视体力继续散步，不必走完全程。",
-          "type": "walk",
-          "placeIds": [
-            "yasaka-pagoda",
-            "gion"
-          ]
         },
         {
           "id": "kyoto-dinner-1009",
@@ -869,6 +842,37 @@
           "type": "transfer"
         },
         {
+          "id": "visit-kiyomizu-dera",
+          "time": "备选",
+          "text": "备选 · 参观清水寺。",
+          "type": "attraction",
+          "placeId": "kiyomizu-dera"
+        },
+        {
+          "id": "higashiyama-slope-walk-1009",
+          "time": "备选",
+          "text": "备选 · 沿三年坂、二年坂缓缓下行；坡路和石板路较多，以舒适步行为主。",
+          "nextTitle": "东山散步（备选）",
+          "nextDetail": "路线：三年坂 → 二年坂\n坡路和石板路较多，缓慢下行。",
+          "type": "walk",
+          "placeIds": [
+            "sannenzaka",
+            "ninenzaka"
+          ]
+        },
+        {
+          "id": "higashiyama-extra-walk-1009",
+          "time": "备选",
+          "text": "备选 · 可继续走到八坂塔或祇园，不必勉强走完全程。",
+          "nextTitle": "八坂塔／祇园（可选）（备选）",
+          "nextDetail": "视体力继续散步，不必走完全程。",
+          "type": "walk",
+          "placeIds": [
+            "yasaka-pagoda",
+            "gion"
+          ]
+        },
+        {
           "id": "visit-heian-shrine",
           "time": "备选",
           "text": "备选 · 平安神宫（不纳入当日主线）",
@@ -884,7 +888,7 @@
         }
       ],
       "notes": [
-        "上午约09:00—11:00以伏见稻荷为主；下午约11:30—16:30走清水寺和东山街区。平安神宫、京都御所只作备选，不挤占主线和休息时间。",
+        "主线：京都御苑 → 锦市场。清水寺、东山散步、平安神宫及京都御所保留为备选。",
         "住宿：京都日航公主酒店（Hotel Nikko Princess Kyoto）。"
       ]
     },
@@ -962,7 +966,7 @@
       "id": "day-8",
       "day": 8,
       "date": "2026-10-11",
-      "title": "大阪自由活动",
+      "title": "心斋桥、大阪城公园与道顿堀",
       "utcOffset": "+09:00",
       "locations": [
         "大阪"
@@ -982,18 +986,35 @@
           ]
         },
         {
+          "id": "visit-shinsaibashi",
+          "time": "白天",
+          "text": "心斋桥筋商店街",
+          "type": "attraction",
+          "placeId": "shinsaibashi"
+        },
+        {
           "id": "visit-osaka-castle-park",
-          "time": "游览可选",
+          "time": "心斋桥之后",
           "text": "大阪城公园",
           "type": "attraction",
           "placeId": "osaka-castle-park"
         },
         {
-          "id": "visit-shinsaibashi",
-          "time": "游览可选",
-          "text": "心斋桥筋商店街",
+          "id": "dinner-osaka-manpukudo",
+          "time": "18:00",
+          "text": "已预约酒肴 大阪满腹堂（今里）晚餐；鱼料理Omakase，1位客人不吃生食，已告知餐厅。",
+          "nextTitle": "酒肴 大阪满腹堂（今里）晚餐",
+          "nextDetail": "鱼料理Omakase · 已预约\n1位客人不吃生食，已告知餐厅\n酒店出发：公共交通约30分钟／打车约20分钟",
+          "type": "restaurant",
+          "placeId": "restaurant-osaka-manpukudo",
+          "bookingId": "restaurant-osaka-manpukudo"
+        },
+        {
+          "id": "visit-dotonbori",
+          "time": "晚餐后",
+          "text": "道顿堀与戎桥",
           "type": "attraction",
-          "placeId": "shinsaibashi"
+          "placeId": "dotonbori"
         },
         {
           "id": "visit-hozenji-yokocho",
@@ -1001,13 +1022,6 @@
           "text": "法善寺及横丁",
           "type": "attraction",
           "placeId": "hozenji-yokocho"
-        },
-        {
-          "id": "visit-dotonbori",
-          "time": "游览可选",
-          "text": "道顿堀与戎桥",
-          "type": "attraction",
-          "placeId": "dotonbori"
         },
         {
           "id": "visit-namba-shopping",
@@ -1085,20 +1099,10 @@
           "text": "唐吉诃德道顿堀店",
           "type": "attraction",
           "placeId": "donki-dotonbori"
-        },
-        {
-          "id": "dinner-osaka-manpukudo",
-          "time": "18:00",
-          "text": "已预约酒肴 大阪满腹堂（今里）晚餐；鱼料理Omakase，1位客人不吃生食，已告知餐厅。",
-          "nextTitle": "酒肴 大阪满腹堂（今里）晚餐",
-          "nextDetail": "鱼料理Omakase · 已预约\n1位客人不吃生食，已告知餐厅\n酒店出发：公共交通约30分钟／打车约20分钟",
-          "type": "restaurant",
-          "placeId": "restaurant-osaka-manpukudo",
-          "bookingId": "restaurant-osaka-manpukudo"
         }
       ],
       "notes": [
-        "白天按采购目标、天气和体力自由选择，不设固定时间或顺序；晚餐按预约时间前往。",
+        "心斋桥 → 大阪城公园 → 18:00酒肴 大阪满腹堂晚餐 → 道顿堀。其他游览及采购地点保留为备选。",
         "大阪 Metro 一日券（Enjoy Eco Card）：在酒店附近的本町站自动售票机购买。10月11日周日成人620日元，首次进闸当天生效；可到心斋桥、难波（道顿堀）、梅田和大阪城公园附近的地铁站，不含JR、阪急。心斋桥与道顿堀可步行连逛，出门前按当天乘车安排决定是否购买。",
         "住宿：大阪东急卓越酒店（Osaka Excel Hotel Tokyu）。"
       ]
@@ -2317,6 +2321,34 @@
         "lat": 34.67498385,
         "lng": 135.49958531
       }
+    },
+    {
+      "id": "sanzenin",
+      "nameZh": "三千院",
+      "nameJa": "三千院",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.11982,
+        "lng": 135.83442
+      },
+      "navigation": {
+        "query": "三千院 京都市左京区大原来迎院町540"
+      }
+    },
+    {
+      "id": "kyoto-gyoen",
+      "nameZh": "京都御苑",
+      "nameJa": "京都御苑",
+      "countryCode": "JP",
+      "cityOrArea": "京都",
+      "geo": {
+        "lat": 35.023396,
+        "lng": 135.7632
+      },
+      "navigation": {
+        "query": "京都御苑 京都"
+      }
     }
   ],
   "restaurants": [],
@@ -2484,7 +2516,7 @@
       "name": "伏见稻荷大社",
       "nameJa": "伏見稲荷大社",
       "dates": [
-        "2026-10-09"
+        "2026-10-08"
       ],
       "detail": "日本各地稻荷神社的总本宫，起源可追溯至公元711年。朱红色的千本鸟居由信众为祈愿与感谢而奉纳，是这里最具代表性的景观。"
     },
@@ -2694,6 +2726,27 @@
         "2026-10-12"
       ],
       "detail": "零食、日用品和杂货集中，适合带清单一次补齐缺项，可在白天顺路采购。参考停留：45—60分钟。"
+    },
+    {
+      "id": "attraction-sanzenin",
+      "placeId": "sanzenin",
+      "name": "三千院",
+      "nameJa": "三千院",
+      "dates": [
+        "2026-10-08"
+      ],
+      "admission": "门票 ¥700",
+      "detail": "位于京都大原的天台宗寺院，以苔庭、往生极乐院和阿弥陀三尊闻名。"
+    },
+    {
+      "id": "attraction-kyoto-gyoen",
+      "placeId": "kyoto-gyoen",
+      "name": "京都御苑",
+      "nameJa": "京都御苑",
+      "dates": [
+        "2026-10-09"
+      ],
+      "detail": "围绕京都御所的国民公园，可沿林荫道和庭园散步。京都御苑与苑内的京都御所为不同游览地点。"
     }
   ],
   "bookingsAndTickets": [
