@@ -1,12 +1,4 @@
-@font-face {
-  font-family: "Noto Serif SC";
-  src: url("assets/fonts/NotoSerifSC-VF.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 200 900;
-  font-display: swap;
-}
-
-:root { --journal-font: "Noto Serif SC", serif; }
+:root { --journal-font: system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif; }
 
 /* Keep module styles and third-party map controls in the same type family. */
 body, body *, body::before, body::after, body *::before, body *::after {
