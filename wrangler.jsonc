@@ -6,6 +6,12 @@
     "directory": "./dist",
     "binding": "ASSETS"
   },
+  "r2_buckets": [
+    {
+      "binding": "TRIP_PHOTOS",
+      "bucket_name": "trip-together-photos"
+    }
+  ],
   "d1_databases": [
     {
       "binding": "TRIP_DB",
