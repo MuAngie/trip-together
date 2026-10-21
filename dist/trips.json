@@ -1,0 +1,16 @@
+[
+  {
+    "id": "shanghai-japan-2026",
+    "title": "邮轮关西之旅",
+    "startDate": "2026-10-04",
+    "endDate": "2026-10-13",
+    "days": 10,
+    "travelers": 6,
+    "route": "上海 · 东京 · 京都 · 神户 · 大阪",
+    "summary": "六人同行，从上海乘 MSC 荣耀号抵达东京，再前往京都、神户和大阪。十天的行程，把海上的时光、寺院与庭园、街巷里的散步和相聚的晚餐，收进同一段旅行。",
+    "cover": "assets/covers/kyoto-2026.png",
+    "coverAlt": "晨光中的京都石板街巷、木造町屋与八坂塔，AI 生成的主题封面",
+    "coverNote": "AI 生成 · 京都主题封面",
+    "data": "/trip-data.json"
+  }
+]

@@ -8,3 +8,6 @@ import "./osaka-map.test.cjs";
 import "./next-clock.test.cjs";
 import "./weather.test.cjs";
 import "./travel-carousel.test.cjs";
+import "./trip-catalog.test.cjs";
+import "./photos.test.mjs";
+import "./photo-client.test.mjs";

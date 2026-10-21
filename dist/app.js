@@ -1318,10 +1318,12 @@ async function init() {
     return;
   }
   try {
-    const dataUrl = new URL("/trip-data.json", window.location.origin);
+    const selectedTrip = window.TravelCatalog ? await window.TravelCatalog.selected(window.location.href) : null;
+    const dataUrl = new URL(selectedTrip?.data || "/trip-data.json", window.location.origin);
     const response = await fetch(dataUrl, { cache: "no-store" });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     state.data = await response.json();
+    if (selectedTrip && state.data.metadata.tripId !== selectedTrip.id) throw new Error("旅行编号与数据不一致");
     state.config = normalizeTripConfig(state.data.config);
     window.TRAVEL_PLAN_CONFIG = state.config;
     window.TRAVEL_PLAN_DATA = state.data;
@@ -1329,6 +1331,7 @@ async function init() {
     applyModuleConfig();
     if (moduleEnabled("overview")) preloadDefaultRouteMap();
     renderHero();
+    if (selectedTrip) window.TravelCatalog.decorate(state.data, selectedTrip);
     if (moduleEnabled("flights")) renderFlights();
     if (moduleEnabled("overview")) setupRouteExplorer();
     if (moduleEnabled("itinerary")) {

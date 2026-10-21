@@ -1,6 +1,12 @@
 # Third-Party Notices
 
-The MIT License in `LICENSE` covers only original project code and original project assets. The geographic data below remains governed by its own source license.
+The MIT License in `LICENSE` covers only original project code and original project assets. Third-party fonts and geographic data remain governed by their own licenses.
+
+## Noto Serif SC
+
+- Source: [Noto CJK Serif](https://github.com/notofonts/noto-cjk/tree/main/Serif), `Serif/Variable/TTF/Subset/NotoSerifSC-VF.ttf` (upstream Git blob `914d51db3ef9841a98ccb8f48db9e8bddb0b0d72`).
+- License: SIL Open Font License 1.1; the full license is bundled at `dist/assets/fonts/OFL.txt`. Copyright notices are retained in the font metadata.
+- Repository changes: converted the variable TrueType font to losslessly compressed WOFF2 for local web embedding. Glyphs and font naming are unchanged.
 
 The bundled Boundary Library is retained only for advanced/legacy maintenance and reference workflows. The current ordinary map path uses the ten fixed templates in `assets/maps/templates/manifest.json`; neither that Builder nor the ordinary page reads or renders these Boundary files. Keeping the files in this repository still requires the source and license notices below.
 

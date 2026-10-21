@@ -127,7 +127,7 @@ test("returning to the page refreshes old forecasts without polling", async () =
 test("weather is loaded after itinerary rendering and has a visible source credit", () => {
   assert.match(source("app.js"), /renderTimeline\(\);\s*window\.TravelWeather\?\.load\(state\.data\)/);
   assert.match(source("app.js"), /class="day-weather" data-weather-date="\$\{escapeHtml\(day\.date\)\}" hidden/);
-  assert.match(source("index.html"), /天气数据：Open-Meteo/);
-  assert.match(source("index.html"), /id="next-weather" hidden/);
+  assert.match(source("trip.html"), /天气数据：Open-Meteo/);
+  assert.match(source("trip.html"), /id="next-weather" hidden/);
   assert.match(source("extensions.js"), /TravelWeather\?\.showNext\(item\.date\)/);
 });

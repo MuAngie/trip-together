@@ -1,3 +1,5 @@
+import { handlePhotoRequest } from "./photo-api.js";
+
 const RECORD_COLLECTIONS = Object.freeze(["bills", "travelers", "todos", "tickets", "shopping", "walletEntries"]);
 const COLLECTION_SET = new Set(RECORD_COLLECTIONS);
 const API_PREFIX = "/api/trip/";
@@ -245,6 +247,8 @@ export async function handleApiRequest(request, env) {
 export default {
   async fetch(request, env) {
     try {
+      const photoResponse = await handlePhotoRequest(request, env, canEdit);
+      if (photoResponse) return photoResponse;
       const apiResponse = await handleApiRequest(request, env);
       if (apiResponse) return apiResponse;
       return env.ASSETS.fetch(request);
