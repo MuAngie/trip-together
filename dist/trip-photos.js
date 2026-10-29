@@ -96,9 +96,14 @@
     const refresh = album.querySelector(".album-refresh");
     const more = album.querySelector(".album-more");
     const note = album.querySelector(".album-note");
+    const pendingPanel = album.querySelector(".album-pending");
+    const pendingList = album.querySelector(".album-pending-list");
+    const upload = album.querySelector(".album-upload");
+    const clear = album.querySelector(".album-clear");
     const tokenKey = `travel-plan:editor-token:${encodeURIComponent(tripId)}`;
     const endpoint = `/api/photos/${encodeURIComponent(tripId)}`;
     let mode, token = "", photos = [], cursor = null, busy = false;
+    let pending = [];
     try { token = sessionStorage.getItem(tokenKey) || ""; } catch { /* Private browsing can disable session storage. */ }
     let urls = [];
     const notify = (text, error = false) => {
@@ -106,6 +111,32 @@
       message.dataset.error = String(error);
     };
     const objectUrl = (blob) => { const url = URL.createObjectURL(blob); urls.push(url); return url; };
+    function renderPending() {
+      pendingPanel.hidden = pending.length === 0;
+      album.querySelector(".album-pending-title").textContent = `待${mode === "local" ? "保存" : "上传"} · ${pending.length} 张`;
+      add.textContent = pending.length ? "＋ 继续选择" : "＋ 选择照片";
+      upload.textContent = `${mode === "local" ? "保存到本机" : "上传"} ${pending.length} 张照片`;
+      upload.disabled = clear.disabled = busy || !pending.length || !["local", "cloud"].includes(mode);
+      pendingList.replaceChildren();
+      for (const file of pending) {
+        const item = document.createElement("li");
+        const name = document.createElement("span");
+        name.textContent = file.name;
+        const remove = document.createElement("button");
+        remove.type = "button";
+        remove.className = "album-remove";
+        remove.textContent = "移除";
+        remove.disabled = busy;
+        remove.setAttribute("aria-label", `取消选择：${file.name}`);
+        remove.addEventListener("click", () => {
+          if (busy) return;
+          pending = pending.filter((entry) => entry !== file);
+          renderPending();
+        });
+        item.append(name, remove);
+        pendingList.append(item);
+      }
+    }
     function authorize() {
       if (mode !== "cloud" || token) return true;
       token = String(window.prompt("请输入团队密码，查看或上传旅行照片") || "").trim();
@@ -134,6 +165,7 @@
       finally {
         busy = false;
         album.querySelectorAll("button").forEach((button) => { button.disabled = button !== refresh && (!mode || mode === "unavailable"); });
+        renderPending();
       }
     }
     async function render(append = false) {
@@ -213,23 +245,52 @@
       const failure = results.find((result) => result.status === "rejected");
       if (failure) throw failure.reason;
     }
-    add.addEventListener("click", () => { if (!busy && ["local", "cloud"].includes(mode) && authorize()) input.click(); });
+    // Open the native picker directly within the tap; ask for a password at upload time.
+    add.addEventListener("click", () => { if (!busy && ["local", "cloud"].includes(mode)) input.click(); });
     refresh.addEventListener("click", () => run(async () => {
       if (!mode || mode === "unavailable") { configuration = null; await initialize(); return; }
       if (authorize()) { await render(); notify("相册已更新"); }
     }));
     more.addEventListener("click", () => run(() => render(true)));
-    input.addEventListener("change", async () => {
+    input.addEventListener("change", () => {
+      if (busy || !["local", "cloud"].includes(mode)) { input.value = ""; return; }
       const files = [...input.files];
+      input.value = "";
       if (!files.length) return;
-      await run(async () => {
+      const failures = [];
+      for (let file of files) {
+        // Some Android file providers omit MIME type; the server also checks file bytes.
+        if (!file.type) {
+          const type = ({ jpg: "image/jpeg", jpeg: "image/jpeg", png: "image/png", webp: "image/webp" })[file.name.split(".").pop().toLowerCase()];
+          if (type) file = new File([file], file.name, { type, lastModified: file.lastModified });
+        }
+        if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+          failures.push(`${file.name}：请转换为 JPG、PNG 或 WebP 后选择`);
+        } else if (!file.size || file.size > MAX_ORIGINAL) {
+          failures.push(`${file.name}：原图须非空且不超过 25 MB`);
+        } else if (!pending.some((entry) => entry.name === file.name && entry.size === file.size && entry.lastModified === file.lastModified)) {
+          pending.push(file);
+        }
+      }
+      renderPending();
+      notify(`已选择 ${pending.length} 张，确认后点击${mode === "local" ? "保存到本机" : "上传"}。${failures.join("；")}`, failures.length > 0);
+    });
+    clear.addEventListener("click", () => {
+      if (busy) return;
+      pending = [];
+      renderPending();
+      notify("已清空选择");
+    });
+    upload.addEventListener("click", () => {
+      if (!pending.length) return;
+      return run(async () => {
+        if (!authorize()) return;
+        const files = [...pending];
         let saved = 0;
         const failures = [];
         for (const file of files) {
           notify(`正在${mode === "cloud" ? "上传" : "保存"} ${saved + failures.length + 1} / ${files.length}…`);
           try {
-            if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) throw new Error("请转换为 JPG、PNG 或 WebP 后上传");
-            if (!file.size || file.size > MAX_ORIGINAL) throw new Error("原图上限为 25 MB");
             const preview = await resize(file);
             if (preview.size > 3 * 1024 * 1024) throw new Error("浏览版超过 3 MB，请选择较小的照片");
             if (mode === "local") await save(tripId, file, preview);
@@ -240,12 +301,13 @@
               await api("", { method: "POST", body: form });
             }
             saved++;
+            pending = pending.filter((entry) => entry !== file);
           } catch (error) { failures.push(`${file.name}：${error.message}`); }
         }
-        await render();
-        notify(`已${mode === "cloud" ? "上传" : "保存到本机"} ${saved} 张。${failures.join("；")}`, failures.length > 0);
+        let refreshError = "";
+        try { await render(); } catch { refreshError = "相册刷新失败，请点击刷新相册查看已保存的照片。"; }
+        notify(`已${mode === "cloud" ? "上传" : "保存到本机"} ${saved} 张。${failures.length ? "未成功的照片已保留，可重试或移除。" : ""}${failures.join("；")}${refreshError}`, failures.length > 0 || Boolean(refreshError));
       });
-      input.value = "";
     });
 
     async function initialize() {

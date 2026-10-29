@@ -61,6 +61,12 @@
 .album-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
 .album-heading h4 { margin: 0; font-size: 22px; font-weight: 600; }
 .album-controls { display: flex; flex-wrap: wrap; gap: 10px; }
+.album-pending { margin: 20px 0; padding-block: 20px; border-block: 1px solid var(--collection-line); }
+.album-pending h5 { margin: 0; font-size: 18px; }
+.album-pending > p { margin: 8px 0; color: var(--collection-muted); font-size: 14px; }
+.album-pending-list { max-height: 280px; overflow-y: auto; margin: 12px 0; padding: 0; list-style: none; }
+.album-pending-list li { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.album-pending-list span { min-width: 0; overflow-wrap: anywhere; font-size: 14px; }
 .album-retention { margin: 4px 0; color: var(--collection-muted); font-size: 13px; overflow-wrap: anywhere; }
 .album-download { min-height: 48px; padding: 6px 0; border: 0; background: transparent; color: var(--collection-accent); text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .album-more { margin-top: 24px; }

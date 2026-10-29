@@ -22,9 +22,15 @@
       </summary>
       <div class="journey-details">
         <section class="trip-album" id="photos-${id}" data-trip-id="${id}" aria-label="${escapeHtml(trip.title)}的照片">
-          <div class="album-heading"><h4>旅行照片<span class="album-count"></span></h4><div class="album-controls"><button class="collection-button album-refresh" type="button">刷新相册</button><button class="collection-button album-add" type="button" disabled>＋ 添加照片</button></div></div>
-          <input class="album-input" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden aria-label="选择旅行照片">
+          <div class="album-heading"><h4>旅行照片<span class="album-count"></span></h4><div class="album-controls"><button class="collection-button album-refresh" type="button">刷新相册</button><button class="collection-button album-add" type="button" disabled>＋ 选择照片</button></div></div>
+          <input class="album-input" type="file" accept="image/*" multiple hidden aria-label="选择旅行照片，可多选">
           <p class="album-note">正在确认相册保存位置…</p>
+          <div class="album-pending" hidden>
+            <h5 class="album-pending-title"></h5>
+            <p>可以继续选择照片，确认后一起上传。刷新或离开页面会清空待上传列表。</p>
+            <ul class="album-pending-list"></ul>
+            <div class="album-controls"><button class="collection-button album-upload" type="button" disabled>上传照片</button><button class="collection-button album-clear" type="button">清空选择</button></div>
+          </div>
           <p class="album-message" role="status" aria-live="polite"></p>
           <div class="album-empty"><p>还没有放入照片</p><p>选几张喜欢的，留住这次同行。</p></div>
           <div class="album-grid"></div>
