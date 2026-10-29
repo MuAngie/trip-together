@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>广州之行 · 我们的旅行</title>
+  <meta name="description" content="2026 年 11 月 26 日至 12 月 3 日，广州、顺德、澳门八天七晚行程整理。">
+  <link rel="stylesheet" href="collection.css?v=20261025-1">
+  <link rel="stylesheet" href="typography.css?v=20261021-1">
+  <style>
+    .trip-plan { max-width: 800px; margin: 0 auto; padding: 28px 24px 64px; }
+    .trip-plan-back { display: inline-flex; align-items: center; min-height: 48px; text-underline-offset: 5px; }
+    .trip-plan h1 { margin: 32px 0 8px; font-size: 36px; line-height: 1.3; }
+    .trip-plan-dates { margin: 0; font-size: 18px; font-variant-numeric: tabular-nums; }
+    .trip-plan > header { margin-bottom: 32px; }
+    .trip-plan-section + .trip-plan-section { margin-top: 48px; }
+    .trip-plan-section h2 { margin: 0 0 18px; font-size: 26px; }
+    .region-tabs, .date-tabs { display: flex; gap: 8px; margin: 20px 0 24px; }
+    .region-tabs button, .date-tabs button { flex: 1; min-height: 48px; padding: 10px 16px; border: 1px solid var(--collection-line); border-radius: 3px; background: var(--collection-surface); color: var(--collection-ink); cursor: pointer; }
+    .region-tabs button:hover, .date-tabs button:hover { border-color: var(--collection-accent); }
+    .region-tabs button[aria-selected="true"], .date-tabs button[aria-selected="true"] { background: var(--collection-accent); color: var(--collection-surface); border-color: var(--collection-accent); font-weight: 650; }
+    .date-tabs { overflow-x: auto; gap: 10px; padding: 6px 6px 12px; margin: 0 -6px 28px; scroll-snap-type: x proximity; }
+    .date-tabs button { flex: 0 0 auto; min-width: 100px; padding: 10px 14px; border-radius: 16px; background: oklch(99% .004 85); font-size: 21px; font-weight: 750; line-height: 1.3; font-variant-numeric: tabular-nums; white-space: nowrap; scroll-snap-align: start; box-shadow: 0 4px 12px oklch(29% .025 245 / .04); }
+    .date-tabs button span { display: block; margin-top: 4px; font-size: 13px; font-weight: 400; color: var(--collection-muted); }
+    .date-tabs button[aria-selected="true"] { background: oklch(40% .065 175); border-color: oklch(40% .065 175); color: oklch(99% .004 85); }
+    .date-tabs button[aria-selected="true"] span { color: inherit; }
+    .day-panel { overflow: hidden; border: 1px solid var(--collection-line); border-radius: 26px; background: oklch(99% .004 85); box-shadow: 0 6px 18px oklch(29% .025 245 / .05); }
+    .day-card-header { display: grid; grid-template-columns: 100px minmax(0, 1fr); align-items: center; gap: 24px; padding: 28px; border-bottom: 1px dashed var(--collection-line); }
+    .day-date { text-align: center; color: oklch(34% .06 175); }
+    .day-date time { display: block; font-size: 40px; font-weight: 750; line-height: 1.15; font-variant-numeric: tabular-nums; }
+    .day-date span { display: block; margin-top: 6px; font-size: 14px; color: var(--collection-muted); white-space: nowrap; }
+    .day-number { display: inline-block; margin-bottom: 8px; padding: 3px 12px; border-radius: 20px; background: oklch(93% .018 175); color: oklch(38% .065 175); font-size: 14px; font-weight: 650; }
+    .day-panel h3 { margin: 0; font-size: 23px; line-height: 1.5; }
+    .day-timeline { list-style: none; margin: 0; padding: 28px 32px 8px; }
+    .day-timeline li { position: relative; padding: 0 0 28px 32px; }
+    .day-timeline li:not(:last-child)::after { content: ''; position: absolute; top: 16px; bottom: 0; left: 7px; width: 2px; background: var(--collection-line); }
+    .day-timeline li::before { content: ''; position: absolute; top: 7px; left: 0; width: 16px; height: 16px; border-radius: 50%; background: oklch(46% .08 165); }
+    .day-timeline .timeline-meal::before { background: oklch(57% .11 60); }
+    .timeline-time { color: oklch(43% .08 165); font-size: 17px; font-weight: 650; font-variant-numeric: tabular-nums; }
+    .timeline-meal .timeline-time { color: oklch(52% .11 60); }
+    .day-timeline p { margin: 4px 0 0; font-size: 18px; line-height: 1.8; }
+    .day-timeline .timeline-placeholder { color: var(--collection-muted); }
+    .region-panel h3 { margin: 0 0 8px; font-size: 21px; }
+    .region-panel > ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; list-style: none; padding: 0; margin: 20px 0 0; }
+    .sight-card { min-width: 0; overflow: hidden; border: 1px solid oklch(89% .012 85); border-radius: 26px; background: oklch(99% .004 85); box-shadow: 0 6px 18px oklch(29% .025 245 / .05); }
+    .sight-card figure { position: relative; margin: 0; }
+    .sight-card img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+    .sight-card img[src$="liurong.jpg"] { object-position: center 20%; }
+    .sight-region { position: absolute; top: 14px; left: 14px; padding: 5px 15px; border-radius: 24px; background: oklch(40% .065 175); color: oklch(99% .004 85); font-size: 16px; font-weight: 650; }
+    .sight-copy { padding: 20px 22px 24px; }
+    .sight-copy h4 { margin: 0 0 8px; font-size: 23px; line-height: 1.4; font-weight: 700; }
+    .sight-copy p { margin: 0; color: var(--collection-muted); font-size: 16px; line-height: 1.7; }
+    .sight-credits { margin-top: 20px; color: var(--collection-muted); font-size: 13px; overflow-wrap: anywhere; }
+    .sight-credits summary { display: list-item; width: fit-content; min-height: 48px; padding-block: 12px; cursor: pointer; }
+    .sight-credits ul { padding-left: 20px; }
+    .sight-credits li { margin-block: 10px; }
+    .sight-credits a { text-underline-offset: 3px; }
+    @media (max-width: 480px) {
+      .trip-plan { padding-inline: 16px; }
+      .trip-plan h1 { font-size: 30px; }
+      .date-tabs button { min-width: 96px; padding: 9px 12px; font-size: 20px; border-radius: 15px; }
+      .day-panel { border-radius: 22px; }
+      .day-card-header { grid-template-columns: 74px minmax(0, 1fr); gap: 14px; padding: 22px 16px; }
+      .day-date time { font-size: 36px; }
+      .day-date span { font-size: 13px; }
+      .day-panel h3 { font-size: 20px; }
+      .day-timeline { padding: 24px 20px 4px; }
+      .day-timeline li { padding-left: 28px; }
+      .day-timeline p { font-size: 17px; }
+      .region-panel > ul { gap: 12px; }
+      .sight-card { border-radius: 18px; }
+      .sight-region { top: 10px; left: 10px; padding: 3px 11px; font-size: 14px; }
+      .sight-copy { padding: 14px 12px 18px; }
+      .sight-copy h4 { font-size: 18px; }
+      .sight-copy p { font-size: 15px; }
+    }
+  </style>
+</head>
+<body class="collection-page">
+  <main class="trip-plan">
+    <a class="trip-plan-back" href="/">← 返回我们的旅行</a>
+    <header>
+      <h1>广州之行</h1>
+      <p class="trip-plan-dates">2026.11.26—12.03 · 八天七晚</p>
+    </header>
+    <section class="trip-plan-section" aria-labelledby="itinerary-title">
+      <div class="date-tabs" role="tablist" aria-label="选择日期" hidden></div>
+      <h2 id="itinerary-title">每日行程</h2>
+      <div class="day-panel" id="day-1126">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-11-26">26</time><span>11月 · 周四</span></div>
+          <div><span class="day-number">第 1 天</span><h3 class="day-route">上海 → 广州</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p>上海直飞广州，航班时间待补充。</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1127">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-11-27">27</time><span>11月 · 周五</span></div>
+          <div><span class="day-number">第 2 天</span><h3 class="day-route">广州</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1128">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-11-28">28</time><span>11月 · 周六</span></div>
+          <div><span class="day-number">第 3 天</span><h3 class="day-route">广州 → 顺德</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1129">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-11-29">29</time><span>11月 · 周日</span></div>
+          <div><span class="day-number">第 4 天</span><h3 class="day-route">顺德</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1130">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-11-30">30</time><span>11月 · 周一</span></div>
+          <div><span class="day-number">第 5 天</span><h3 class="day-route">顺德</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1201">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-12-01">01</time><span>12月 · 周二</span></div>
+          <div><span class="day-number">第 6 天</span><h3 class="day-route">顺德 → 珠海 → 澳门</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1202">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-12-02">02</time><span>12月 · 周三</span></div>
+          <div><span class="day-number">第 7 天</span><h3 class="day-route">澳门</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+        </ol>
+      </div>
+      <div class="day-panel" id="day-1203">
+        <header class="day-card-header">
+          <div class="day-date"><time datetime="2026-12-03">03</time><span>12月 · 周四</span></div>
+          <div><span class="day-number">第 8 天</span><h3 class="day-route">澳门 → 上海</h3></div>
+        </header>
+        <ol class="day-timeline">
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
+          <li class="timeline-meal"><span class="timeline-time">13:30</span><p>澳门返回上海</p></li>
+          <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">抵达安排待补充</p></li>
+        </ol>
+      </div>
+    </section>
+    <section class="trip-plan-section" aria-labelledby="sights-title">
+      <h2 id="sights-title">景点</h2>
+      <div class="region-tabs" role="tablist" aria-label="选择地区" hidden>
+        <button type="button" role="tab" id="tab-guangzhou" aria-controls="sights-guangzhou" aria-selected="true">广州</button>
+        <button type="button" role="tab" id="tab-shunde" aria-controls="sights-shunde" aria-selected="false" tabindex="-1">顺德</button>
+        <button type="button" role="tab" id="tab-macao" aria-controls="sights-macao" aria-selected="false" tabindex="-1">澳门</button>
+      </div>
+      <div class="region-panel" id="sights-guangzhou">
+        <h3>广州</h3>
+        <ul>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/shamian.jpg" alt="沙面的绿荫与历史建筑" width="960" height="668" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>沙面</h4><p>树荫下的欧式老建筑与江边街道，可以挑一小段慢慢走。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/chen-clan.jpg" alt="陈家祠正门与屋脊装饰" width="960" height="540" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>陈家祠</h4><p>看岭南祠堂建筑，以及屋脊、门窗上的雕刻细节。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/yongqingfang.jpg" alt="永庆坊的青砖街巷" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>永庆坊 · 恩宁路</h4><p>沿西关街巷看骑楼、青砖老屋，穿插小店与茶歇。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/pearl-river.jpg" alt="珠江上的夜游船与沿岸灯光" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>珠江夜游</h4><p>坐船看珠江两岸灯光，适合安排在晚饭后。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/canton-tower.jpg" alt="从花城广场远望广州塔夜景" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>广州塔 · 花城广场</h4><p>在花城广场远望广州塔，看看城市中轴线的夜景。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/sacred-heart.jpg" alt="圣心大教堂的双塔与正立面" width="960" height="673" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>圣心大教堂</h4><p>欣赏石砌双塔与哥特式外观，可作为老城游览中的短暂停留。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/beijing-road.jpg" alt="北京路步行街街景" width="960" height="640" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>北京路</h4><p>老城商业街，逛街吃东西时顺路看看古道遗址。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/yuexiu.jpg" alt="越秀公园的五羊石像" width="960" height="641" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>越秀公园</h4><p>五羊石像与老城绿地；园内有坡道、台阶，按体力选一小段。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/baiyun.jpg" alt="从白云山俯瞰广州城市与绿地" width="960" height="540" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>白云山</h4><p>看山林与广州城景，适合想亲近自然时单独留出时间。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">广州</span>
+              <img src="assets/guangzhou-2026/liurong.jpg" alt="六榕寺花塔" width="960" height="1280" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>六榕寺</h4><p>以花塔为特色的老城寺院，适合对寺庙建筑感兴趣时停留。</p></div>
+          </li>
+        </ul>
+        <details class="sight-credits"><summary>照片来源与授权</summary>
+          <ul>
+            <li>沙面：<a href="https://commons.wikimedia.org/wiki/File:Shamian_002.jpg" target="_blank" rel="noopener noreferrer">Rutger van der Maar</a> · <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener noreferrer">CC BY 2.0</a></li>
+            <li>陈家祠：<a href="https://commons.wikimedia.org/wiki/File:Chen_Clan_Ancestral_Hall_2025.06_01.jpg" target="_blank" rel="noopener noreferrer">Shujianyang</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>永庆坊 · 恩宁路：<a href="https://commons.wikimedia.org/wiki/File:Yongqingfang.jpg" target="_blank" rel="noopener noreferrer">钉钉</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>珠江夜游：<a href="https://commons.wikimedia.org/wiki/File:%E7%8F%A0%E6%B1%9F%E5%A4%9C%E6%B8%B8_-_Pearl_River_Night_Cruise_-_2015.12_-_panoramio.jpg" target="_blank" rel="noopener noreferrer">rheins</a> · <a href="https://creativecommons.org/licenses/by/3.0" target="_blank" rel="noopener noreferrer">CC BY 3.0</a></li>
+            <li>广州塔 · 花城广场：<a href="https://commons.wikimedia.org/wiki/File:Huacheng_Square_and_Canton_Tower_at_night_4.jpg" target="_blank" rel="noopener noreferrer">そらみみ</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>圣心大教堂：<a href="https://commons.wikimedia.org/wiki/File:Sacred_Heart_Cathedral_of_Guangzhou_2025.06_05.jpg" target="_blank" rel="noopener noreferrer">Shujianyang</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>北京路：<a href="https://commons.wikimedia.org/wiki/File:Beijing_Lu_Pedestrian_Area_2019.jpg" target="_blank" rel="noopener noreferrer">Wpcpey</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>越秀公园：<a href="https://commons.wikimedia.org/wiki/File:Five-Ram_Sculpture_of_Guangzhou.jpg" target="_blank" rel="noopener noreferrer">xiquinhosilva</a> · <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener noreferrer">CC BY 2.0</a></li>
+            <li>白云山：<a href="https://commons.wikimedia.org/wiki/File:View_of_Guangzhou_from_Mt_Baiyun,_Aug_2022.jpg" target="_blank" rel="noopener noreferrer">HMGiovanniV</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>六榕寺：<a href="https://commons.wikimedia.org/wiki/File:Temple_of_the_Six_Banyan_Trees_pagoda_2.jpg" target="_blank" rel="noopener noreferrer">Shujianyang</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener noreferrer">CC0</a></li>
+          </ul>
+        </details>
+      </div>
+      <div class="region-panel" id="sights-shunde">
+        <h3>顺德</h3>
+        <ul>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">顺德</span>
+              <img src="assets/guangzhou-2026/qinghui.jpg" alt="清晖园门洞与庭院景致" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>清晖园</h4><p>大良的岭南园林，慢看庭院、水池和窗景，方便与周边美食串联。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">顺德</span>
+              <img src="assets/guangzhou-2026/fengjian.jpg" alt="逢简水乡的河道与游船" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>逢简水乡</h4><p>沿河看老屋与小桥，也可把水乡游览和杏坛吃饭放在一起。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">顺德</span>
+              <img src="assets/guangzhou-2026/shunfengshan.jpg" alt="顺峰山公园大牌坊夜景" width="960" height="638" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>顺峰山公园</h4><p>以大牌坊、湖岸和绿地为特色，适合饭后选一段散步。</p></div>
+          </li>
+        </ul>
+        <details class="sight-credits"><summary>照片来源与授权</summary>
+          <ul>
+            <li>清晖园：<a href="https://commons.wikimedia.org/wiki/File:Qinghui_Garden.jpg" target="_blank" rel="noopener noreferrer">EditQ</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>逢简水乡：<a href="https://commons.wikimedia.org/wiki/File:River_channel_in_Fengjian.jpg" target="_blank" rel="noopener noreferrer">Yuqing Denga,Yi Huang,Chen Zhang,Juan Cheng, Weiqi Zhao</a> · <a href="https://creativecommons.org/licenses/by/4.0" target="_blank" rel="noopener noreferrer">CC BY 4.0</a></li>
+            <li>顺峰山公园：<a href="https://commons.wikimedia.org/wiki/File:Shunfeng_Park_Paifang_(night).jpg" target="_blank" rel="noopener noreferrer">Caiguanhao</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
+          </ul>
+        </details>
+      </div>
+      <div class="region-panel" id="sights-macao">
+        <h3>澳门</h3>
+        <ul>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/senado.jpg" alt="议事亭前地的铺地与历史建筑" width="960" height="672" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>议事亭前地</h4><p>波浪纹铺地与葡式建筑相映，是澳门老城区的一处中心广场。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/st-dominic.jpg" alt="澳门玫瑰堂的黄色正立面" width="960" height="641" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>玫瑰堂</h4><p>黄色立面与绿色门窗很醒目，可和议事亭前地一起游览。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/st-paul.jpg" alt="澳门大三巴牌坊全景，黑白照片" width="960" height="692" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>大三巴牌坊</h4><p>细看教堂遗址立面的雕刻；前方有台阶，可按体力决定走到哪里。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/a-ma.jpg" alt="妈阁庙山门与石阶" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>妈阁庙</h4><p>沿山势展开的古庙，感受澳门传统信仰与旧城氛围。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/taipa.jpg" alt="氹仔官也街夜景" width="960" height="672" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>氹仔旧城区</h4><p>围绕官也街一带逛老街、吃小食，感受与澳门半岛不同的街区气息。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/cotai.jpg" alt="路氹片区伦敦人酒店外观" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>路氹片区</h4><p>以大型度假酒店与主题建筑为主，可选择一处慢逛。</p></div>
+          </li>
+        </ul>
+        <details class="sight-credits"><summary>照片来源与授权</summary>
+          <ul>
+            <li>议事亭前地：<a href="https://commons.wikimedia.org/wiki/File:Senado_Square_Macao.jpg" target="_blank" rel="noopener noreferrer">Georgio</a> · <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
+            <li>玫瑰堂：<a href="https://commons.wikimedia.org/wiki/File:Macau_Igreja_de_S%C3%A3o_Domingos_(3454555617).jpg" target="_blank" rel="noopener noreferrer">Sylvain Kalache from San Francisco, USA</a> · <a href="https://creativecommons.org/licenses/by/2.0" target="_blank" rel="noopener noreferrer">CC BY 2.0</a></li>
+            <li>大三巴牌坊：<a href="https://commons.wikimedia.org/wiki/File:The_Ruins_of_St._Paul%27s_in_Macau.jpg" target="_blank" rel="noopener noreferrer">BenjPhoto</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>妈阁庙：<a href="https://commons.wikimedia.org/wiki/File:Sanmon_of_A-Ma_Temple.jpg" target="_blank" rel="noopener noreferrer">No1lovesu</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>氹仔旧城区：<a href="https://commons.wikimedia.org/wiki/File:Rua_do_Cunha.jpg" target="_blank" rel="noopener noreferrer">Iidxplus</a> · <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
+            <li>路氹片区：<a href="https://commons.wikimedia.org/wiki/File:MC_%E6%BE%B3%E9%96%80_Macau_%E8%B7%AF%E6%B0%B9_Cotai_Avenue_Strip_Sands_Cotai_Central_%E5%80%AB%E6%95%A6%E4%BA%BA%E9%85%92%E5%BA%97_The_Londoner_Hotel_November_2023_R12S_02.jpg" target="_blank" rel="noopener noreferrer">Kamfutiam Georgez</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener noreferrer">CC0</a></li>
+          </ul>
+        </details>
+      </div>
+    </section>
+  </main>
+  <script>
+    const dateTabs = document.querySelector('.date-tabs');
+    document.querySelectorAll('.day-panel').forEach((panel) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.id = `tab-${panel.id}`;
+      button.setAttribute('role', 'tab');
+      button.setAttribute('aria-controls', panel.id);
+      button.textContent = panel.querySelector('time').dateTime.slice(5).replace('-', '/');
+      const city = document.createElement('span');
+      city.textContent = panel.querySelector('.day-route').textContent;
+      button.append(city);
+      dateTabs.append(button);
+    });
+    document.querySelectorAll('[role="tablist"]').forEach((tablist) => {
+      const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+      function selectTab(selected) {
+        tabs.forEach((tab) => {
+          const active = tab === selected;
+          tab.setAttribute('aria-selected', String(active));
+          tab.tabIndex = active ? 0 : -1;
+          document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+        });
+      }
+      tabs.forEach((tab, index) => {
+        const panel = document.getElementById(tab.getAttribute('aria-controls'));
+        panel.setAttribute('role', 'tabpanel');
+        panel.setAttribute('aria-labelledby', tab.id);
+        panel.tabIndex = 0;
+        tab.addEventListener('click', () => selectTab(tab));
+        tab.addEventListener('keydown', (event) => {
+          const destinations = { ArrowRight: (index + 1) % tabs.length, ArrowLeft: (index + tabs.length - 1) % tabs.length, Home: 0, End: tabs.length - 1 };
+          if (!(event.key in destinations)) return;
+          event.preventDefault();
+          const next = tabs[destinations[event.key]];
+          selectTab(next);
+          next.focus();
+        });
+      });
+      selectTab(tabs[0]);
+      tablist.hidden = false;
+    });
+  </script>
+</body>
+</html>
