@@ -1,5 +1,14 @@
 [
   {
+    "id": "guangzhou-2026",
+    "title": "广州之行",
+    "startDate": "2026-11-26",
+    "endDate": "2026-12-03",
+    "days": 8,
+    "route": "上海 · 广州 · 顺德 · 珠海 · 澳门",
+    "href": "/guangzhou-2026.html"
+  },
+  {
     "id": "shanghai-japan-2026",
     "title": "邮轮关西之旅",
     "startDate": "2026-10-04",
@@ -11,6 +20,7 @@
     "cover": "assets/covers/kyoto-2026.png",
     "coverAlt": "晨光中的京都石板街巷、木造町屋与八坂塔，AI 生成的主题封面",
     "coverNote": "AI 生成 · 京都主题封面",
-    "data": "/trip-data.json"
+    "data": "/trip-data.json",
+    "href": "/trip.html?trip=shanghai-japan-2026#itinerary"
   }
 ]

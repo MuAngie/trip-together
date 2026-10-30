@@ -3,21 +3,18 @@
   const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const dateLabel = (date) => date.replaceAll("-", ".");
 
-  function card(trip, index) {
+  function card(trip) {
     const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Shanghai", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
     const status = today > trip.endDate ? "已收藏 · 旅行回忆" : today < trip.startDate ? "即将出发" : "旅途中";
     const id = escapeHtml(trip.id);
-    return `<details class="journey-card" id="trip-${id}">
+    const hasCover = Boolean(trip.cover);
+    return `<details class="journey-card${hasCover ? " has-cover" : ""}" id="trip-${id}">
       <summary>
-        <div class="journey-visual">
-          <img class="journey-cover" src="${escapeHtml(trip.cover)}" alt="${escapeHtml(trip.coverAlt || trip.title)}" width="960" height="440" ${index ? 'loading="lazy"' : 'fetchpriority="high"'}>
-          ${trip.coverNote ? `<small class="journey-cover-note">${escapeHtml(trip.coverNote)}</small>` : ""}
-        </div>
+        ${hasCover ? `<img class="journey-backdrop" src="${escapeHtml(trip.cover)}" alt="" aria-hidden="true" loading="lazy">` : ""}
         <div class="journey-summary">
-          <div class="journey-meta"><span class="journey-number">旅程 / ${String(index + 1).padStart(2, "0")}</span><span class="journey-status">${status}</span></div>
+          <div class="journey-meta"><p class="journey-dates"><time datetime="${escapeHtml(trip.startDate)}">${escapeHtml(dateLabel(trip.startDate))}</time><span>至</span><time datetime="${escapeHtml(trip.endDate)}">${escapeHtml(dateLabel(trip.endDate))}</time></p><span class="journey-status">${status}</span></div>
           <h3>${escapeHtml(trip.title)}</h3><p class="journey-route">${escapeHtml(trip.route)}</p>
-          <p class="journey-dates">${escapeHtml(dateLabel(trip.startDate))}<span>至</span>${escapeHtml(dateLabel(trip.endDate))}</p>
-          <div class="journey-bottom"><span>${escapeHtml(trip.days)} 天${trip.travelers ? ` · ${escapeHtml(trip.travelers)} 人同行` : ""}</span><span class="journey-links"><a class="journey-itinerary" href="/trip.html?trip=${id}#itinerary" aria-label="查看${escapeHtml(trip.title)}的完整行程">查看行程 <span aria-hidden="true">↗</span></a><span class="journey-toggle">展开照片</span></span></div>
+          <div class="journey-bottom"><span>${escapeHtml(trip.days)} 天${trip.travelers ? ` · ${escapeHtml(trip.travelers)} 人同行` : ""}</span><span class="journey-links"><a class="journey-itinerary" href="${escapeHtml(trip.href)}" aria-label="查看${escapeHtml(trip.title)}的完整行程">查看行程 <span aria-hidden="true">↗</span></a><span class="journey-toggle">展开照片</span></span></div>
         </div>
       </summary>
       <div class="journey-details">
@@ -63,7 +60,7 @@
         const nextYear = trip.startDate.slice(0, 4);
         const heading = nextYear !== year ? `<h2 class="collection-year">${escapeHtml(nextYear)}<span></span><small>${trips.filter((item) => item.startDate.startsWith(nextYear)).length} 次旅行</small></h2>` : "";
         year = nextYear;
-        return heading + card(trip, index);
+        return heading + card(trip);
       }).join("") || "<p>还没有旅行记录，第一段旅程将从这里开始。</p>";
       document.querySelectorAll(".journey-card").forEach((details) => {
         details.addEventListener("toggle", () => {
