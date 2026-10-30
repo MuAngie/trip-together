@@ -1,0 +1,52 @@
+.date-tabs { position: sticky; top: 0; z-index: 5; background: var(--collection-bg, oklch(96% .012 85)); }
+.date-tabs button { position: relative; }
+.day-panel, #sights-title { scroll-margin-top: 120px; }
+.planner-save-note { margin: -4px 0 12px; color: var(--collection-muted); font-size: 14px; }
+.planner-button, .plan-actions summary, .plan-time input, .plan-move select { min-height: 44px; font: inherit; }
+.planner-button { padding: 9px 14px; border: 1px solid var(--collection-line); border-radius: 8px; background: var(--collection-surface); color: var(--collection-accent); cursor: pointer; }
+.planner-button:hover { border-color: var(--collection-accent); }
+.planner-button:disabled { opacity: .45; cursor: default; }
+.planner-button:focus-visible, .plan-actions summary:focus-visible, .plan-time input:focus-visible, .plan-move select:focus-visible { outline: 2px solid var(--collection-accent); outline-offset: 3px; }
+.plan-transport { margin: 0; padding: 12px 20px; border-bottom: 1px dashed var(--collection-line); font-size: 16px; }
+.plan-list { list-style: none; padding: 0 20px; margin: 0; }
+.plan-empty { padding: 18px 0 4px; color: var(--collection-muted); font-size: 16px; }
+.plan-stop { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 2px 12px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--collection-line); }
+.plan-stop > img { width: 72px; height: 80px; object-fit: cover; border-radius: 8px; }
+.plan-stop h4 { margin: 0 0 6px; font-size: 19px; }
+.plan-stop-copy > p { margin: 0; font-size: 15px; line-height: 1.55; color: var(--collection-muted); }
+.plan-time, .plan-move { display: flex; align-items: center; gap: 6px; margin: 0; font-size: 13px; color: var(--collection-muted); white-space: nowrap; }
+.plan-time input, .plan-move select { min-height: 36px; min-width: 0; padding: 4px 6px; border: 1px solid var(--collection-line); border-radius: 8px; color: var(--collection-ink); background: transparent; font-size: 13px; }
+.plan-time input { width: 110px; }
+.plan-move select { width: 146px; }
+.plan-actions { grid-column: 2 / -1; font-size: 13px; }
+.plan-actions summary { width: fit-content; min-height: 36px; padding: 7px 0; color: var(--collection-muted); cursor: pointer; }
+.plan-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; padding: 2px 0 6px; }
+.plan-order { display: flex; gap: 4px; }
+.plan-actions .planner-button { min-height: 36px; margin: 0; padding: 5px 8px; border-color: transparent; background: transparent; font-size: 13px; }
+.plan-actions .planner-button:hover:not(:disabled) { background: oklch(94% .012 85); }
+.plan-remove { grid-column: 3; grid-row: 1; border: 0; padding-inline: 4px; font-size: 14px; color: oklch(48% .1 35); }
+.plan-add { display: block; margin: 12px auto 16px; }
+.catalog-context { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: 15px; }
+.catalog-context > span { min-width: 0; }
+.catalog-context .planner-button { flex-shrink: 0; }
+.sight-card { display: flex; flex-direction: column; }
+.sight-copy { display: flex; flex: 1; flex-direction: column; }
+.sight-add { align-self: flex-end; width: auto; margin-top: auto; padding: 10px 2px 4px 10px; border: 0; background: transparent; font-size: 13px; font-weight: 400; }
+.sight-add:hover:not([aria-disabled="true"]) { text-decoration: underline; text-underline-offset: 4px; }
+.sight-add[aria-disabled="true"] { background: transparent; color: var(--collection-muted); cursor: default; }
+.planner-notice { position: fixed; bottom: max(16px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 10; display: flex; align-items: center; gap: 16px; max-width: calc(100% - 32px); width: max-content; padding: 10px 16px; border: 1px solid var(--collection-line); border-radius: 16px; background: var(--collection-surface); box-shadow: 0 4px 18px oklch(29% .025 245 / .12); font-size: 15px; }
+.planner-notice[hidden], .planner-notice button[hidden] { display: none; }
+.planner-notice button { flex-shrink: 0; }
+.trip-plan { padding-bottom: 120px; }
+@media (max-width: 480px) {
+  .plan-list { padding-inline: 16px; }
+  .plan-stop { grid-template-columns: 56px minmax(0, 1fr) auto; gap: 2px 10px; }
+  .plan-stop > img { width: 56px; height: 66px; }
+  .plan-stop h4 { font-size: 18px; }
+  .plan-stop-copy > p { font-size: 14px; }
+  .plan-transport { padding: 12px 16px; }
+  .catalog-context { font-size: 14px; }
+}
+@media (pointer: coarse) {
+  .plan-actions summary, .plan-actions .planner-button, .plan-time input, .plan-move select { min-height: 44px; }
+}
