@@ -76,11 +76,15 @@
       .sight-copy p { font-size: 15px; }
     }
   </style>
-  <link rel="stylesheet" href="guangzhou-planner.css?v=20261029-5">
+  <link rel="stylesheet" href="guangzhou-planner.css?v=20261102-2">
+  <link rel="stylesheet" href="guangzhou-region-maps.css?v=20261102-2">
 </head>
 <body class="collection-page">
   <main class="trip-plan">
-    <a class="trip-plan-back" href="/">← 返回我们的旅行</a>
+    <nav style="display:flex;align-items:center;justify-content:space-between;gap:16px" aria-label="广州之行">
+      <a class="trip-plan-back" href="/">← 返回我们的旅行</a>
+      <a class="trip-plan-back" href="guangzhou-ledger.html">记账 ↗</a>
+    </nav>
     <header>
       <h1>广州之行</h1>
       <p class="trip-plan-dates">2026.11.26—12.03 · 八天七晚</p>
@@ -177,85 +181,92 @@
         </ol>
       </div>
     </section>
-    <section class="trip-plan-section" aria-labelledby="sights-title">
+    <section class="trip-plan-section" aria-label="景点、美食与口岸交通">
+      <div class="catalog-tabs" id="catalog-tabs" role="tablist" aria-label="选择内容" hidden>
+        <button type="button" role="tab" id="tab-catalog-sights" aria-controls="catalog-sights" aria-selected="true">景点</button>
+        <button type="button" role="tab" id="tab-catalog-food" aria-controls="catalog-food" aria-selected="false" tabindex="-1">美食</button>
+        <button type="button" role="tab" id="tab-catalog-ports" aria-controls="catalog-ports" aria-selected="false" tabindex="-1">口岸交通</button>
+      </div>
+      <div class="catalog-panel" id="catalog-sights">
       <h2 id="sights-title">景点</h2>
+      <p class="duration-note">建议时长按轻松慢游估算，不含景点间交通、正餐及排队，个别体验见卡片说明。</p>
       <div class="region-tabs" role="tablist" aria-label="选择地区" hidden>
         <button type="button" role="tab" id="tab-guangzhou" aria-controls="sights-guangzhou" aria-selected="true">广州</button>
         <button type="button" role="tab" id="tab-shunde" aria-controls="sights-shunde" aria-selected="false" tabindex="-1">顺德</button>
         <button type="button" role="tab" id="tab-macao" aria-controls="sights-macao" aria-selected="false" tabindex="-1">澳门</button>
       </div>
       <div class="region-panel" id="sights-guangzhou">
-        <h3>广州</h3>
+        <h3 hidden>广州</h3>
         <ul>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/shamian.jpg" alt="沙面的绿荫与历史建筑" width="960" height="668" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>沙面</h4><p>树荫下的欧式老建筑与江边街道，可以挑一小段慢慢走。</p></div>
+            <div class="sight-copy"><h4>沙面</h4><p>树荫下的欧式老建筑与江边街道，可以挑一小段慢慢走。</p><p class="sight-duration">建议游览：1—1.5 小时，选树荫街道与江边慢走。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/chen-clan.jpg" alt="陈家祠正门与屋脊装饰" width="960" height="540" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>陈家祠</h4><p>看岭南祠堂建筑，以及屋脊、门窗上的雕刻细节。</p></div>
+            <div class="sight-copy"><h4>陈家祠</h4><p>看岭南祠堂建筑，以及屋脊、门窗上的雕刻细节。</p><p class="sight-duration">建议游览：1—1.5 小时，慢看建筑与雕刻细节。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/yongqingfang.jpg" alt="永庆坊的青砖街巷" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>永庆坊 · 恩宁路</h4><p>沿西关街巷看骑楼、青砖老屋，穿插小店与茶歇。</p></div>
+            <div class="sight-copy"><h4>永庆坊 · 恩宁路</h4><p>沿西关街巷看骑楼、青砖老屋，穿插小店与茶歇。</p><p class="sight-duration">建议游览：1.5—2 小时，含街巷闲逛与短暂茶歇。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/pearl-river.jpg" alt="珠江上的夜游船与沿岸灯光" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>珠江夜游</h4><p>坐船看珠江两岸灯光，适合安排在晚饭后。</p></div>
+            <div class="sight-copy"><h4>珠江夜游</h4><p>坐船看珠江两岸灯光，适合安排在晚饭后。</p><p class="sight-duration">建议游览：1.5—2 小时，作为登船、游船与离船的行程预留；实际航程以所选船票为准。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/canton-tower.jpg" alt="从花城广场远望广州塔夜景" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>广州塔 · 花城广场</h4><p>在花城广场远望广州塔，看看城市中轴线的夜景。</p></div>
+            <div class="sight-copy"><h4>广州塔 · 花城广场</h4><p>在花城广场远望广州塔，看看城市中轴线的夜景。</p><p class="sight-duration">建议游览：1—1.5 小时，以广场与江边远眺为主，不含登塔。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/sacred-heart.jpg" alt="圣心大教堂的双塔与正立面" width="960" height="673" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>圣心大教堂</h4><p>欣赏石砌双塔与哥特式外观，可作为老城游览中的短暂停留。</p></div>
+            <div class="sight-copy"><h4>圣心大教堂</h4><p>欣赏石砌双塔与哥特式外观，可作为老城游览中的短暂停留。</p><p class="sight-duration">建议游览：30—45 分钟；如开放参观，可顺路入内。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/beijing-road.jpg" alt="北京路步行街街景" width="960" height="640" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>北京路</h4><p>老城商业街，逛街吃东西时顺路看看古道遗址。</p></div>
+            <div class="sight-copy"><h4>北京路</h4><p>老城商业街，逛街吃东西时顺路看看古道遗址。</p><p class="sight-duration">建议游览：1—1.5 小时，边逛边看古道遗址，正餐另留时间。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/yuexiu.jpg" alt="越秀公园的五羊石像" width="960" height="641" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>越秀公园</h4><p>五羊石像与老城绿地；园内有坡道、台阶，按体力选一小段。</p></div>
+            <div class="sight-copy"><h4>越秀公园</h4><p>五羊石像与老城绿地；园内有坡道、台阶，按体力选一小段。</p><p class="sight-duration">建议游览：1—1.5 小时，只选五羊石像周边一小段，不走全园。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/baiyun.jpg" alt="从白云山俯瞰广州城市与绿地" width="960" height="540" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>白云山</h4><p>看山林与广州城景，适合想亲近自然时单独留出时间。</p></div>
+            <div class="sight-copy"><h4>白云山</h4><p>看山林与广州城景，适合想亲近自然时单独留出时间。</p><p class="sight-duration">建议游览：2—3 小时，搭配索道或观光车游览；全程徒步需另留更长时间。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">广州</span>
               <img src="assets/guangzhou-2026/liurong.jpg" alt="六榕寺花塔" width="960" height="1280" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>六榕寺</h4><p>以花塔为特色的老城寺院，适合对寺庙建筑感兴趣时停留。</p></div>
+            <div class="sight-copy"><h4>六榕寺</h4><p>以花塔为特色的老城寺院，适合对寺庙建筑感兴趣时停留。</p><p class="sight-duration">建议游览：30—45 分钟，以寺院和花塔外观为主。</p></div>
           </li>
         </ul>
         <details class="sight-credits"><summary>照片来源与授权</summary>
@@ -274,28 +285,28 @@
         </details>
       </div>
       <div class="region-panel" id="sights-shunde">
-        <h3>顺德</h3>
+        <h3 hidden>顺德</h3>
         <ul>
           <li class="sight-card">
             <figure>
               <span class="sight-region">顺德</span>
               <img src="assets/guangzhou-2026/qinghui.jpg" alt="清晖园门洞与庭院景致" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>清晖园</h4><p>大良的岭南园林，慢看庭院、水池和窗景，方便与周边美食串联。</p></div>
+            <div class="sight-copy"><h4>清晖园</h4><p>大良的岭南园林，慢看庭院、水池和窗景，方便与周边美食串联。</p><p class="sight-duration">建议游览：1—1.5 小时，慢看园林，周边吃东西另算。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">顺德</span>
               <img src="assets/guangzhou-2026/fengjian.jpg" alt="逢简水乡的河道与游船" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>逢简水乡</h4><p>沿河看老屋与小桥，也可把水乡游览和杏坛吃饭放在一起。</p></div>
+            <div class="sight-copy"><h4>逢简水乡</h4><p>沿河看老屋与小桥，也可把水乡游览和杏坛吃饭放在一起。</p><p class="sight-duration">建议游览：1.5—2.5 小时，含沿河闲逛；如乘船，另留候船时间。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">顺德</span>
               <img src="assets/guangzhou-2026/shunfengshan.jpg" alt="顺峰山公园大牌坊夜景" width="960" height="638" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>顺峰山公园</h4><p>以大牌坊、湖岸和绿地为特色，适合饭后选一段散步。</p></div>
+            <div class="sight-copy"><h4>顺峰山公园</h4><p>以大牌坊、湖岸和绿地为特色，适合饭后选一段散步。</p><p class="sight-duration">建议游览：45—60 分钟，选大牌坊和附近湖岸散步。</p></div>
           </li>
         </ul>
         <details class="sight-credits"><summary>照片来源与授权</summary>
@@ -307,49 +318,70 @@
         </details>
       </div>
       <div class="region-panel" id="sights-macao">
-        <h3>澳门</h3>
+        <h3 hidden>澳门</h3>
         <ul>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/senado.jpg" alt="议事亭前地的铺地与历史建筑" width="960" height="672" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>议事亭前地</h4><p>波浪纹铺地与葡式建筑相映，是澳门老城区的一处中心广场。</p></div>
+            <div class="sight-copy"><h4>议事亭前地</h4><p>波浪纹铺地与葡式建筑相映，是澳门老城区的一处中心广场。</p><p class="sight-duration">建议游览：20—30 分钟，看铺地与周边建筑，不含相邻景点。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/st-dominic.jpg" alt="澳门玫瑰堂的黄色正立面" width="960" height="641" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>玫瑰堂</h4><p>黄色立面与绿色门窗很醒目，可和议事亭前地一起游览。</p></div>
+            <div class="sight-copy"><h4>玫瑰堂</h4><p>黄色立面与绿色门窗很醒目，可和议事亭前地一起游览。</p><p class="sight-duration">建议游览：20—30 分钟，含外观与开放时的教堂内部参观。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/st-paul.jpg" alt="澳门大三巴牌坊全景，黑白照片" width="960" height="692" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>大三巴牌坊</h4><p>细看教堂遗址立面的雕刻；前方有台阶，可按体力决定走到哪里。</p></div>
+            <div class="sight-copy"><h4>大三巴牌坊</h4><p>细看教堂遗址立面的雕刻；前方有台阶，可按体力决定走到哪里。</p><p class="sight-duration">建议游览：30—45 分钟，含前地、石阶及立面欣赏，不含大炮台。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/a-ma.jpg" alt="妈阁庙山门与石阶" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>妈阁庙</h4><p>沿山势展开的古庙，感受澳门传统信仰与旧城氛围。</p></div>
+            <div class="sight-copy"><h4>妈阁庙</h4><p>沿山势展开的古庙，感受澳门传统信仰与旧城氛围。</p><p class="sight-duration">建议游览：30—60 分钟，按体力选择台阶与参观范围。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/taipa.jpg" alt="氹仔官也街夜景" width="960" height="672" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>氹仔旧城区</h4><p>围绕官也街一带逛老街、吃小食，感受与澳门半岛不同的街区气息。</p></div>
+            <div class="sight-copy"><h4>氹仔旧城区</h4><p>围绕官也街一带逛老街、吃小食，感受与澳门半岛不同的街区气息。</p><p class="sight-duration">建议游览：1—1.5 小时，围绕官也街与附近老街慢逛，正餐另算。</p></div>
           </li>
           <li class="sight-card">
             <figure>
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/cotai.jpg" alt="路氹片区伦敦人酒店外观" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>路氹片区</h4><p>以大型度假酒店与主题建筑为主，可选择一处慢逛。</p></div>
+            <div class="sight-copy"><h4>路氹片区</h4><p>以大型度假酒店与主题建筑为主，可选择一处慢逛。</p><p class="sight-duration">建议游览：1—2 小时，挑一处酒店或一段街区；若已单独安排下列酒店，不重复累加。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/venetian.jpg" alt="威尼斯人室内运河、拱桥与贡多拉船" width="800" height="600" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>威尼斯人</h4><p>室内运河穿过仿威尼斯街区，蓝天穹顶、拱桥和贡多拉是主要特色。可沿河看建筑、逛店或乘船，适合避雨和穿插茶歇；商场较大，选一段慢逛即可。</p><p class="sight-duration">建议游览：1.5—2 小时，以运河街区慢逛为主；购物、正餐及贡多拉候船另留时间。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/parisian.jpg" alt="巴黎人半比例巴黎铁塔与酒店的夜间灯光" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>巴黎人</h4><p>以半比例巴黎铁塔和法式建筑为特色，夜间有铁塔灯光秀。可在对面的巴黎人花园看铁塔全景，也可登观景台俯瞰路氹；傍晚至夜间更适合欣赏灯景。</p><p class="sight-duration">建议游览：1—1.5 小时，含铁塔外观、花园及夜间灯光；登塔建议额外预留约 1 小时。</p></div>
+          </li>
+          <li class="sight-card">
+            <figure>
+              <span class="sight-region">澳门</span>
+              <img src="assets/guangzhou-2026/wynn-palace.jpg" alt="永利皇宫表演湖边的观光缆车与酒店外观" width="960" height="720" loading="lazy" decoding="async">
+            </figure>
+            <div class="sight-copy"><h4>永利皇宫</h4><p>以表演湖水舞、跨湖观光缆车和巨型花卉装置为特色。湖边可看音乐喷泉，乘缆车从空中看酒店与湖景，再入内看花艺；想少走路，可集中游览湖边和大堂。</p><p class="sight-duration">建议游览：1—1.5 小时，含湖边观景与大堂花艺；乘缆车另留排队时间。</p></div>
           </li>
         </ul>
         <details class="sight-credits"><summary>照片来源与授权</summary>
@@ -360,11 +392,87 @@
             <li>妈阁庙：<a href="https://commons.wikimedia.org/wiki/File:Sanmon_of_A-Ma_Temple.jpg" target="_blank" rel="noopener noreferrer">No1lovesu</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
             <li>氹仔旧城区：<a href="https://commons.wikimedia.org/wiki/File:Rua_do_Cunha.jpg" target="_blank" rel="noopener noreferrer">Iidxplus</a> · <a href="http://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
             <li>路氹片区：<a href="https://commons.wikimedia.org/wiki/File:MC_%E6%BE%B3%E9%96%80_Macau_%E8%B7%AF%E6%B0%B9_Cotai_Avenue_Strip_Sands_Cotai_Central_%E5%80%AB%E6%95%A6%E4%BA%BA%E9%85%92%E5%BA%97_The_Londoner_Hotel_November_2023_R12S_02.jpg" target="_blank" rel="noopener noreferrer">Kamfutiam Georgez</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener noreferrer">CC0</a></li>
+            <li>威尼斯人：<a href="https://commons.wikimedia.org/wiki/File:The_Venetian_Macao_SanLucaCanal.jpg" target="_blank" rel="noopener noreferrer">WiNG</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
+            <li>巴黎人：<a href="https://commons.wikimedia.org/wiki/File:The_Parisian_Macao_15-12-2025.jpg" target="_blank" rel="noopener noreferrer">LN9267</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>永利皇宫：<a href="https://commons.wikimedia.org/wiki/File:Wynn_Palace_02.jpg" target="_blank" rel="noopener noreferrer">Doraemon.tvb</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
+          </ul>
+        </details>
+        <details class="sight-credits"><summary>景点资料来源</summary>
+          <ul>
+            <li><a href="https://www.macaotourism.gov.mo/zh-hans/shopping/shopping-malls/shoppes-at-venetian" target="_blank" rel="noopener noreferrer">威尼斯人购物中心 · 澳门旅游局</a></li>
+            <li><a href="https://www.parisianmacao.com.cn/amenities/eiffel-tower.html" target="_blank" rel="noopener noreferrer">巴黎铁塔 · 巴黎人官网</a>、<a href="https://www.parisianmacao.com/amenities.html" target="_blank" rel="noopener noreferrer">巴黎人花园与游览设施</a></li>
+            <li><a href="https://www.wynnresortsmacau.com.cn/zh-cn/wynn-palace/experiences/entertainment/sky-cab" target="_blank" rel="noopener noreferrer">观光缆车 · 永利皇宫官网</a>、<a href="https://www.newsroom.wynnresorts.com/sc/wynnpalace" target="_blank" rel="noopener noreferrer">表演湖与花卉艺术</a></li>
           </ul>
         </details>
       </div>
+      </div>
+      <div class="catalog-panel" id="catalog-food">
+        <h2 id="food-title">美食</h2>
+        <div class="region-tabs" role="tablist" aria-label="选择美食地区" hidden>
+          <button type="button" role="tab" id="tab-food-guangzhou" aria-controls="food-guangzhou" aria-selected="true">广州</button>
+          <button type="button" role="tab" id="tab-food-shunde" aria-controls="food-shunde" aria-selected="false" tabindex="-1">顺德</button>
+          <button type="button" role="tab" id="tab-food-macao" aria-controls="food-macao" aria-selected="false" tabindex="-1">澳门</button>
+        </div>
+        <div class="region-panel" id="food-guangzhou">
+          <h3>广州</h3><p class="catalog-empty">美食店铺待补充</p>
+        </div>
+        <div class="region-panel" id="food-shunde">
+          <h3>顺德</h3><p class="catalog-empty">美食店铺待补充</p>
+        </div>
+        <div class="region-panel" id="food-macao">
+          <h3>澳门</h3><p class="catalog-empty">美食店铺待补充</p>
+        </div>
+      </div>
+      <div class="catalog-panel" id="catalog-ports">
+        <section class="port-section" aria-labelledby="ports-title">
+          <header class="port-section-heading"><h2 id="ports-title">口岸交通</h2><span>核对于 2026.11.02</span></header>
+          <p class="port-intro">选择建议：先游澳门半岛老城，可考虑拱北；先去威尼斯人、巴黎人、永利皇宫所在的路氹区，可考虑横琴。以下按公共交通衔接整理。</p>
+          <div class="port-list">
+            <article class="port-info">
+              <h3>拱北口岸 · 澳门关闸</h3>
+              <p class="port-hours">旅检通关：每日 06:00—次日 01:00</p>
+              <dl>
+                <div><dt>珠海侧地址</dt><dd>珠海市香洲区拱北迎宾南路南端，拱北口岸旅检大厅（珠海站旁）。导航搜索“拱北口岸”。</dd></div>
+                <div><dt>澳门侧地址</dt><dd>澳门半岛关闸广场，关闸边检大楼。与珠海侧步行相连。</dd></div>
+                <div><dt>通关方式</dt><dd>经珠海侧出境、澳门侧入境，分别接受两地查验；携带行李步行通过。</dd></div>
+              </dl>
+              <details class="port-details"><summary>交通接驳与查询</summary>
+                <dl>
+                  <div><dt>到达口岸</dt><dd>乘城际铁路抵达“珠海站”，出站后沿拱北口岸指引步行。顺德出发的具体车次、是否需要换乘，以 12306 当日查询为准。</dd></div>
+                  <div><dt>过关之后</dt><dd>关闸广场地下客运总站可乘澳门公共巴士，也可转出租车；酒店接驳巴士须另查目的酒店的站点与班次。</dd></div>
+                  <div><dt>适合前往</dt><dd>澳门半岛老城区，如议事亭前地、大三巴、玫瑰堂一带。此为按区域位置给出的选择建议。</dd></div>
+                  <div><dt>口岸查询</dt><dd>澳门海关关闸口岸海关站：<a href="tel:+85384900515">+853 8490 0515</a>（海关事务查询）。</dd></div>
+                </dl>
+              </details>
+              <p class="port-links"><a href="https://uri.amap.com/search?keyword=%E6%8B%B1%E5%8C%97%E5%8F%A3%E5%B2%B8&amp;city=%E7%8F%A0%E6%B5%B7" target="_blank" rel="noopener noreferrer">地图查看</a><a href="https://www.macaotourism.gov.mo/zh-hans/sightseeing/other-attractions/border-gate-portas-do-cerco" target="_blank" rel="noopener noreferrer">澳门旅游局资料</a></p>
+            </article>
+            <article class="port-info">
+              <h3>横琴口岸 · 澳门口岸区</h3>
+              <p class="port-hours">旅检通关：24 小时开放</p>
+              <dl>
+                <div><dt>珠海侧地址</dt><dd>珠海横琴琴海东路与顺景路交汇处西约 150 米，横琴口岸旅检大厅。导航搜索“横琴口岸”。</dd></div>
+                <div><dt>澳门侧地址</dt><dd>横琴口岸澳门口岸区，设于横琴岛的口岸大楼内；过关后再乘轻轨、巴士或出租车前往澳门市区。</dd></div>
+                <div><dt>通关方式</dt><dd>旅检采用“合作查验、一次放行”，在同一口岸内完成两地边检查验；按现场指引选择自助或人工通道。</dd></div>
+              </dl>
+              <details class="port-details"><summary>交通接驳与查询</summary>
+                <dl>
+                  <div><dt>到达口岸</dt><dd>可乘城际铁路至内地铁路“横琴站”，再按口岸指引步行。出发站、换乘和车次以 12306 查询为准。</dd></div>
+                  <div><dt>过关之后</dt><dd>可乘澳门轻轨“横琴线”，从澳门轻轨“横琴站”到“莲花站”，再换乘“氹仔线”；也可选择巴士或出租车。内地铁路横琴站与澳门轻轨横琴站属于不同系统，须先通关再转乘。</dd></div>
+                  <div><dt>适合前往</dt><dd>氹仔、路氹酒店区；前往威尼斯人、巴黎人、永利皇宫时，按酒店位置选择轻轨站或出租车。此为按区域位置给出的选择建议。</dd></div>
+                  <div><dt>夜间接驳</dt><dd>口岸全天通关，轻轨及酒店接驳巴士各有服务时间，夜间出行需另查末班。</dd></div>
+                  <div><dt>口岸查询</dt><dd>澳门海关横琴口岸澳门口岸区海关站：<a href="tel:+85384911631">+853 8491 1631</a>（海关事务查询）。</dd></div>
+                </dl>
+              </details>
+              <p class="port-links"><a href="https://uri.amap.com/search?keyword=%E6%A8%AA%E7%90%B4%E5%8F%A3%E5%B2%B8&amp;city=%E7%8F%A0%E6%B5%B7" target="_blank" rel="noopener noreferrer">地图查看</a><a href="https://www.hengqin.gov.cn/macao_zh_hans/hzqgl/zszy/clearance/index.html" target="_blank" rel="noopener noreferrer">合作区口岸资料</a><a href="https://www.mlm.com.mo/tc/route.html" target="_blank" rel="noopener noreferrer">轻轨线路与时刻表</a></p>
+            </article>
+          </div>
+          <p class="port-note">内地居民赴澳门旅游须持有效往来港澳通行证及澳门签注。以上为常规旅检开放时间，临时调整与当日排队以官方公告及现场为准；两地均为北京时间，无时差。</p>
+          <p class="port-links"><a href="https://www.customs.gov.mo/cn/notice_passengers_item4.html" target="_blank" rel="noopener noreferrer">口岸开放时间与查询电话</a><a href="https://www.fsm.gov.mo/psp/CHT/psp_top7_sm_12_7.html" target="_blank" rel="noopener noreferrer">横琴通关说明</a><a href="https://www.gov.mo/zh-hans/services/ps-1474/faqs/" target="_blank" rel="noopener noreferrer">出入境证件说明</a></p>
+        </section>
+      </div>
     </section>
   </main>
-  <script src="guangzhou-planner.js?v=20261029-2"></script>
+  <script src="guangzhou-planner.js?v=20261102-1"></script>
+  <script type="module" src="guangzhou-region-maps.js?v=20261102-2"></script>
 </body>
 </html>

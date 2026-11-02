@@ -90,10 +90,10 @@
     timeline.replaceWith(day.list);
     day.add = button('＋ 添加景点', () => {
       const region = day.city.includes('澳门') ? 'macao' : day.city.includes('顺德') ? 'shunde' : 'guangzhou';
+      document.getElementById('tab-catalog-sights').click();
       document.getElementById(`tab-${region}`).click();
-      const heading = document.getElementById('sights-title');
-      heading.focus({ preventScroll: true });
-      heading.scrollIntoView({ block: 'start' });
+      document.getElementById('tab-catalog-sights').focus({ preventScroll: true });
+      document.getElementById('catalog-tabs').scrollIntoView({ block: 'start' });
     });
     day.add.classList.add('plan-add');
     day.panel.append(day.add);

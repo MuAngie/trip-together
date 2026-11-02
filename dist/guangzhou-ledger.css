@@ -1,0 +1,36 @@
+.guangzhou-ledger-page {
+  --ink: var(--collection-ink);
+  --muted: var(--collection-muted);
+  --lake: oklch(40% .065 175);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+.guangzhou-ledger-main { max-width: 800px; margin-inline: auto; padding: 16px 24px 48px; }
+.guangzhou-page-nav { display: flex; align-items: center; justify-content: space-between; min-height: 44px; gap: 20px; font-size: 15px; }
+.guangzhou-page-nav a { display: inline-flex; align-items: center; min-height: 44px; text-underline-offset: 4px; }
+.guangzhou-ledger-heading h1 { margin: 16px 0 6px; font-size: 30px; line-height: 1.3; }
+.guangzhou-ledger-heading p { margin: 0; font-size: 14px; color: var(--collection-muted); }
+.guangzhou-ledger-main .ledger-app { width: 100%; min-height: 0; padding: 24px 0 0; }
+.guangzhou-ledger-main .ledger-page-header h2 { font-size: 23px; }
+.guangzhou-ledger-main .ledger-tabs { margin-top: 12px; gap: 24px; }
+.guangzhou-ledger-main .ledger-tab { font-size: 16px; font-weight: 600; }
+.guangzhou-ledger-main .ledger-amount-block { grid-template-columns: minmax(0, 1fr); }
+.guangzhou-ledger-main .ledger-field-amount .ledger-field-label { display: block; text-align: left; }
+.guangzhou-ledger-main .ledger-field-label, .guangzhou-ledger-main .ledger-person-name,
+.guangzhou-ledger-main .ledger-category-choice, .guangzhou-ledger-main .ledger-text-button,
+.guangzhou-ledger-main .ledger-person-static, .guangzhou-ledger-main .ledger-add-person small,
+.guangzhou-ledger-main .ledger-live, .guangzhou-ledger-main .ledger-split-summary,
+.guangzhou-ledger-main .ledger-form-error, .guangzhou-ledger-main .ledger-dialog-note { font-size: 14px; }
+.guangzhou-ledger-main .ledger-primary-button, .guangzhou-ledger-main .ledger-secondary-button { font-size: 15px; border-radius: 8px; }
+.guangzhou-ledger-main .ledger-entry-card, .guangzhou-ledger-main .ledger-member-stat,
+.guangzhou-ledger-main .ledger-dialog { border-radius: 16px; }
+.guangzhou-ledger-main .ledger-input, .guangzhou-ledger-main .ledger-category-choice { border-radius: 8px; }
+.guangzhou-ledger-main .ledger-amount-input { font-size: 30px; font-weight: 650; }
+.guangzhou-ledger-main .ledger-fold { margin-top: 16px; padding: 0; border: 1px solid var(--collection-line); border-radius: 16px; background: var(--collection-surface); box-shadow: none; }
+.guangzhou-ledger-main .ledger-fold > summary { min-height: 44px; padding: 12px 16px; cursor: pointer; font-size: 16px; }
+.guangzhou-ledger-main .ledger-fold > summary small { color: var(--collection-muted); font-size: 13px; }
+.guangzhou-ledger-main .ledger-fold-body { padding: 0 16px 16px; }
+.guangzhou-ledger-main .ledger-list-section > :not(summary) { margin-inline: 16px; }
+@media (max-width: 480px) {
+  .guangzhou-ledger-main { padding-inline: 16px; }
+  .guangzhou-ledger-main .ledger-category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}

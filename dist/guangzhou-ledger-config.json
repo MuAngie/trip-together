@@ -1,0 +1,9 @@
+{
+  "config": {
+    "persistence": {
+      "mode": "d1",
+      "apiBase": "/api/trip",
+      "sharedCollections": ["ledger"]
+    }
+  }
+}

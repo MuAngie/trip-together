@@ -245,5 +245,44 @@
     "description": "MC 澳門 Macau 路氹 Cotai Avenue Sands Cotai Central 倫敦人酒店 The Londoner Hotel November 2023",
     "width": 960,
     "height": 720
+  },
+  {
+    "id": "venetian",
+    "file": "venetian.jpg",
+    "title": "File:The Venetian Macao SanLucaCanal.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Venetian_Macao_SanLucaCanal.jpg",
+    "download": "https://upload.wikimedia.org/wikipedia/commons/6/69/The_Venetian_Macao_SanLucaCanal.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail_unscaled",
+    "author": "WiNG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "The Venetian Macao San Luca Canal",
+    "width": 800,
+    "height": 600
+  },
+  {
+    "id": "parisian",
+    "file": "parisian.jpg",
+    "title": "File:The Parisian Macao 15-12-2025.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Parisian_Macao_15-12-2025.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/95/The_Parisian_Macao_15-12-2025.jpg/960px-The_Parisian_Macao_15-12-2025.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "LN9267",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "description": "​這張照片在金光大道拍攝。",
+    "width": 960,
+    "height": 720
+  },
+  {
+    "id": "wynn-palace",
+    "file": "wynn-palace.jpg",
+    "title": "File:Wynn Palace 02.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Wynn_Palace_02.jpg",
+    "download": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/bf/Wynn_Palace_02.jpg/960px-Wynn_Palace_02.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+    "author": "Doraemon.tvb",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "description": "Wynn Palace, Cotai",
+    "width": 960,
+    "height": 720
   }
 ]

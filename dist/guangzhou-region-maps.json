@@ -1,0 +1,339 @@
+{
+  "coordinateSystem": "WGS84",
+  "checkedAt": "2026-11-02",
+  "regions": [
+    {
+      "id": "guangzhou",
+      "name": "广州",
+      "overview": "西侧的陈家祠、永庆坊、沙面可顺游；老城中心另成一组。东侧的花城广场、广州塔与北侧的白云山，适合分开安排。",
+      "note": "珠江夜游尚未选定码头，因此不设固定点。广州塔与花城广场分开标注，两者隔江；白云山、越秀公园和北京路标的是区域参考位置，不是精确入口。",
+      "places": [
+        {
+          "id": "chen-clan",
+          "name": "陈家祠",
+          "lat": 23.12975833,
+          "lng": 113.2405,
+          "source": "https://www.wikidata.org/wiki/Q5090739"
+        },
+        {
+          "id": "yongqingfang",
+          "name": "永庆坊 · 恩宁路",
+          "lat": 23.11804,
+          "lng": 113.2326,
+          "source": "https://www.wikidata.org/wiki/Q63925707"
+        },
+        {
+          "id": "shamian",
+          "name": "沙面",
+          "lat": 23.10944444,
+          "lng": 113.23944444,
+          "source": "https://www.wikidata.org/wiki/Q529977"
+        },
+        {
+          "id": "yuexiu",
+          "name": "越秀公园（区域参考）",
+          "lat": 23.14287,
+          "lng": 113.26026,
+          "source": "https://www.wikidata.org/wiki/Q7209907"
+        },
+        {
+          "id": "liurong",
+          "name": "六榕寺",
+          "lat": 23.13088056,
+          "lng": 113.25478889,
+          "source": "https://www.wikidata.org/wiki/Q683127"
+        },
+        {
+          "id": "beijing-road",
+          "name": "北京路（街区南端参考）",
+          "lat": 23.1207302,
+          "lng": 113.2646563,
+          "source": "https://www.openstreetmap.org/way/437762286"
+        },
+        {
+          "id": "sacred-heart",
+          "name": "圣心大教堂",
+          "lat": 23.11731667,
+          "lng": 113.25483333,
+          "source": "https://www.wikidata.org/wiki/Q1195445"
+        },
+        {
+          "id": "huacheng",
+          "name": "花城广场",
+          "lat": 23.12622222,
+          "lng": 113.31925,
+          "source": "https://www.wikidata.org/wiki/Q29469292"
+        },
+        {
+          "id": "canton-tower",
+          "name": "广州塔",
+          "lat": 23.1092,
+          "lng": 113.31914722,
+          "source": "https://www.wikidata.org/wiki/Q168400"
+        },
+        {
+          "id": "baiyun",
+          "name": "白云山（景区参考）",
+          "lat": 23.180091,
+          "lng": 113.29817,
+          "source": "https://www.wikidata.org/wiki/Q837385"
+        }
+      ],
+      "routes": [
+        {
+          "name": "西关顺游",
+          "stops": [
+            "chen-clan",
+            "yongqingfang",
+            "shamian"
+          ],
+          "mode": "点间乘车，街区内步行",
+          "tip": "从北向南串联，方向也可反过来。陈家祠看完再往永庆坊、沙面走，不必来回穿插；你们想少走路，三处之间建议公交或出租车。",
+          "image": "assets/guangzhou-2026/maps/guangzhou-route-1.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "老城中心",
+          "stops": [
+            "yuexiu",
+            "liurong",
+            "beijing-road",
+            "sacred-heart"
+          ],
+          "mode": "挑两三处，搭配乘车",
+          "tip": "按北侧公园、寺院、商业街、南侧教堂的顺序串联。四处全走会累，可只选六榕寺、北京路、圣心大教堂，并用公交或出租车衔接。",
+          "image": "assets/guangzhou-2026/maps/guangzhou-route-2.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "珠江新城夜景",
+          "stops": [
+            "huacheng",
+            "canton-tower"
+          ],
+          "mode": "隔江观景，可只留北岸",
+          "tip": "花城广场远望广州塔即可形成一段轻松夜游。两点隔江，图上连线不能直接步行；若要到塔下，乘地铁或出租车。夜游船码头选定后再接入。",
+          "image": "assets/guangzhou-2026/maps/guangzhou-route-3.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "白云山单独安排",
+          "stops": [
+            "baiyun"
+          ],
+          "mode": "单独半天更从容",
+          "tip": "与老城和珠江新城分开安排，避免为了凑景点往返城区。按体力搭配索道或观光车。",
+          "image": "assets/guangzhou-2026/maps/guangzhou-route-4.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        }
+      ],
+      "references": [
+        {
+          "label": "荔湾区官方顺游线路",
+          "url": "https://www.lw.gov.cn/attachment/7/7340/7340358/8066573.pdf"
+        },
+        {
+          "label": "花城广场位置介绍",
+          "url": "https://www.gdfao.gov.cn/zwgk/zdly/gzscfd/content/post_1333472.html"
+        }
+      ],
+      "image": "assets/guangzhou-2026/maps/guangzhou-all.svg",
+      "imageWidth": 1000,
+      "imageHeight": 820
+    },
+    {
+      "id": "shunde",
+      "name": "顺德",
+      "overview": "清晖园与顺峰山可放在同一天，两处之间乘车。逢简水乡在更西侧，建议与杏坛吃饭另排半天。",
+      "note": "清晖园、顺峰山属于大良一带，逢简在西侧杏坛。村落和公园坐标仅作区域参考，实际到达点请按入口导航。",
+      "places": [
+        {
+          "id": "qinghui",
+          "name": "清晖园",
+          "lat": 22.83838749,
+          "lng": 113.2501924,
+          "source": "https://www.wikidata.org/wiki/Q13649239"
+        },
+        {
+          "id": "shunfengshan",
+          "name": "顺峰山公园",
+          "lat": 22.82623,
+          "lng": 113.27769,
+          "source": "https://www.wikidata.org/wiki/Q13671566"
+        },
+        {
+          "id": "fengjian",
+          "name": "逢简水乡（村落参考）",
+          "lat": 22.8128,
+          "lng": 113.155,
+          "source": "https://www.wikidata.org/wiki/Q5443433"
+        }
+      ],
+      "routes": [
+        {
+          "name": "大良园林与散步",
+          "stops": [
+            "qinghui",
+            "shunfengshan"
+          ],
+          "mode": "两处之间乘车",
+          "tip": "清晖园与周边美食放在一起，饭后再乘公交或出租车去顺峰山，选湖边一小段散步。两处并非出门就到，不建议全程步行。",
+          "image": "assets/guangzhou-2026/maps/shunde-route-1.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "杏坛水乡单独半天",
+          "stops": [
+            "fengjian"
+          ],
+          "mode": "往返杏坛乘车",
+          "tip": "逢简与杏坛吃饭放在同一趟，避免一天内多次往返大良和杏坛。把水乡安排在另一半天，比夹在两个大良景点之间更顺。",
+          "image": "assets/guangzhou-2026/maps/shunde-route-2.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        }
+      ],
+      "references": [],
+      "image": "assets/guangzhou-2026/maps/shunde-all.svg",
+      "imageWidth": 1000,
+      "imageHeight": 600
+    },
+    {
+      "id": "macao",
+      "name": "澳门",
+      "overview": "议事亭前地、玫瑰堂、大三巴紧邻，可步行连逛。氹仔、路氹适合另排一天，半岛与离岛之间乘车。",
+      "note": "澳门半岛与氹仔、路氹隔海，跨区需乘车。氹仔旧城区以官也街为参考点；“路氹片区”是概括区域，不再单独设点，避免与酒店重复。",
+      "places": [
+        {
+          "id": "senado",
+          "name": "议事亭前地",
+          "lat": 22.19358333,
+          "lng": 113.53966667,
+          "source": "https://www.wikidata.org/wiki/Q837935"
+        },
+        {
+          "id": "st-dominic",
+          "name": "玫瑰堂",
+          "lat": 22.194681,
+          "lng": 113.540412,
+          "source": "https://www.wikidata.org/wiki/Q4130614"
+        },
+        {
+          "id": "st-paul",
+          "name": "大三巴牌坊",
+          "lat": 22.1975,
+          "lng": 113.54055556,
+          "source": "https://www.wikidata.org/wiki/Q1551411"
+        },
+        {
+          "id": "a-ma",
+          "name": "妈阁庙",
+          "lat": 22.186111,
+          "lng": 113.531139,
+          "source": "https://www.wikidata.org/wiki/Q2149114"
+        },
+        {
+          "id": "taipa",
+          "name": "氹仔旧城区 · 官也街",
+          "lat": 22.15368,
+          "lng": 113.55692,
+          "source": "https://www.wikidata.org/wiki/Q7375637"
+        },
+        {
+          "id": "venetian",
+          "name": "威尼斯人",
+          "lat": 22.14861111,
+          "lng": 113.56055556,
+          "source": "https://www.wikidata.org/wiki/Q1156708"
+        },
+        {
+          "id": "parisian",
+          "name": "巴黎人",
+          "lat": 22.1436757,
+          "lng": 113.5607181,
+          "source": "https://www.wikidata.org/wiki/Q18207985"
+        },
+        {
+          "id": "wynn-palace",
+          "name": "永利皇宫",
+          "lat": 22.1472,
+          "lng": 113.5681,
+          "source": "https://www.wikidata.org/wiki/Q16925204"
+        }
+      ],
+      "routes": [
+        {
+          "name": "老城步行小圈",
+          "stops": [
+            "senado",
+            "st-dominic",
+            "st-paul"
+          ],
+          "mode": "适合步行连逛",
+          "tip": "议事亭前地 → 玫瑰堂 → 大三巴，一路往北，不必回到原点。大三巴前有上坡和石阶，途中可休息；游完从北端另乘车离开。",
+          "image": "assets/guangzhou-2026/maps/macao-route-1.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "半岛加上妈阁庙",
+          "stops": [
+            "a-ma",
+            "senado",
+            "st-dominic",
+            "st-paul"
+          ],
+          "mode": "首段乘车，后三处步行",
+          "tip": "妈阁庙先游，随后公交或出租车到议事亭前地，再步行串联玫瑰堂、大三巴。这样不用老城游完再折返半岛西南侧。",
+          "image": "assets/guangzhou-2026/maps/macao-route-2.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "路氹西侧顺游",
+          "stops": [
+            "parisian",
+            "venetian",
+            "taipa"
+          ],
+          "mode": "从南往北，按体力接驳",
+          "tip": "巴黎人 → 威尼斯人 → 官也街，沿南北方向串联。地图距离是建筑参考点之间的距离，酒店内部也很大；你们想少走路，可分段乘出租车。若想晚上看铁塔灯光，就反向安排。",
+          "image": "assets/guangzhou-2026/maps/macao-route-3.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        },
+        {
+          "name": "三家酒店顺游",
+          "stops": [
+            "parisian",
+            "venetian",
+            "wynn-palace"
+          ],
+          "mode": "西侧两家后，再乘车向东",
+          "tip": "先南北相邻的巴黎人、威尼斯人，再向东到永利皇宫。永利皇宫与前两家并非一个商场，不建议按图中直线全程步行；与官也街路线二选一更轻松。",
+          "image": "assets/guangzhou-2026/maps/macao-route-4.svg",
+          "imageWidth": 1000,
+          "imageHeight": 740
+        }
+      ],
+      "references": [
+        {
+          "label": "澳门旅游局世遗步行路线",
+          "url": "https://content.macaotourism.gov.mo/uploads/mgto_brochures/b526a854a7a0151c21c2cf64cb04b662d445e1c6.pdf"
+        },
+        {
+          "label": "澳门轻轨线路",
+          "url": "https://www.mlm.com.mo/tc/route.html"
+        }
+      ],
+      "image": "assets/guangzhou-2026/maps/macao-all.svg",
+      "imageWidth": 1000,
+      "imageHeight": 1000
+    }
+  ]
+}

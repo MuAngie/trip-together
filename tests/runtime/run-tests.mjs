@@ -1,4 +1,6 @@
 import "./runtime-storage.test.cjs";
+import "./guangzhou-ledger.test.cjs";
+import "./guangzhou-region-maps.test.mjs";
 import "./worker-d1.test.mjs";
 import "./wallet.test.cjs";
 import "./mobile-startup.test.cjs";

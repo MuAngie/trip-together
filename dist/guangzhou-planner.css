@@ -1,6 +1,30 @@
 .date-tabs { position: sticky; top: 0; z-index: 5; background: var(--collection-bg, oklch(96% .012 85)); }
 .date-tabs button { position: relative; }
-.day-panel, #sights-title { scroll-margin-top: 120px; }
+.day-panel, #catalog-tabs { scroll-margin-top: 120px; }
+.catalog-tabs { display: flex; gap: 24px; margin-bottom: 12px; border-bottom: 1px solid var(--collection-line); }
+.catalog-tabs button { position: relative; min-height: 44px; padding: 4px 2px 10px; border: 0; background: transparent; color: var(--collection-muted); font-size: 21px; font-weight: 500; cursor: pointer; }
+.catalog-tabs button[aria-selected="true"] { color: var(--collection-ink); font-weight: 650; }
+.catalog-tabs button[aria-selected="true"]::after { content: ''; position: absolute; bottom: -1px; left: 2px; right: 2px; height: 2px; background: oklch(40% .065 175); }
+.catalog-tabs:not([hidden]) ~ .catalog-panel > h2 { display: none; }
+.catalog-empty { margin: 0; padding: 20px 0; border-top: 1px solid var(--collection-line); color: var(--collection-muted); font-size: 15px; }
+.port-section { margin: 16px 0 24px; }
+.port-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.port-section-heading h2 { margin: 0; font-size: 19px; }
+.port-section-heading span, .port-note { color: var(--collection-muted); font-size: 13px; }
+.port-intro { margin: 8px 0 14px; font-size: 15px; line-height: 1.7; }
+.port-list { display: grid; gap: 12px; }
+.port-info { min-width: 0; padding: 16px; border: 1px solid var(--collection-line); border-radius: 16px; background: var(--collection-surface); }
+.port-info h3 { margin: 0; font-size: 18px; font-weight: 650; }
+.port-hours { margin: 4px 0 12px; color: oklch(38% .065 175); font-size: 16px; font-weight: 600; }
+.port-info dl { margin: 0; font-size: 14px; line-height: 1.7; }
+.port-info dl > div { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; padding-block: 6px; }
+.port-info dt { color: var(--collection-muted); }
+.port-info dd { margin: 0; overflow-wrap: anywhere; }
+.port-details { margin-top: 8px; border-top: 1px solid var(--collection-line); }
+.port-details summary { min-height: 44px; padding-block: 10px; font-size: 14px; color: var(--collection-accent); cursor: pointer; }
+.port-links { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 8px 0 0; font-size: 13px; }
+.port-links a { display: inline-flex; align-items: center; min-height: 36px; text-underline-offset: 4px; }
+.port-note { margin: 12px 0 0; line-height: 1.7; }
 .planner-save-note { margin: -4px 0 12px; color: var(--collection-muted); font-size: 14px; }
 .planner-button, .plan-actions summary, .plan-time input, .plan-move select { min-height: 44px; font: inherit; }
 .planner-button { padding: 9px 14px; border: 1px solid var(--collection-line); border-radius: 8px; background: var(--collection-surface); color: var(--collection-accent); cursor: pointer; }
@@ -31,6 +55,8 @@
 .catalog-context .planner-button { flex-shrink: 0; }
 .sight-card { display: flex; flex-direction: column; }
 .sight-copy { display: flex; flex: 1; flex-direction: column; }
+.sight-copy .sight-duration { margin: 6px 0 4px; font-size: 13px; line-height: 1.6; }
+.duration-note { margin: 0 0 12px; color: var(--collection-muted); font-size: 13px; line-height: 1.6; }
 .sight-add { align-self: flex-end; width: auto; margin-top: auto; padding: 10px 2px 4px 10px; border: 0; background: transparent; font-size: 13px; font-weight: 400; }
 .sight-add:hover:not([aria-disabled="true"]) { text-decoration: underline; text-underline-offset: 4px; }
 .sight-add[aria-disabled="true"] { background: transparent; color: var(--collection-muted); cursor: default; }

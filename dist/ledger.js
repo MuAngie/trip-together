@@ -140,6 +140,7 @@
   let ledgerAdapter = null;
   let ledgerPersistenceMode = "local";
   let ledgerData = null;
+  let fixedCurrency = "";
   let initialized = false;
   let activeTab = "entry";
   const openFolds = new Set();
@@ -267,10 +268,10 @@
       return [{ id, name, initial: avatarInitial(name), color }];
     });
     const travelerIds = new Set(travelers.map((traveler) => traveler.id));
-    const requestedBase = String(raw.settings?.baseCurrency || DEFAULT_SETTINGS.baseCurrency).toUpperCase();
+    const requestedBase = fixedCurrency || String(raw.settings?.baseCurrency || DEFAULT_SETTINGS.baseCurrency).toUpperCase();
     const baseCurrency = CURRENCY_BY_CODE.has(requestedBase) ? requestedBase : DEFAULT_SETTINGS.baseCurrency;
     const commonCurrencies = [...new Set(
-      (Array.isArray(raw.settings?.commonCurrencies) ? raw.settings.commonCurrencies : DEFAULT_SETTINGS.commonCurrencies)
+      (fixedCurrency ? [] : Array.isArray(raw.settings?.commonCurrencies) ? raw.settings.commonCurrencies : DEFAULT_SETTINGS.commonCurrencies)
         .map((code) => String(code).toUpperCase())
         .filter((code) => CURRENCY_BY_CODE.has(code) && code !== baseCurrency)
     )];
@@ -639,7 +640,7 @@
   function renderBillForm() {
     const editingBill = ledgerData.bills.find((bill) => bill.id === editingBillId) || null;
     const draft = editingBill ? null : billDraft;
-    const currency = editingBill?.currency || draft?.currency || ledgerData.settings.lastCurrency;
+    const currency = fixedCurrency || editingBill?.currency || draft?.currency || ledgerData.settings.lastCurrency;
     const baseCurrency = ledgerData.settings.baseCurrency;
     const isForeign = currency !== baseCurrency;
     const selectedParticipants = new Set(
@@ -657,7 +658,7 @@
         ${ledgerData.travelers.length ? `
           <form class="ledger-bill-form" data-ledger-form="bill" novalidate>
             <div class="ledger-amount-block">
-              <label class="ledger-field ledger-field-currency">
+              <label class="ledger-field ledger-field-currency" ${fixedCurrency ? "hidden" : ""}>
                 <span class="ledger-field-label">币种</span>
                 <input type="hidden" name="currency" data-ledger-field="currency" value="${escapeAttribute(currency)}">
                 <details class="ledger-currency-dropdown">
@@ -666,7 +667,7 @@
                 </details>
               </label>
               <label class="ledger-field ledger-field-amount">
-                <span class="ledger-field-label">金额</span>
+                <span class="ledger-field-label">金额${fixedCurrency ? "（人民币 / 元）" : ""}</span>
                 <input class="ledger-amount-input" name="originalAmount" data-ledger-field="original-amount" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" value="${escapeAttribute(editingBill ? centsToInput(editingBill.originalAmountCents) : draft?.originalAmount || "")}" required>
               </label>
             </div>
@@ -692,7 +693,7 @@
 
             <label class="ledger-field ledger-note-field">
               <span class="ledger-field-label">备注 <small>选填</small></span>
-              <input class="ledger-input" type="text" name="note" maxlength="160" autocomplete="off" placeholder="例如：米兰大教堂门票" value="${escapeAttribute(editingBill?.note || draft?.note || "")}">
+              <input class="ledger-input" type="text" name="note" maxlength="160" autocomplete="off" placeholder="${fixedCurrency ? "例如：顺德晚餐" : "例如：米兰大教堂门票"}" value="${escapeAttribute(editingBill?.note || draft?.note || "")}">
             </label>
 
             <label class="ledger-field ledger-date-field">
@@ -1211,7 +1212,7 @@
       <div class="ledger-app" data-ledger-trip-id="${escapeAttribute(ledgerTripId)}">
         <header class="ledger-page-header">
           <h2>账单与结算</h2>
-          <div class="ledger-header-actions">
+          <div class="ledger-header-actions" ${fixedCurrency ? "hidden" : ""}>
             <button class="ledger-icon-button" type="button" data-ledger-action="open-settings" aria-label="记账设置">设置</button>
           </div>
         </header>
@@ -1223,8 +1224,8 @@
         ${renderEntryPage()}
         ${renderStatsPage()}
         ${renderMembersDialog()}
-        ${renderSettingsDialog()}
-        ${renderCurrencyDialog()}
+        ${fixedCurrency ? "" : renderSettingsDialog()}
+        ${fixedCurrency ? "" : renderCurrencyDialog()}
       </div>`;
     syncSplitSummary();
     attachDialogBehavior();
@@ -1437,7 +1438,7 @@
 
   async function submitBill(form) {
     const formData = new FormData(form);
-    const currency = String(formData.get("currency") || "").toUpperCase();
+    const currency = fixedCurrency || String(formData.get("currency") || "").toUpperCase();
     const originalAmountCents = toCents(formData.get("originalAmount"));
     const isForeign = currency !== ledgerData.settings.baseCurrency;
     const baseAmountCents = isForeign ? toCents(formData.get("baseAmount")) : originalAmountCents;
@@ -1893,6 +1894,7 @@
     if (initialized && requestedRoot === ledgerRoot) return deepClone(ledgerData);
 
     ledgerRoot = requestedRoot;
+    fixedCurrency = options.fixedCurrency === "CNY" ? "CNY" : "";
     ledgerRoot.setAttribute("aria-busy", "true");
     const [resolvedTripId, tripConfig] = await Promise.all([
       resolveTripId(ledgerRoot, options),
