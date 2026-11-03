@@ -76,7 +76,7 @@
       .sight-copy p { font-size: 15px; }
     }
   </style>
-  <link rel="stylesheet" href="guangzhou-planner.css?v=20261102-2">
+  <link rel="stylesheet" href="guangzhou-planner.css?v=20261103-1">
   <link rel="stylesheet" href="guangzhou-region-maps.css?v=20261102-2">
 </head>
 <body class="collection-page">
@@ -97,8 +97,17 @@
           <div class="day-date"><time datetime="2026-11-26">26</time><span>11月 · 周四</span></div>
           <div><span class="day-number">第 1 天</span><h3 class="day-route">上海 → 广州</h3></div>
         </header>
+        <div class="plan-transport" aria-label="去程航班">
+          <p class="flight-title">中国国航 CA1838</p>
+          <div class="flight-route">
+            <div><strong>12:35</strong><span>上海虹桥机场 T2</span></div>
+            <span aria-hidden="true">→</span>
+            <div><strong>14:55</strong><span>广州白云机场 T3</span></div>
+          </div>
+          <p class="flight-details">飞行 2 小时 20 分 · 经济舱 · 有餐食</p>
+          <p class="flight-details">空客 A330-300（大型机）· 已出票</p>
+        </div>
         <ol class="day-timeline">
-          <li><span class="timeline-time">时间待定</span><p>上海直飞广州，航班时间待补充。</p></li>
           <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
           <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
         </ol>
@@ -174,9 +183,18 @@
           <div class="day-date"><time datetime="2026-12-03">03</time><span>12月 · 周四</span></div>
           <div><span class="day-number">第 8 天</span><h3 class="day-route">澳门 → 上海</h3></div>
         </header>
+        <div class="plan-transport" aria-label="返程航班">
+          <p class="flight-title">澳门航空 NX116</p>
+          <div class="flight-route">
+            <div><strong>13:20</strong><span>澳门机场（MFM）</span></div>
+            <span aria-hidden="true">→</span>
+            <div><strong>15:45</strong><span>上海浦东机场（PVG）T2</span></div>
+          </div>
+          <p class="flight-details">飞行 2 小时 25 分 · 经济舱 · 有餐食</p>
+          <p class="flight-details">空客 A321（中型机）· 已出票</p>
+        </div>
         <ol class="day-timeline">
           <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
-          <li class="timeline-meal"><span class="timeline-time">13:30</span><p>澳门返回上海</p></li>
           <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">抵达安排待补充</p></li>
         </ol>
       </div>
@@ -472,7 +490,7 @@
       </div>
     </section>
   </main>
-  <script src="guangzhou-planner.js?v=20261102-1"></script>
+  <script src="guangzhou-planner.js?v=20261103-2"></script>
   <script type="module" src="guangzhou-region-maps.js?v=20261102-2"></script>
 </body>
 </html>

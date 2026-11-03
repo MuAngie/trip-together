@@ -82,8 +82,6 @@
     dateTabs.append(tab);
     day.tab = tab;
     const timeline = day.panel.querySelector('.day-timeline');
-    const flight = day.id === 'day-1126' ? '去程 · 上海直飞广州，航班时间待补充。' : day.id === 'day-1203' ? '返程 · 13:30 澳门返回上海' : '';
-    if (flight) timeline.before(make('p', 'plan-transport', flight));
     day.list = make('ol', 'plan-list');
     day.list.tabIndex = -1;
     day.list.setAttribute('aria-label', `${day.date} 的景点安排`);

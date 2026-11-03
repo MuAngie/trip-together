@@ -1,9 +1,83 @@
 {
   "config": {
     "persistence": {
-      "mode": "d1",
-      "apiBase": "/api/trip",
-      "sharedCollections": ["ledger"]
+      "mode": "local"
     }
+  },
+  "ledgerSeed": {
+    "bills": [
+      {
+        "baseAmountCents": 322000,
+        "category": "交通",
+        "currency": "CNY",
+        "id": "bill-4b92cd2e-d43f-4d52-8d80-73976a0333cb",
+        "note": "返程机票（五人）· 12/03 澳门航空 NX116，澳门 MFM 13:20 → 上海浦东 PVG T2 15:45",
+        "orderedAt": "",
+        "originalAmountCents": 322000,
+        "participantIds": [
+          "person-b4132718-6aab-4507-9d8a-af24cd7672a1",
+          "person-2a75fcb2-f6f1-44ed-af27-fa5d85820f4e",
+          "person-64a98eaf-7630-40c5-816f-ebc6895fe51d",
+          "person-62e1941a-eba0-41c4-9ee9-99ec60123915",
+          "person-f00bda5d-b953-430f-a119-4049ed3d63aa"
+        ],
+        "payerId": "person-b4132718-6aab-4507-9d8a-af24cd7672a1"
+      },
+      {
+        "baseAmountCents": 380000,
+        "category": "交通",
+        "currency": "CNY",
+        "id": "bill-8f8ee475-9b59-44f0-ae94-a4c55d675c80",
+        "note": "去程机票（五人）· 11/26 国航 CA1838，上海虹桥 T2 12:35 → 广州白云 T3 14:55",
+        "orderedAt": "",
+        "originalAmountCents": 380000,
+        "participantIds": [
+          "person-b4132718-6aab-4507-9d8a-af24cd7672a1",
+          "person-2a75fcb2-f6f1-44ed-af27-fa5d85820f4e",
+          "person-64a98eaf-7630-40c5-816f-ebc6895fe51d",
+          "person-62e1941a-eba0-41c4-9ee9-99ec60123915",
+          "person-f00bda5d-b953-430f-a119-4049ed3d63aa"
+        ],
+        "payerId": "person-b4132718-6aab-4507-9d8a-af24cd7672a1"
+      }
+    ],
+    "settings": {
+      "baseCurrency": "CNY",
+      "commonCurrencies": [],
+      "lastCurrency": "CNY"
+    },
+    "travelers": [
+      {
+        "color": "#D96C42",
+        "id": "person-b4132718-6aab-4507-9d8a-af24cd7672a1",
+        "initial": "1",
+        "name": "1"
+      },
+      {
+        "color": "#217D91",
+        "id": "person-2a75fcb2-f6f1-44ed-af27-fa5d85820f4e",
+        "initial": "2",
+        "name": "2"
+      },
+      {
+        "color": "#5C8E62",
+        "id": "person-64a98eaf-7630-40c5-816f-ebc6895fe51d",
+        "initial": "3",
+        "name": "3"
+      },
+      {
+        "color": "#8B6AA8",
+        "id": "person-62e1941a-eba0-41c4-9ee9-99ec60123915",
+        "initial": "4",
+        "name": "4"
+      },
+      {
+        "color": "#C58B32",
+        "id": "person-f00bda5d-b953-430f-a119-4049ed3d63aa",
+        "initial": "5",
+        "name": "5"
+      }
+    ],
+    "version": 1
   }
 }
