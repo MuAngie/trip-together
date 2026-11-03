@@ -40,7 +40,6 @@
 .flight-route span { font-size: 14px; line-height: 1.5; color: var(--collection-muted); }
 .plan-transport .flight-details { margin-top: 4px; font-size: 13px; line-height: 1.6; color: var(--collection-muted); }
 .plan-list { list-style: none; padding: 0 20px; margin: 0; }
-.plan-empty { padding: 18px 0 4px; color: var(--collection-muted); font-size: 16px; }
 .plan-stop { display: grid; grid-template-columns: 72px minmax(0, 1fr) auto; gap: 2px 12px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--collection-line); }
 .plan-stop > img { width: 72px; height: 80px; object-fit: cover; border-radius: 8px; }
 .plan-stop h4 { margin: 0 0 6px; font-size: 19px; }
@@ -63,7 +62,6 @@
 .sight-card { display: flex; flex-direction: column; }
 .sight-copy { display: flex; flex: 1; flex-direction: column; }
 .sight-copy .sight-duration { margin: 6px 0 4px; font-size: 13px; line-height: 1.6; }
-.duration-note { margin: 0 0 12px; color: var(--collection-muted); font-size: 13px; line-height: 1.6; }
 .sight-add { align-self: flex-end; width: auto; margin-top: auto; padding: 10px 2px 4px 10px; border: 0; background: transparent; font-size: 13px; font-weight: 400; }
 .sight-add:hover:not([aria-disabled="true"]) { text-decoration: underline; text-underline-offset: 4px; }
 .sight-add[aria-disabled="true"] { background: transparent; color: var(--collection-muted); cursor: default; }

@@ -1,0 +1,112 @@
+/* Shared type scale for the Guangzhou itinerary and ledger only. */
+.trip-plan, .guangzhou-ledger-main {
+  --text-caption: .75rem;
+  --text-label: .875rem;
+  --text-body: 1rem;
+  --text-subheading: 1.125rem;
+  --text-heading: 1.375rem;
+  --text-display: 1.75rem;
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.6;
+}
+:is(.trip-plan, .guangzhou-ledger-main) :is(button, input, select, textarea) {
+  font-size: var(--text-label);
+  font-weight: 400;
+  line-height: 1.4;
+}
+:is(.trip-plan, .guangzhou-ledger-main) :is(h1, h2, h3, h4, strong, b) {
+  font-weight: 600;
+  letter-spacing: normal;
+}
+.trip-plan h1, .trip-plan .day-date time,
+.guangzhou-ledger-main h1, .guangzhou-ledger-main .ledger-stats-overview h2,
+.guangzhou-ledger-main .ledger-list-total strong, .guangzhou-ledger-main .ledger-amount-input {
+  font-size: var(--text-display);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: normal;
+}
+.trip-plan .trip-plan-section h2, .guangzhou-ledger-main .ledger-page-header h2 {
+  font-size: var(--text-heading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.trip-plan :is(.day-route, .region-panel h3, .sight-copy h4, .plan-stop h4, .flight-route strong, .port-info h3),
+.guangzhou-ledger-main :is(.ledger-section-heading h2, .ledger-dialog-header h2, .ledger-members-strip-heading strong,
+  .ledger-bill-amount strong, .ledger-transfer-amount, .ledger-fold > summary) {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.trip-plan .region-tabs button[aria-selected="true"], .trip-plan .map-groups button[aria-pressed="true"] {
+  font-weight: 600;
+}
+.trip-plan :is(.sight-copy p, .plan-stop-copy > p, .day-timeline p, .port-intro, .catalog-empty),
+.guangzhou-ledger-main .ledger-bill-title-row h3 {
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+.guangzhou-ledger-main .ledger-bill-title-row h3 { font-weight: 500; }
+.trip-plan :is(.trip-plan-back, .trip-plan-dates, .catalog-context, .plan-transport, .flight-title, .flight-route span,
+  .plan-time, .plan-move, .plan-actions, .sight-region, .region-map > summary, .map-route-info, .port-hours,
+  .port-info dl, .port-details summary, .planner-notice),
+.guangzhou-ledger-main :is(.guangzhou-page-nav, .guangzhou-ledger-heading p, .ledger-field-label, .ledger-fieldset legend,
+  .ledger-person-static, .ledger-person-name, .ledger-add-person small, .ledger-split-summary, .ledger-live,
+  .ledger-form-error, .ledger-dialog-note, .ledger-bill-people, .ledger-member-bill, .ledger-member-empty,
+  .ledger-member-identity strong, .ledger-member-metrics dd, .ledger-transfer-person strong,
+  .ledger-member-net strong, .ledger-member-edit-row-static strong, .ledger-bill-note-form) {
+  font-size: var(--text-label);
+  line-height: 1.6;
+}
+.trip-plan :is(.flight-title, .sight-region, .region-tabs button, .port-hours, .region-map > summary),
+.guangzhou-ledger-main :is(.ledger-field-label, .ledger-fieldset legend, .ledger-category-choice,
+  .ledger-member-metrics dd, .ledger-bill-payer b, .ledger-bill-participants b) {
+  font-weight: 500;
+}
+.trip-plan :is(.day-date span, .day-number, .date-tabs button span, .planner-save-note, .sight-copy .sight-duration,
+  .sight-credits, .region-map > summary > span, .map-key-number, .map-key-link, .map-distance,
+  .map-caption, .map-credit, .map-notes, .port-section-heading span, .port-links, .port-note),
+.guangzhou-ledger-main :is(.ledger-fold > summary small, .ledger-field-label small, .ledger-fieldset legend small,
+  .ledger-section-kicker, .ledger-soft-count, .ledger-members-strip-heading span, .ledger-list-total span,
+  .ledger-bill-date, .ledger-bill-title-row p, .ledger-bill-amount span, .ledger-stats-overview > span,
+  .ledger-transfer-person small, .ledger-member-net small, .ledger-member-metrics dt, .ledger-field-help,
+  .ledger-empty-state, .ledger-onboarding, .ledger-dialog-empty) {
+  font-size: var(--text-caption);
+  font-weight: 400;
+  line-height: 1.6;
+}
+.trip-plan .day-number, .guangzhou-ledger-main .ledger-section-kicker { font-weight: 500; }
+.trip-plan .plan-transport .flight-details { font-size: var(--text-caption); line-height: 1.6; }
+.trip-plan .flight-route strong { font-size: var(--text-heading); }
+.trip-plan .flight-route > div > span { font-size: var(--text-body); }
+.trip-plan .timeline-time { font-size: var(--text-label); font-weight: 500; }
+.trip-plan :is(.planner-button, .sight-add, .plan-remove, .plan-time input, .plan-move select, .map-groups button, .map-key a),
+.guangzhou-ledger-main :is(.ledger-primary-button, .ledger-secondary-button, .ledger-text-button,
+  .ledger-icon-button, .ledger-category-choice, .ledger-input, .ledger-bill-note-trigger) {
+  font-size: var(--text-label);
+  line-height: 1.4;
+}
+.trip-plan :is(.date-tabs button, .catalog-tabs button), .guangzhou-ledger-main .ledger-tab {
+  font-size: var(--text-subheading);
+  font-weight: 500;
+  line-height: 1.4;
+}
+.trip-plan :is(.date-tabs button, .catalog-tabs button)[aria-selected="true"],
+.guangzhou-ledger-main .ledger-tab.ledger-is-active { font-weight: 600; }
+.trip-plan .date-tabs button { font-weight: 600; }
+.guangzhou-ledger-main :is(.ledger-bill-note-trigger, .ledger-text-button, .ledger-person-name, .ledger-dialog-note) {
+  font-weight: 400;
+}
+.guangzhou-ledger-main :is(.ledger-primary-button, .ledger-secondary-button) { font-weight: 500; }
+.guangzhou-ledger-main :is(.ledger-avatar, .ledger-add-member-preview, .ledger-dialog-close, .ledger-member-chevron),
+.guangzhou-ledger-main .ledger-add-person > span, .guangzhou-ledger-main .ledger-member-edit-row .ledger-avatar {
+  font-size: var(--text-subheading);
+  font-weight: 600;
+  line-height: 1;
+}
+.guangzhou-ledger-main :is(.ledger-avatar-small, .ledger-avatar-tiny, .ledger-person-check) {
+  font-size: var(--text-caption);
+  font-weight: 500;
+  line-height: 1;
+}

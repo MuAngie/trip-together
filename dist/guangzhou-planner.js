@@ -24,11 +24,15 @@
     }];
   }));
   const storageKey = 'guangzhou-2026-itinerary-v1';
-  const saveNote = make('p', 'planner-save-note', '自动保存在此浏览器，其他设备不会同步。');
+  const saveNote = make('p', 'planner-save-note');
+  saveNote.hidden = true;
   document.getElementById('itinerary-title').after(saveNote);
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(storageKey) || '{}') || {}; }
-  catch { saveNote.textContent = '暂时无法读取已保存的安排，请保留此页面。'; }
+  catch {
+    saveNote.textContent = '暂时无法读取已保存的安排，请保留此页面。';
+    saveNote.hidden = false;
+  }
   const plan = Object.fromEntries(days.map(day => {
     const seen = new Set();
     const entries = (Array.isArray(saved[day.id]) ? saved[day.id] : []).filter(entry => {
@@ -67,9 +71,11 @@
   function save() {
     try {
       localStorage.setItem(storageKey, JSON.stringify(plan));
-      saveNote.textContent = '已保存在此浏览器，其他设备不会同步。';
+      saveNote.textContent = '';
+      saveNote.hidden = true;
     } catch {
       saveNote.textContent = '保存失败，刷新或关闭页面会丢失本次修改。';
+      saveNote.hidden = false;
     }
   }
   const dateTabs = document.querySelector('.date-tabs');
@@ -116,7 +122,6 @@
   });
   function renderDay(day) {
     day.list.replaceChildren();
-    if (!plan[day.id].length) day.list.append(make('li', 'plan-empty', '还未安排景点，从下方挑选加入。'));
     plan[day.id].forEach((entry, index) => {
       const sight = sights.get(entry.id);
       const row = make('li', 'plan-stop');

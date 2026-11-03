@@ -78,7 +78,6 @@ function mountMap(region) {
     if (route) info.append(make('p', 'map-route-mode', route.mode), make('p', '', route.tip));
     else info.append(make('p', '', region.overview));
   }
-  const caption = make('p', 'map-caption', '点地图查看大图。虚线仅示意串联顺序，距离为直线估算，实际路程以导航为准。');
   const notes = make('details', 'map-notes');
   notes.append(make('summary', '', '位置说明与资料来源'), make('p', '', region.note));
   const sources = make('p', 'map-sources');
@@ -96,7 +95,7 @@ function mountMap(region) {
   copyright.target = '_blank';
   copyright.rel = 'noopener noreferrer';
   credit.append(copyright);
-  content.append(controls, scene, info, caption, credit, notes);
+  content.append(controls, scene, info, credit, notes);
   root.append(summary, content);
   panel.querySelector('h3').after(root);
   render(null);
