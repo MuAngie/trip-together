@@ -56,6 +56,26 @@
     .sight-credits ul { padding-left: 20px; }
     .sight-credits li { margin-block: 10px; }
     .sight-credits a { text-underline-offset: 3px; }
+    .sight-seasonal { margin-top: 8px; }
+    .sight-seasonal > summary { min-height: 44px; padding-block: 10px; color: var(--collection-accent); cursor: pointer; }
+    .sight-seasonal figure + figure { margin-top: 12px; }
+    .sight-seasonal img { aspect-ratio: auto; border-radius: 8px; }
+    .sight-seasonal figcaption { padding-block: 6px; color: var(--collection-muted); }
+    .food-search { width: 100%; min-height: 44px; margin-bottom: 12px; padding: 10px 12px; border: 1px solid var(--collection-line); border-radius: 8px; background: var(--collection-surface); color: var(--collection-ink); }
+    .food-search:focus-visible { outline: 2px solid var(--collection-accent); outline-offset: 3px; }
+    .food-group { border-top: 1px solid var(--collection-line); }
+    .food-group:last-of-type { border-bottom: 1px solid var(--collection-line); }
+    .food-group > summary { display: flex; align-items: center; gap: 8px; min-height: 48px; padding: 10px 0; list-style: none; font-weight: 500; cursor: pointer; }
+    .food-group > summary::-webkit-details-marker { display: none; }
+    .food-group > summary::after { content: '＋'; margin-left: auto; color: var(--collection-muted); }
+    .food-group[open] > summary::after { content: '−'; }
+    .food-count { color: var(--collection-muted); font-size: var(--text-caption); font-weight: 400; }
+    .food-list { list-style: none; padding: 0; margin: 0; }
+    .food-list > li { padding: 8px 0; border-top: 1px dashed var(--collection-line); }
+    .food-list > li:last-child { padding-bottom: 12px; }
+    .food-list h4 { margin: 0; font-size: var(--text-body); line-height: 1.6; }
+    .food-list p { margin: 2px 0 0; color: var(--collection-muted); font-size: var(--text-label); }
+    .food-no-results { margin: 12px 0; color: var(--collection-muted); }
     @media (max-width: 480px) {
       .trip-plan { padding-inline: 16px; }
       .trip-plan h1 { font-size: 30px; }
@@ -76,9 +96,9 @@
       .sight-copy p { font-size: 15px; }
     }
   </style>
-  <link rel="stylesheet" href="guangzhou-planner.css?v=20261103-2">
+  <link rel="stylesheet" href="guangzhou-planner.css?v=20261111-2">
   <link rel="stylesheet" href="guangzhou-region-maps.css?v=20261102-2">
-  <link rel="stylesheet" href="guangzhou-typography.css?v=20261103-2">
+  <link rel="stylesheet" href="guangzhou-typography.css?v=20261111-2">
 </head>
 <body class="collection-page">
   <main class="trip-plan">
@@ -98,6 +118,7 @@
           <div class="day-date"><time datetime="2026-11-26">26</time><span>11月 · 周四</span></div>
           <div><span class="day-number">第 1 天</span><h3 class="day-route">上海 → 广州</h3></div>
         </header>
+        <p class="day-hotel">入住：广州威珀斯酒店 · 3 间商务双床房 · 含单早</p>
         <div class="plan-transport" aria-label="去程航班">
           <p class="flight-title">中国国航 CA1838</p>
           <div class="flight-route">
@@ -118,6 +139,7 @@
           <div class="day-date"><time datetime="2026-11-27">27</time><span>11月 · 周五</span></div>
           <div><span class="day-number">第 2 天</span><h3 class="day-route">广州</h3></div>
         </header>
+        <p class="day-hotel">住宿：广州威珀斯酒店 · 3 间商务双床房 · 含单早</p>
         <ol class="day-timeline">
           <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
           <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
@@ -129,6 +151,7 @@
           <div class="day-date"><time datetime="2026-11-28">28</time><span>11月 · 周六</span></div>
           <div><span class="day-number">第 3 天</span><h3 class="day-route">广州 → 顺德</h3></div>
         </header>
+        <p class="day-hotel">退房：广州威珀斯酒店</p>
         <ol class="day-timeline">
           <li><span class="timeline-time">时间待定</span><p class="timeline-placeholder">行程内容待补充</p></li>
           <li class="timeline-meal"><span class="timeline-time">时间待定</span><p class="timeline-placeholder">餐饮安排待补充</p></li>
@@ -200,10 +223,11 @@
         </ol>
       </div>
     </section>
-    <section class="trip-plan-section" aria-label="景点、美食与口岸交通">
+    <section class="trip-plan-section" aria-label="景点、美食、酒店与口岸交通">
       <div class="catalog-tabs" id="catalog-tabs" role="tablist" aria-label="选择内容" hidden>
         <button type="button" role="tab" id="tab-catalog-sights" aria-controls="catalog-sights" aria-selected="true">景点</button>
         <button type="button" role="tab" id="tab-catalog-food" aria-controls="catalog-food" aria-selected="false" tabindex="-1">美食</button>
+        <button type="button" role="tab" id="tab-catalog-hotels" aria-controls="catalog-hotels" aria-selected="false" tabindex="-1">酒店</button>
         <button type="button" role="tab" id="tab-catalog-ports" aria-controls="catalog-ports" aria-selected="false" tabindex="-1">口岸交通</button>
       </div>
       <div class="catalog-panel" id="catalog-sights">
@@ -392,7 +416,19 @@
               <span class="sight-region">澳门</span>
               <img src="assets/guangzhou-2026/parisian.jpg" alt="巴黎人半比例巴黎铁塔与酒店的夜间灯光" width="960" height="720" loading="lazy" decoding="async">
             </figure>
-            <div class="sight-copy"><h4>巴黎人</h4><p>以半比例巴黎铁塔和法式建筑为特色，夜间有铁塔灯光秀。可在对面的巴黎人花园看铁塔全景，也可登观景台俯瞰路氹；傍晚至夜间更适合欣赏灯景。</p><p class="sight-duration">建议游览：1—1.5 小时，含铁塔外观、花园及夜间灯光；登塔建议额外预留约 1 小时。</p></div>
+            <div class="sight-copy"><h4>巴黎人</h4><p>以半比例巴黎铁塔和法式建筑为特色，夜间有铁塔灯光秀。可在对面的巴黎人花园看铁塔全景，也可登观景台俯瞰路氹；傍晚至夜间更适合欣赏灯景。</p><p class="sight-duration">建议游览：1—1.5 小时，含铁塔外观、花园及夜间灯光；登塔建议额外预留约 1 小时。</p>
+              <details class="sight-seasonal">
+                <summary>2026 圣诞布置 · 照片与位置</summary>
+                <figure>
+                  <img src="https://resource02.ulifestyle.com.hk/ulcms/content/article/image/w600/2026/11/20261103112838_69fdbf672b35f8634df99a7b0c69344dadf85d76.jpg" alt="巴黎人大堂的倒挂圣诞树，小红书曦熙Sienna~77实拍，U Travel刊载" width="600" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+                  <figcaption>一楼大堂 · 倒挂圣诞树</figcaption>
+                </figure>
+                <figure>
+                  <img src="https://resource02.ulifestyle.com.hk/ulcms/content/article/image/w600/2026/11/20261103114534_a378293ca3db7f6d480e1f7ff1cdb5f4466e0a33.jpg" alt="巴黎人户外铁塔上的巨型红缎结，小红书大只女孩Ashley实拍，U Travel刊载" width="600" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+                  <figcaption>户外巴黎铁塔 · 巨型红缎结</figcaption>
+                </figure>
+              </details>
+            </div>
           </li>
           <li class="sight-card">
             <figure>
@@ -412,6 +448,7 @@
             <li>路氹片区：<a href="https://commons.wikimedia.org/wiki/File:MC_%E6%BE%B3%E9%96%80_Macau_%E8%B7%AF%E6%B0%B9_Cotai_Avenue_Strip_Sands_Cotai_Central_%E5%80%AB%E6%95%A6%E4%BA%BA%E9%85%92%E5%BA%97_The_Londoner_Hotel_November_2023_R12S_02.jpg" target="_blank" rel="noopener noreferrer">Kamfutiam Georgez</a> · <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en" target="_blank" rel="noopener noreferrer">CC0</a></li>
             <li>威尼斯人：<a href="https://commons.wikimedia.org/wiki/File:The_Venetian_Macao_SanLucaCanal.jpg" target="_blank" rel="noopener noreferrer">WiNG</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
             <li>巴黎人：<a href="https://commons.wikimedia.org/wiki/File:The_Parisian_Macao_15-12-2025.jpg" target="_blank" rel="noopener noreferrer">LN9267</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank" rel="noopener noreferrer">CC BY-SA 4.0</a></li>
+            <li>巴黎人圣诞实拍：小红书 @曦熙Sienna~77（大堂）、@大只女孩Ashley（铁塔）；图片及地点见 <a href="https://utravel.com.hk/news/detail/20116341/" target="_blank" rel="noopener noreferrer">U Travel 报道</a>。</li>
             <li>永利皇宫：<a href="https://commons.wikimedia.org/wiki/File:Wynn_Palace_02.jpg" target="_blank" rel="noopener noreferrer">Doraemon.tvb</a> · <a href="https://creativecommons.org/licenses/by-sa/3.0" target="_blank" rel="noopener noreferrer">CC BY-SA 3.0</a></li>
           </ul>
         </details>
@@ -435,11 +472,74 @@
           <h3>广州</h3><p class="catalog-empty">美食店铺待补充</p>
         </div>
         <div class="region-panel" id="food-shunde">
-          <h3>顺德</h3><p class="catalog-empty">美食店铺待补充</p>
+          <h3 hidden>顺德</h3>
+          <input class="food-search" type="search" placeholder="搜店名、菜品或路段" aria-label="搜索顺德美食" hidden>
+          <details class="food-group">
+            <summary>餐厅·私房菜 <span class="food-count">8 家</span></summary>
+            <ul class="food-list">
+              <li><h4>鹅簋</h4><p>好吃，略油，排队人多。</p></li>
+              <li><h4>辉哥私房菜（东明路）</h4></li>
+              <li><h4>水仙头私房菜（近良）</h4></li>
+              <li><h4>凤城酒家（凤城食都）</h4></li>
+              <li><h4>美味居</h4></li>
+              <li><h4>龙桥私厨（容桂）</h4></li>
+              <li><h4>松记餐厅</h4></li>
+              <li><h4>照华农庄</h4></li>
+            </ul>
+          </details>
+          <details class="food-group">
+            <summary>粥底·桑拿鸡·鱼生 <span class="food-count">4 家</span></summary>
+            <ul class="food-list">
+              <li><h4>福田桑拿鸡（大良店）</h4><p>提前电话确认有没有姜花。</p></li>
+              <li><h4>联合鱼庄</h4><p>鱼生很好吃，但位置很远。</p></li>
+              <li><h4>山泉粥</h4><p>粥底火锅不错。</p></li>
+              <li><h4>毋米粥（锦龙路总店）</h4></li>
+            </ul>
+          </details>
+          <details class="food-group">
+            <summary>饭粉·牛杂 <span class="food-count">5 家</span></summary>
+            <ul class="food-list">
+              <li><h4>品香排骨饭</h4><p>位置偏远。</p></li>
+              <li><h4>容边排骨饭</h4><p>推荐干蒸排骨。</p></li>
+              <li><h4>一言牛杂</h4><p>好吃、便宜。</p></li>
+              <li><h4>泉记手工粉</h4><p>手工粉很好吃。</p></li>
+              <li><h4>红星光发煲仔饭</h4></li>
+            </ul>
+          </details>
+          <details class="food-group">
+            <summary>甜品·炖品 <span class="food-count">6 家</span></summary>
+            <ul class="food-list">
+              <li><h4>糖朝甜品</h4><p>双皮奶没那么甜；姜撞奶偏辣。</p></li>
+              <li><h4>阿三麻蓉汤圆</h4><p>推荐花生馅汤圆。</p></li>
+              <li><h4>凤城姜撞奶</h4><p>推荐牛奶、姜撞奶和蒸奶卷。</p></li>
+              <li><h4>阿嬷私房名店</h4><p>沙翁好吃，略油。</p></li>
+              <li><h4>华生行</h4><p>推荐龟苓膏，口味略苦。</p></li>
+              <li><h4>国英炖品店（甲子路）</h4></li>
+            </ul>
+          </details>
+          <p class="food-no-results" role="status" hidden>没有找到相关店铺</p>
         </div>
         <div class="region-panel" id="food-macao">
           <h3>澳门</h3><p class="catalog-empty">美食店铺待补充</p>
         </div>
+      </div>
+      <div class="catalog-panel" id="catalog-hotels">
+        <h2>酒店</h2>
+        <article class="hotel-info" aria-labelledby="guangzhou-hotel-name">
+          <h3 id="guangzhou-hotel-name">广州威珀斯酒店</h3>
+          <p class="hotel-dates"><strong>11/26 入住 → 11/28 退房 · 2 晚</strong></p>
+          <dl>
+            <div><dt>房型</dt><dd>3 间威珀斯商务双床房，每间含单早</dd></div>
+            <div><dt>预订账号</dt><dd>1341601</dd></div>
+            <div><dt>入住日期</dt><dd>2026 年 11 月 26 日</dd></div>
+            <div><dt>退房日期</dt><dd>2026 年 11 月 28 日</dd></div>
+            <div><dt>早餐地点</dt><dd>酒店二楼 · 珀萃美食餐厅</dd></div>
+            <div><dt>早餐时间</dt><dd>06:30—10:00</dd></div>
+            <div><dt>酒店地址</dt><dd>广州市天河区珠江新城金穗路 5 号威珀斯酒店</dd></div>
+            <div><dt>酒店总机</dt><dd><a href="tel:02038933888">020-38933888</a></dd></div>
+          </dl>
+          <a class="hotel-quote-link" href="guangzhou-ledger.html#hotel-quote">查看预订报价 ↗</a>
+        </article>
       </div>
       <div class="catalog-panel" id="catalog-ports">
         <section class="port-section" aria-labelledby="ports-title">
@@ -490,7 +590,7 @@
       </div>
     </section>
   </main>
-  <script src="guangzhou-planner.js?v=20261103-3"></script>
+  <script src="guangzhou-planner.js?v=20261104-1"></script>
   <script type="module" src="guangzhou-region-maps.js?v=20261103-1"></script>
 </body>
 </html>

@@ -234,5 +234,26 @@
     selectTab(tabs[0]);
     tablist.hidden = false;
   });
+  const foodPanel = document.getElementById('food-shunde');
+  const foodSearch = foodPanel.querySelector('.food-search');
+  const foodGroups = [...foodPanel.querySelectorAll('.food-group')];
+  const foodEmpty = foodPanel.querySelector('.food-no-results');
+  foodSearch.hidden = false;
+  foodSearch.addEventListener('input', () => {
+    const query = foodSearch.value.trim().toLowerCase();
+    let matches = 0;
+    foodGroups.forEach(group => {
+      let count = 0;
+      group.querySelectorAll('li').forEach(row => {
+        row.hidden = !row.textContent.toLowerCase().includes(query);
+        if (!row.hidden) count += 1;
+      });
+      matches += count;
+      group.hidden = count === 0;
+      group.open = Boolean(query) && count > 0;
+      group.querySelector('.food-count').textContent = `${count} 家`;
+    });
+    foodEmpty.hidden = matches !== 0;
+  });
   days.forEach(renderDay);
 })();

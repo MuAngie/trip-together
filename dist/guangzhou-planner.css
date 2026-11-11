@@ -7,6 +7,15 @@
 .catalog-tabs button[aria-selected="true"]::after { content: ''; position: absolute; bottom: -1px; left: 2px; right: 2px; height: 2px; background: oklch(40% .065 175); }
 .catalog-tabs:not([hidden]) ~ .catalog-panel > h2 { display: none; }
 .catalog-empty { margin: 0; padding: 20px 0; border-top: 1px solid var(--collection-line); color: var(--collection-muted); font-size: 15px; }
+.hotel-info { margin-top: 16px; padding: 16px; border: 1px solid var(--collection-line); border-radius: 16px; background: var(--collection-surface); }
+.hotel-info h3 { margin: 0; }
+.hotel-dates { margin: 6px 0 12px; }
+.hotel-info dl { margin: 0; }
+.hotel-info dl > div { display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: 8px; padding-block: 6px; }
+.hotel-info dt { color: var(--collection-muted); }
+.hotel-info dd { margin: 0; overflow-wrap: anywhere; }
+.hotel-info a { text-underline-offset: 4px; }
+.hotel-info dd a, .hotel-quote-link { display: inline-flex; align-items: center; min-height: 44px; }
 .port-section { margin: 16px 0 24px; }
 .port-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
 .port-section-heading h2 { margin: 0; font-size: 19px; }
@@ -33,6 +42,7 @@
 .planner-button:focus-visible, .plan-actions summary:focus-visible, .plan-time input:focus-visible, .plan-move select:focus-visible { outline: 2px solid var(--collection-accent); outline-offset: 3px; }
 .plan-transport { margin: 0; padding: 12px 20px; border-bottom: 1px dashed var(--collection-line); font-size: 16px; }
 .plan-transport p { margin: 0; }
+.day-hotel { margin: 0; padding: 10px 20px; border-bottom: 1px dashed var(--collection-line); color: var(--collection-muted); }
 .flight-title { font-weight: 600; }
 .flight-route { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 12px; margin: 8px 0; }
 .flight-route > div:last-child { text-align: right; }
