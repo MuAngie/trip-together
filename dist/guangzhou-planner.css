@@ -15,7 +15,7 @@
 .hotel-info dt { color: var(--collection-muted); }
 .hotel-info dd { margin: 0; overflow-wrap: anywhere; }
 .hotel-info a { text-underline-offset: 4px; }
-.hotel-info dd a, .hotel-quote-link { display: inline-flex; align-items: center; min-height: 44px; }
+.hotel-info dd a { display: inline-flex; align-items: center; min-height: 44px; }
 .port-section { margin: 16px 0 24px; }
 .port-section-heading { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
 .port-section-heading h2 { margin: 0; font-size: 19px; }

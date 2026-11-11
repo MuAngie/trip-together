@@ -96,7 +96,7 @@
 .guangzhou-ledger-main .ledger-tab.ledger-is-active { font-weight: 600; }
 .trip-plan .date-tabs button { font-weight: 600; }
 .trip-plan .hotel-info h3 { font-size: var(--text-subheading); font-weight: 600; line-height: 1.3; }
-.trip-plan :is(.hotel-dates, .hotel-info dl, .hotel-quote-link, .day-hotel) { font-size: var(--text-label); line-height: 1.6; }
+.trip-plan :is(.hotel-dates, .hotel-info dl, .day-hotel) { font-size: var(--text-label); line-height: 1.6; }
 .trip-plan .sight-seasonal > summary { font-size: var(--text-label); font-weight: 500; line-height: 1.4; }
 .trip-plan .sight-seasonal figcaption { font-size: var(--text-label); font-weight: 400; line-height: 1.6; }
 .guangzhou-ledger-main :is(.ledger-bill-note-trigger, .ledger-text-button, .ledger-person-name, .ledger-dialog-note) {
