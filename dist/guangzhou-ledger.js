@@ -84,6 +84,11 @@
       root: '#ledger-root', tripId,
       fixedCurrency: 'CNY', config, ...(repository ? { repository } : {})
     });
+    document.getElementById('ledger-root').addEventListener('travel-ledger:changed', event => {
+      if (!['bill-added', 'bill-updated'].includes(event.detail.reason)) return;
+      const entry = document.querySelector('#ledger-root [data-ledger-fold="entry"]');
+      if (entry) entry.open = false;
+    });
     const shared = window.TravelLedger.getPersistenceMode() === 'd1';
     status.textContent = shared
       ? pendingSync ? '账目尚未同步，输入团队密码后可同步到共享账本。本机原账目保留。' : sharedStatus

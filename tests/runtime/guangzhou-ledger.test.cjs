@@ -11,12 +11,12 @@ function harness() {
     dataset: {}, innerHTML: '', setAttribute() {}, removeAttribute() {},
     querySelector() { return null; }, querySelectorAll() { return []; },
     addEventListener(type, handler) { handlers[type] = handler; },
-    contains() { return true; }, dispatchEvent() {}
+    contains() { return true; }, dispatchEvent(event) { handlers[event.type]?.(event); }
   };
   const context = vm.createContext({
     console, window: {}, location: { hash: '', pathname: '/guangzhou-ledger.html' },
     document: { querySelector: () => root, addEventListener() {} },
-    CustomEvent: class {},
+    CustomEvent: class { constructor(type, options) { this.type = type; this.detail = options?.detail; } },
     FormData: class {
       constructor(form) { this.values = form.values; }
       get(key) { return this.values[key] ?? ''; }
@@ -190,6 +190,31 @@ test('opening a shared ledger reads cloud records without prompting or overwriti
   assert.equal(h.prompts(), 0);
   assert.equal(h.writes.length, 0);
   assert.equal(JSON.stringify(remote), before);
+});
+
+test('Guangzhou bill entry collapses only after a successful save and stays closed on rerender', async () => {
+  const remote = JSON.parse(JSON.stringify(standaloneBundle.ledgerSeed));
+  const h = await loadShared(memoryStorage(), remote, ['team-password']);
+  const entry = { open: true, dataset: { ledgerFold: 'entry' } };
+  h.context.document.querySelector = () => entry;
+  h.root.querySelectorAll = selector => selector === '[data-ledger-fold]' ? [entry] : [];
+  const form = {
+    dataset: { ledgerForm: 'bill' }, elements: {}, querySelector: () => null,
+    values: { originalAmount: '100', payerId: remote.travelers[0].id,
+      participantIds: remote.travelers.map(person => person.id), category: '餐饮', note: '测试晚餐' },
+    closest() { return this; }
+  };
+  remote.error = true;
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(entry.open, true);
+  assert.equal(h.api.getSnapshot().bills.length, 2);
+  delete remote.error;
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(entry.open, false);
+  assert.equal(h.api.getSnapshot().bills.length, 3);
+  assert.match(h.root.innerHTML, /账单已保存/);
+  h.api.setActiveTab('stats', { updateHash: false });
+  assert.doesNotMatch(h.root.innerHTML, /data-ledger-fold="entry" open/);
 });
 
 test('cancelling password entry leaves shared and local records unchanged', async () => {
