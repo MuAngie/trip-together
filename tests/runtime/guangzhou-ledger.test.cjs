@@ -84,12 +84,12 @@ const standaloneBundle = JSON.parse(fs.readFileSync(path.join(__dirname, '../../
 const guangzhouTripId = 'guangzhou-shunde-macao-2026';
 function memoryStorage() {
   const values = new Map();
-  return { getItem: key => values.get(key) || null, setItem: (key, value) => values.set(key, value) };
+  return { getItem: key => values.get(key) || null, setItem: (key, value) => values.set(key, value), removeItem: key => values.delete(key) };
 }
 async function loadStandalone(storage) {
   const h = harness();
   h.context.localStorage = storage;
-  h.context.fetch = async () => ({ ok: true, json: async () => standaloneBundle });
+  h.context.fetch = async () => ({ ok: true, json: async () => ({ ...standaloneBundle, config: { persistence: { mode: 'local' } } }) });
   h.context.document.getElementById = id => id === 'guangzhou-ledger-status' ? { textContent: '' } : h.root;
   vm.runInContext(storageSource, h.context);
   h.context.TravelRuntimeStorage = h.context.window.TravelRuntimeStorage;
@@ -97,8 +97,7 @@ async function loadStandalone(storage) {
   return h.api;
 }
 
-test('a fresh published local ledger starts with five aliases and the two flight bills', async () => {
-  assert.equal(standaloneBundle.config.persistence.mode, 'local');
+test('a fresh local ledger starts with five aliases and the two flight bills', async () => {
   const api = await loadStandalone(memoryStorage());
   const snapshot = api.getSnapshot();
   assert.equal(api.getPersistenceMode(), 'local');
@@ -107,6 +106,126 @@ test('a fresh published local ledger starts with five aliases and the two flight
   const payer = snapshot.travelers.find(person => person.name === '1');
   assert.ok(snapshot.bills.every(bill => bill.payerId === payer.id && bill.participantIds.length === 5 && bill.currency === 'CNY'));
   assert.equal(snapshot.bills.reduce((sum, bill) => sum + bill.baseAmountCents, 0), 702000);
+});
+
+async function loadShared(storage, remote, passwords = []) {
+  const h = harness();
+  const events = {};
+  const status = { textContent: '' };
+  const sync = { hidden: true, addEventListener(type, fn) { events[type] = fn; } };
+  const input = { value: '' };
+  let prompts = 0;
+  const dialog = {
+    querySelector: selector => selector === 'input' ? input : selector === 'button' ? { addEventListener() {} } : { textContent: '' },
+    showModal() {
+      prompts += 1;
+      input.value = passwords.shift() || '';
+      this.returnValue = input.value ? 'confirm' : 'cancel';
+      this.onclose();
+    }
+  };
+  const writes = [];
+  h.context.localStorage = storage;
+  h.context.sessionStorage = memoryStorage();
+  h.context.document.getElementById = id => ({
+    'guangzhou-ledger-status': status, 'guangzhou-ledger-sync': sync,
+    'guangzhou-editor-password': dialog, 'ledger-root': h.root
+  })[id];
+  h.context.fetch = async (url, init = {}) => {
+    if (url === 'guangzhou-ledger-config.json') return { ok: true, json: async () => standaloneBundle };
+    assert.match(url, /^\/api\/trip\/guangzhou-shunde-macao-2026\?/);
+    if (remote.error) throw new Error('共享读取失败');
+    if (init.method === 'POST') {
+      writes.push(init);
+      if (init.headers.authorization !== 'Bearer team-password') {
+        return { ok: false, status: 401, json: async () => ({ error: '团队编辑密码不正确' }) };
+      }
+      for (const change of JSON.parse(init.body).changes) {
+        remote[change.collection] = remote[change.collection].filter(row => row.id !== change.id);
+        if (change.op === 'upsert') remote[change.collection].push(change.value);
+      }
+    }
+    return { ok: true, status: 200, json: async () => JSON.parse(JSON.stringify(remote)) };
+  };
+  vm.runInContext(storageSource, h.context);
+  h.context.TravelRuntimeStorage = h.context.window.TravelRuntimeStorage;
+  await vm.runInContext(standaloneSource, h.context);
+  return { ...h, status, sync, events, writes, prompts: () => prompts };
+}
+
+test('shared Guangzhou ledger requires the server password before migrating actual local records', async () => {
+  assert.equal(standaloneBundle.config.persistence.mode, 'd1');
+  assert.deepEqual(standaloneBundle.config.persistence.sharedCollections, ['ledger']);
+  const storage = memoryStorage();
+  const local = await loadStandalone(storage);
+  const edited = local.getSnapshot();
+  edited.travelers[0].name = '保留姓名';
+  edited.bills[0].note = '保留已修改的机票备注';
+  const adapter = local.createLocalStorageAdapter(guangzhouTripId, { storage });
+  await adapter.save(edited);
+  const backup = JSON.stringify(await adapter.load());
+  const remote = { settings: null, travelers: [], bills: [] };
+  const h = await loadShared(storage, remote, ['wrong', 'team-password']);
+  assert.equal(h.api.getPersistenceMode(), 'd1');
+  assert.equal(h.api.getSnapshot().travelers[0].name, '保留姓名');
+  assert.equal(h.writes.length, 0);
+  assert.equal(h.sync.hidden, false);
+  await h.events.click();
+  assert.equal(h.prompts(), 2);
+  assert.equal(h.writes.length, 2);
+  assert.equal(h.sync.hidden, true);
+  assert.equal(remote.travelers[0].name, '保留姓名');
+  assert.equal(remote.bills[0].note, '保留已修改的机票备注');
+  assert.equal(JSON.stringify(await adapter.load()), backup);
+});
+
+test('opening a shared ledger reads cloud records without prompting or overwriting them', async () => {
+  const remote = { ...standaloneBundle.ledgerSeed, travelers: standaloneBundle.ledgerSeed.travelers.map(row => ({ ...row, name: '云端姓名' })) };
+  const before = JSON.stringify(remote);
+  const storage = memoryStorage();
+  await loadStandalone(storage);
+  const h = await loadShared(storage, remote);
+  assert.equal(h.api.getSnapshot().travelers[0].name, '云端姓名');
+  assert.equal(h.sync.hidden, true);
+  assert.equal(h.prompts(), 0);
+  assert.equal(h.writes.length, 0);
+  assert.equal(JSON.stringify(remote), before);
+});
+
+test('cancelling password entry leaves shared and local records unchanged', async () => {
+  const remote = { settings: null, travelers: [], bills: [] };
+  const h = await loadShared(memoryStorage(), remote);
+  await h.events.click();
+  assert.equal(h.writes.length, 0);
+  assert.equal(remote.bills.length, 0);
+  assert.equal(h.sync.hidden, false);
+  assert.match(h.status.textContent, /需要团队编辑密码/);
+});
+
+test('a cloud ledger populated after opening is not replaced by pending local migration', async () => {
+  const remote = { settings: null, travelers: [], bills: [] };
+  const h = await loadShared(memoryStorage(), remote, ['team-password']);
+  remote.travelers = [{ id: 'new-cloud-person', name: '新云端成员' }];
+  await h.events.click();
+  assert.equal(h.writes.length, 0);
+  assert.equal(remote.travelers[0].name, '新云端成员');
+  assert.match(h.status.textContent, /未覆盖云端账目/);
+});
+
+test('cloud read failure does not open an editable local fallback', async () => {
+  const h = await loadShared(memoryStorage(), { error: true });
+  assert.equal(h.root.innerHTML, '');
+  assert.match(h.status.textContent, /共享读取失败/);
+  assert.equal(h.writes.length, 0);
+});
+
+test('clearing a previously shared ledger does not restore old local bills', async () => {
+  const storage = memoryStorage();
+  await loadStandalone(storage);
+  storage.setItem(`${guangzhouTripId}:shared-initialized`, '1');
+  const h = await loadShared(storage, { settings: null, travelers: [], bills: [] });
+  assert.equal(h.api.getSnapshot().bills.length, 0);
+  assert.equal(h.sync.hidden, true);
 });
 
 test('reopening the published ledger preserves names, bill edits, and existing identities', async () => {

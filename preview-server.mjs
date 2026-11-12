@@ -7,6 +7,17 @@ const types = { ".html": "text/html; charset=utf-8", ".css": "text/css; charset=
 
 createServer(async (request, response) => {
   try {
+    const sharedLedgerPath = '/api/trip/guangzhou-shunde-macao-2026';
+    if (request.url.split('?')[0] === sharedLedgerPath) {
+      const upstream = await fetch(`https://trip-together.linjie-angie-gao.workers.dev${request.url}`, {
+        method: request.method,
+        headers: { 'content-type': 'application/json', ...(request.headers.authorization ? { authorization: request.headers.authorization } : {}) },
+        ...(request.method === 'POST' ? { body: request, duplex: 'half' } : {})
+      });
+      response.writeHead(upstream.status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
+      response.end(await upstream.text());
+      return;
+    }
     if (request.url === "/api/photos/config") {
       response.writeHead(200, { "Content-Type": "application/json", "Cache-Control": "no-store" });
       response.end(JSON.stringify({ mode: "local" }));
@@ -18,7 +29,7 @@ createServer(async (request, response) => {
     let body = await readFile(file);
     if (extname(file) === ".json" && relative !== "trips.json") {
       const data = JSON.parse(body);
-      if (data.config?.persistence) {
+      if (data.config?.persistence && relative !== 'guangzhou-ledger-config.json') {
         data.config.persistence.mode = "local";
         body = JSON.stringify(data);
       }

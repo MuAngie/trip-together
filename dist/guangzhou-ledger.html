@@ -10,9 +10,9 @@
   <link rel="stylesheet" href="typography.css?v=20261021-1">
   <link rel="stylesheet" href="guangzhou-ledger.css?v=20261102-1">
   <link rel="stylesheet" href="guangzhou-typography.css?v=20261111-1">
-  <script src="runtime-storage.js?v=20260925-1" defer></script>
+  <script src="runtime-storage.js?v=20261112-1" defer></script>
   <script src="ledger.js?v=20261102-1" defer></script>
-  <script src="guangzhou-ledger.js?v=20261103-1" defer></script>
+  <script src="guangzhou-ledger.js?v=20261112-1" defer></script>
 </head>
 <body class="collection-page guangzhou-ledger-page">
   <main class="guangzhou-ledger-main">
@@ -23,8 +23,23 @@
     <header class="guangzhou-ledger-heading">
       <h1>广州之行</h1>
       <p id="guangzhou-ledger-status" role="status">正在读取账本…</p>
+      <button id="guangzhou-ledger-sync" class="ledger-secondary-button" type="button" hidden>同步本机账目</button>
     </header>
     <div id="ledger-root" aria-busy="true"></div>
+    <dialog id="guangzhou-editor-password" class="ledger-dialog" aria-labelledby="guangzhou-editor-title">
+      <form method="dialog">
+        <div class="ledger-dialog-header">
+          <h2 id="guangzhou-editor-title">团队编辑密码</h2>
+          <button class="ledger-dialog-close" type="button" aria-label="关闭">×</button>
+        </div>
+        <div class="ledger-dialog-body">
+          <p class="ledger-dialog-note">请输入团队编辑密码</p>
+          <label class="ledger-field-label" for="guangzhou-editor-input">密码</label>
+          <input id="guangzhou-editor-input" class="ledger-input" type="password" autocomplete="current-password" required autofocus>
+          <button class="ledger-primary-button" value="confirm">确认并保存</button>
+        </div>
+      </form>
+    </dialog>
   </main>
 </body>
 </html>

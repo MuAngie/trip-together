@@ -1,7 +1,9 @@
 {
   "config": {
     "persistence": {
-      "mode": "local"
+      "mode": "d1",
+      "apiBase": "/api/trip",
+      "sharedCollections": ["ledger"]
     }
   },
   "ledgerSeed": {

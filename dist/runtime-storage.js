@@ -237,10 +237,10 @@
       } catch {}
     }
 
-    function askForEditorToken(message = "请输入团队编辑密码") {
+    async function askForEditorToken(message = "请输入团队编辑密码") {
       const promptEditor = options.prompt || globalThis.prompt;
       if (typeof promptEditor !== "function") return "";
-      const token = String(promptEditor(message) || "").trim();
+      const token = String((await promptEditor(message)) || "").trim();
       if (token) storeEditorToken(token);
       return token;
     }
@@ -257,7 +257,7 @@
       if (method === "GET") {
         response = await fetch(endpoint(), { cache: "no-store" });
       } else {
-        let token = readEditorToken() || askForEditorToken();
+        let token = readEditorToken() || await askForEditorToken();
         if (!token) throw new Error("需要团队编辑密码才能保存修改");
         const makeRequest = () => fetch(endpoint(), {
           method,
@@ -267,7 +267,7 @@
         response = await makeRequest();
         if (response.status === 401) {
           storeEditorToken("");
-          token = askForEditorToken("密码不正确，请重新输入团队编辑密码");
+          token = await askForEditorToken("密码不正确，请重新输入团队编辑密码");
           if (!token) throw new Error("团队编辑密码不正确");
           response = await makeRequest();
           if (response.status === 401) storeEditorToken("");
