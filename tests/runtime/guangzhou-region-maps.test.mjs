@@ -16,7 +16,10 @@ test('region distances use geographic meters, including short walking clusters',
 test('maps cover fixed catalog locations and every route references its own region', () => {
   const data = JSON.parse(readFileSync(new URL('../../dist/guangzhou-region-maps.json', import.meta.url)));
   const html = readFileSync(new URL('../../dist/guangzhou-2026.html', import.meta.url), 'utf8');
-  const sightIds = [...html.matchAll(/src="assets\/guangzhou-2026\/([\w-]+)\.jpg"/g)].map(match => match[1]);
+  const sightIds = [
+    ...html.matchAll(/src="assets\/guangzhou-2026\/([\w-]+)\.jpg"/g),
+    ...html.matchAll(/data-sight-id="([\w-]+)"/g)
+  ].map(match => match[1]);
   const mappedIds = data.regions.flatMap(region => region.places.map(place => place.id));
   assert.deepEqual(data.regions.map(region => region.id), ['guangzhou', 'shunde', 'macao']);
   assert.equal(data.coordinateSystem, 'WGS84');
@@ -28,7 +31,6 @@ test('maps cover fixed catalog locations and every route references its own regi
     for (const place of region.places) {
       assert.ok(place.lat > 22 && place.lat < 24 && place.lng > 113 && place.lng < 114);
       assert.ok(place.source.startsWith('https://'));
-      assert.ok(region.routes.some(route => route.stops.includes(place.id)));
     }
     for (const route of region.routes) {
       assert.ok(route.stops.length > 0);

@@ -102,7 +102,7 @@ function mountMap(region) {
 }
 
 if (typeof document !== 'undefined') {
-  fetch('guangzhou-region-maps.json?v=20261102-2')
+  fetch('guangzhou-region-maps.json?v=20261112-1')
     .then(response => { if (!response.ok) throw new Error('Map data unavailable'); return response.json(); })
     .then(data => data.regions.forEach(mountMap))
     .catch(() => {

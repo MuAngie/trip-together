@@ -148,8 +148,8 @@
     {
       "id": "shunde",
       "name": "顺德",
-      "overview": "清晖园与顺峰山可放在同一天，两处之间乘车。逢简水乡在更西侧，建议与杏坛吃饭另排半天。",
-      "note": "清晖园、顺峰山属于大良一带，逢简在西侧杏坛。村落和公园坐标仅作区域参考，实际到达点请按入口导航。",
+      "overview": "清晖园、华盖路与金榜上街可放在一起，顺峰山另乘车前往。金凤凰广场靠近酒店，容桂渔人码头在河对岸，需乘车过桥；逢简水乡在更西侧，另排半天。",
+      "note": "新增三组分别以金凤凰广场、华盖路和容桂渔人码头作为参考位置；同组的金榜上街、柴油机1959未单独设点。村落、公园和街区坐标仅作区域参考，实际到达点请按入口导航。",
       "places": [
         {
           "id": "qinghui",
@@ -171,6 +171,27 @@
           "lat": 22.8128,
           "lng": 113.155,
           "source": "https://www.wikidata.org/wiki/Q5443433"
+        },
+        {
+          "id": "desheng-riverside",
+          "name": "德胜河岸 · 金凤凰广场",
+          "lat": 22.79795951,
+          "lng": 113.29389715,
+          "source": "https://www.openstreetmap.org/way/968351776"
+        },
+        {
+          "id": "huagai-jinbang",
+          "name": "华盖路步行街 · 金榜上街",
+          "lat": 22.83918758,
+          "lng": 113.24736744,
+          "source": "https://www.amap.com/place/B0FFFEYYWJ"
+        },
+        {
+          "id": "ronggui-wharf",
+          "name": "容桂渔人码头 · 柴油机1959",
+          "lat": 22.78294502,
+          "lng": 113.26576953,
+          "source": "https://ditu.amap.com/place/B0FFH901MG"
         }
       ],
       "routes": [

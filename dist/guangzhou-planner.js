@@ -18,7 +18,7 @@
   }));
   const sights = new Map([...document.querySelectorAll('.sight-card')].map(card => {
     const img = card.querySelector('img');
-    return [img.getAttribute('src').split('/').pop().replace('.jpg', ''), {
+    return [card.dataset.sightId || img.getAttribute('src').split('/').pop().replace('.jpg', ''), {
       card, img, name: card.querySelector('h4').textContent,
       description: card.querySelector('.sight-copy p').textContent
     }];
