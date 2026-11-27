@@ -51,6 +51,8 @@ test('Guangzhou bills use CNY cents and split odd cents without introducing fore
   assert.equal(bill.baseAmountCents, 10001);
   assert.equal(bill.originalAmountCents, 10001);
   h.api.setActiveTab('stats', { updateHash: false });
+  assert.match(h.root.innerHTML, /餐饮 · 买单（测试晚餐）/);
+  assert.match(h.root.innerHTML, /餐饮（测试晚餐）/);
   assert.match(h.root.innerHTML, /50\.00/);
   assert.match(h.root.innerHTML, /50\.01/);
   const fresh = harness();

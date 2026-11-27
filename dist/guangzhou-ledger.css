@@ -47,6 +47,8 @@
 .guangzhou-ledger-main .ledger-bill-time-actions { display: flex; justify-content: flex-end; gap: 4px; margin-top: 4px; }
 .guangzhou-ledger-main .ledger-bill-time-actions button { min-height: 36px; padding: 0 10px; }
 .guangzhou-ledger-main .ledger-bill-time-form :disabled { opacity: .5; cursor: wait; }
+.guangzhou-ledger-main .ledger-member-bill > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.guangzhou-ledger-main .ledger-member-bill > span:last-child { flex-shrink: 0; white-space: nowrap; }
 @media (max-width: 480px) {
   .guangzhou-ledger-main { padding-inline: 16px; }
   .guangzhou-ledger-main .ledger-category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }

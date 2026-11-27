@@ -974,7 +974,7 @@
       const share = billShares(bill).get(member.traveler.id) || 0;
       return `
         <div class="ledger-member-bill">
-          <span>${escapeHtml(bill.category)}${bill.payerId === member.traveler.id ? " · 买单" : ""}</span>
+          <span>${escapeHtml(bill.category)}${bill.payerId === member.traveler.id ? " · 买单" : ""}${ledgerTripId === "guangzhou-shunde-macao-2026" && bill.note ? `（${escapeHtml(bill.note)}）` : ""}</span>
           <span>${share ? `分摊 ${escapeHtml(formatMoney(share, ledgerData.settings.baseCurrency))}` : "未参与分摊"}</span>
         </div>`;
     }).join("");
