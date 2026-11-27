@@ -792,7 +792,7 @@
     }).format(date) : "未记录";
     return `
       <details class="ledger-bill-time">
-        <summary aria-label="修改时间：${escapeAttribute(label)}">${escapeHtml(label)}</summary>
+        <summary aria-label="修改时间：${escapeAttribute(label)}">时间：${escapeHtml(label)}</summary>
         <form class="ledger-bill-time-form" data-ledger-form="bill-time" data-ledger-id="${escapeAttribute(bill.id)}">
           ${renderDateTimeInputs("recordedAt", value, true)}
           <div class="ledger-bill-time-actions">

@@ -299,7 +299,7 @@ test('old Guangzhou bills show 未记录 without inferring a time or writing to 
   remote.bills[0].createdAt = '2026-11-01T01:00:00.000Z';
   remote.bills[0].orderedAt = '2026-11-01T12:00';
   const h = await loadShared(memoryStorage(), remote);
-  assert.equal((h.root.innerHTML.match(/>未记录<\/summary>/g) || []).length, 2);
+  assert.equal((h.root.innerHTML.match(/>时间：未记录<\/summary>/g) || []).length, 2);
   assert.ok(h.api.getSnapshot().bills.every(bill => bill.recordedAt === ''));
   assert.equal(h.writes.length, 0);
   assert.equal(h.prompts(), 0);
@@ -319,7 +319,7 @@ test('new Guangzhou bills record Beijing time and keep it when the bill is edite
   await h.handlers.submit({ target: form, preventDefault() {} });
   const saved = h.api.getSnapshot().bills[0];
   assert.equal(saved.recordedAt, now);
-  assert.match(h.root.innerHTML, />11\/28 00:10<\/summary>/);
+  assert.match(h.root.innerHTML, />时间：11\/28 00:10<\/summary>/);
   assert.match(h.root.innerHTML, /type="date" name="recordedAtDate" value="2026-11-28"/);
   assert.match(h.root.innerHTML, /type="time" name="recordedAtTime" value="00:10"/);
   assert.doesNotMatch(h.root.innerHTML, /type="datetime-local"/);
@@ -331,7 +331,7 @@ test('new Guangzhou bills record Beijing time and keep it when the bill is edite
   const reopened = harness();
   await reopened.api.init({ root: reopened.root, config: {}, tripId: guangzhouTripId, fixedCurrency: 'CNY', repository: h.repository });
   assert.equal(reopened.api.getSnapshot().bills[0].recordedAt, now);
-  assert.match(reopened.root.innerHTML, />11\/28 00:10<\/summary>/);
+  assert.match(reopened.root.innerHTML, />时间：11\/28 00:10<\/summary>/);
 });
 
 test('editing a time uses the shared password and preserves amounts, notes and other bills', async () => {
@@ -347,7 +347,7 @@ test('editing a time uses the shared password and preserves amounts, notes and o
   assert.equal(remote.bills.find(bill => bill.id === changed.id).recordedAt, changed.recordedAt);
   for (const key of ['originalAmountCents', 'baseAmountCents', 'note', 'payerId', 'createdAt']) assert.equal(changed[key], before[0][key]);
   assert.deepEqual(JSON.parse(JSON.stringify(h.api.getSnapshot().bills[1])), before[1]);
-  assert.match(details.outerHTML, />11\/26 18:30<\/summary>/);
+  assert.match(details.outerHTML, />时间：11\/26 18:30<\/summary>/);
   assert.doesNotMatch(details.outerHTML, /<details[^>]* open/);
   assert.equal(input.disabled, false);
 });
