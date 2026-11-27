@@ -83,7 +83,7 @@
 .trip-plan .timeline-time { font-size: var(--text-label); font-weight: 500; }
 .trip-plan :is(.planner-button, .sight-add, .plan-remove, .plan-time input, .plan-move select, .map-groups button, .map-key a),
 .guangzhou-ledger-main :is(.ledger-primary-button, .ledger-secondary-button, .ledger-text-button,
-  .ledger-icon-button, .ledger-category-choice, .ledger-input, .ledger-bill-note-trigger) {
+  .ledger-icon-button, .ledger-category-choice, .ledger-input, .ledger-clock-inputs, .ledger-bill-note-trigger) {
   font-size: var(--text-label);
   line-height: 1.4;
 }

@@ -289,9 +289,9 @@ function billTimeForm(id, value) {
   const input = { disabled: false };
   const form = {
     dataset: { ledgerForm: 'bill-time', ledgerId: id }, elements: [input],
-    values: { recordedAtDate: value.split('T')[0], recordedAtTime: value.split('T')[1] },
+    values: { recordedAtDate: value.split('T')[0], recordedAtHour: value.split('T')[1].split(':')[0], recordedAtMinute: value.split(':')[1] },
     closest: selector => selector === '.ledger-bill-time' ? details : form,
-    reset() { this.values.recordedAtDate = ''; this.values.recordedAtTime = ''; }
+    reset() { this.values.recordedAtDate = ''; this.values.recordedAtHour = ''; this.values.recordedAtMinute = ''; }
   };
   return { form, details, input };
 }
@@ -323,8 +323,9 @@ test('new Guangzhou bills record Beijing time and keep it when the bill is edite
   assert.equal(saved.recordedAt, now);
   assert.match(h.root.innerHTML, />时间：11\/28 00:10<\/summary>/);
   assert.match(h.root.innerHTML, /type="date" name="recordedAtDate" value="2026-11-28"/);
-  assert.match(h.root.innerHTML, /type="time" name="recordedAtTime" value="00:10"/);
-  assert.doesNotMatch(h.root.innerHTML, /type="datetime-local"/);
+  assert.match(h.root.innerHTML, /inputmode="numeric" name="recordedAtHour" value="00"/);
+  assert.match(h.root.innerHTML, /inputmode="numeric" name="recordedAtMinute" value="10"/);
+  assert.doesNotMatch(h.root.innerHTML, /type="(?:datetime-local|time)"/);
   const button = { dataset: { ledgerAction: 'edit-bill', ledgerId: saved.id }, closest: selector => selector === '[data-ledger-action]' ? button : null };
   await h.handlers.click({ target: button, preventDefault() {} });
   form.values.originalAmount = '120';
@@ -369,7 +370,8 @@ test('cancelled or failed time edits leave the stored time unchanged and failed 
   assert.equal(JSON.stringify(h.api.getSnapshot()), before);
   details.open = true;
   form.values.recordedAtDate = '2026-11-26';
-  form.values.recordedAtTime = '18:30';
+  form.values.recordedAtHour = '18';
+  form.values.recordedAtMinute = '30';
   await h.handlers.submit({ target: form, preventDefault() {} });
   assert.equal(h.prompts(), 1);
   assert.equal(h.writes.length, 0);
@@ -377,7 +379,8 @@ test('cancelled or failed time edits leave the stored time unchanged and failed 
   assert.equal(details.open, true);
   assert.equal(details.outerHTML, '');
   assert.equal(form.values.recordedAtDate, '2026-11-26');
-  assert.equal(form.values.recordedAtTime, '18:30');
+  assert.equal(form.values.recordedAtHour, '18');
+  assert.equal(form.values.recordedAtMinute, '30');
   assert.equal(input.disabled, false);
 });
 
@@ -388,13 +391,20 @@ test('separate order date and time save together and incomplete dates do not cre
   const form = {
     dataset: { ledgerForm: 'bill' }, elements: {}, querySelector: () => error,
     values: { originalAmount: '100', payerId: 'a', participantIds: ['a', 'b'], category: '餐饮',
-      orderedAtDate: '2026-11-27', orderedAtTime: '' },
+      orderedAtDate: '2026-11-27', orderedAtHour: '', orderedAtMinute: '' },
     closest() { return this; }
   };
   await h.handlers.submit({ target: form, preventDefault() {} });
   assert.equal(h.api.getSnapshot().bills.length, 0);
   assert.match(error.textContent, /填写完整/);
-  form.values.orderedAtTime = '14:30';
+  for (const [hour, minute] of [['24', '00'], ['14', '60'], ['14', ''], ['-1', '30']]) {
+    form.values.orderedAtHour = hour;
+    form.values.orderedAtMinute = minute;
+    await h.handlers.submit({ target: form, preventDefault() {} });
+    assert.equal(h.api.getSnapshot().bills.length, 0);
+  }
+  form.values.orderedAtHour = '9';
+  form.values.orderedAtMinute = '5';
   await h.handlers.submit({ target: form, preventDefault() {} });
-  assert.equal(h.api.getSnapshot().bills[0].orderedAt, '2026-11-27T14:30');
+  assert.equal(h.api.getSnapshot().bills[0].orderedAt, '2026-11-27T09:05');
 });

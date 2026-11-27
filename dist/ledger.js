@@ -642,18 +642,31 @@
 
   function renderDateTimeInputs(name, value, required = false) {
     const [date = "", time = ""] = value.split("T");
+    const [hour = "", minute = ""] = time.split(":");
     const label = name === "orderedAt" ? "下单" : "记账";
     return `<div class="ledger-date-time-inputs">
       <input class="ledger-input" type="date" name="${name}Date" value="${escapeAttribute(date)}" aria-label="${label}日期" ${required ? "required" : ""}>
-      <input class="ledger-input" type="time" name="${name}Time" value="${escapeAttribute(time)}" aria-label="${label}时间（北京时间）" ${required ? "required" : ""}>
+      <div class="ledger-clock-inputs" role="group" aria-label="${label}时间（北京时间）">
+        <input class="ledger-input" type="text" inputmode="numeric" name="${name}Hour" value="${escapeAttribute(hour)}" maxlength="2" pattern="([01]?[0-9]|2[0-3])" autocomplete="off" placeholder="时" aria-label="${label}小时（0—23）" ${required ? "required" : ""}>
+        <span aria-hidden="true">:</span>
+        <input class="ledger-input" type="text" inputmode="numeric" name="${name}Minute" value="${escapeAttribute(minute)}" maxlength="2" pattern="[0-5]?[0-9]" autocomplete="off" placeholder="分" aria-label="${label}分钟（0—59）" ${required ? "required" : ""}>
+      </div>
     </div>`;
   }
 
   function readDateTime(formData, name) {
     if (ledgerTripId !== "guangzhou-shunde-macao-2026") return String(formData.get(name) || "");
     const date = String(formData.get(`${name}Date`) || "");
-    const time = String(formData.get(`${name}Time`) || "");
-    return date || time ? `${date}T${time}` : "";
+    const hour = String(formData.get(`${name}Hour`) || "").trim();
+    const minute = String(formData.get(`${name}Minute`) || "").trim();
+    return date || hour || minute ? `${date}T${hour ? hour.padStart(2, "0") : ""}:${minute ? minute.padStart(2, "0") : ""}` : "";
+  }
+
+  function validBeijingDateTime(value) {
+    if (!/^\d{4}-\d{2}-\d{2}T([01]\d|2[0-3]):[0-5]\d$/.test(value)) return false;
+    const date = new Date(`${value}+08:00`);
+    return !Number.isNaN(date.getTime())
+      && new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 16) === value;
   }
 
   function renderBillForm() {
@@ -1521,7 +1534,7 @@
     }
 
     const orderedAt = readDateTime(formData, "orderedAt");
-    if (ledgerTripId === "guangzhou-shunde-macao-2026" && orderedAt && Number.isNaN(new Date(`${orderedAt}+08:00`).getTime())) {
+    if (ledgerTripId === "guangzhou-shunde-macao-2026" && orderedAt && !validBeijingDateTime(orderedAt)) {
       setFormError(form, "请填写完整、有效的下单日期和时间。");
       return;
     }
@@ -1652,7 +1665,7 @@
     if (ledgerTripId !== "guangzhou-shunde-macao-2026" || form.dataset.saving === "true") return;
     const value = readDateTime(new FormData(form), "recordedAt");
     const date = new Date(`${value}+08:00`);
-    if (!value || Number.isNaN(date.getTime())) {
+    if (!validBeijingDateTime(value)) {
       setNotice("请选择有效的时间。");
       return;
     }

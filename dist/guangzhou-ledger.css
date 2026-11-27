@@ -36,6 +36,8 @@
 .guangzhou-ledger-main .ledger-date-time-inputs { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
 .guangzhou-ledger-main .ledger-date-time-inputs .ledger-input { flex: 1 1 100px; width: 100%; min-width: 0; }
 .guangzhou-ledger-main .ledger-date-time-inputs [type="date"] { flex-basis: 150px; }
+.guangzhou-ledger-main .ledger-clock-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 6px; flex: 1 1 110px; min-width: 0; }
+.guangzhou-ledger-main .ledger-clock-inputs .ledger-input { text-align: center; }
 .guangzhou-ledger-main .ledger-bill-main { row-gap: 0; }
 .guangzhou-ledger-main .ledger-bill-time { grid-column: 1 / -1; margin: 4px 0 0 15px; }
 .guangzhou-ledger-main .ledger-bill-time > summary { display: flex; align-items: center; width: fit-content; min-height: 28px; color: var(--collection-muted); cursor: pointer; list-style: none; }
