@@ -60,9 +60,13 @@ test('Guangzhou bills use CNY cents and split odd cents without introducing fore
 
 test('existing trips retain their currency picker unless CNY-only mode is requested', async () => {
   const h = harness();
+  h.repository.load().bills.push({ id: 'japan-bill', currency: 'JPY', originalAmountCents: 10000, baseAmountCents: 500,
+    category: '餐饮', payerId: 'a', participantIds: ['a', 'b'], orderedAt: '2026-10-07T12:30' });
   await h.api.init({ root: h.root, config: {}, tripId: 'shanghai-japan-2026', repository: h.repository });
   assert.equal(h.api.getSnapshot().settings.lastCurrency, 'JPY');
   assert.match(h.root.innerHTML, /data-ledger-dialog="settings"/);
+  assert.match(h.root.innerHTML, /class="ledger-bill-date"/);
+  assert.doesNotMatch(h.root.innerHTML, /class="ledger-bill-time"/);
 });
 
 test('Guangzhou and Japan local ledgers keep separate records', async () => {
@@ -276,4 +280,119 @@ test('deleting all local records does not restore the initial flight bills on re
   const reopened = (await loadStandalone(storage)).getSnapshot();
   assert.equal(reopened.travelers.length, 0);
   assert.equal(reopened.bills.length, 0);
+});
+
+function billTimeForm(id, value) {
+  const details = { open: true, outerHTML: '' };
+  const input = { disabled: false };
+  const form = {
+    dataset: { ledgerForm: 'bill-time', ledgerId: id }, elements: [input],
+    values: { recordedAtDate: value.split('T')[0], recordedAtTime: value.split('T')[1] },
+    closest: selector => selector === '.ledger-bill-time' ? details : form,
+    reset() { this.values.recordedAtDate = ''; this.values.recordedAtTime = ''; }
+  };
+  return { form, details, input };
+}
+
+test('old Guangzhou bills show 未记录 without inferring a time or writing to the cloud', async () => {
+  const remote = JSON.parse(JSON.stringify(standaloneBundle.ledgerSeed));
+  remote.bills[0].createdAt = '2026-11-01T01:00:00.000Z';
+  remote.bills[0].orderedAt = '2026-11-01T12:00';
+  const h = await loadShared(memoryStorage(), remote);
+  assert.equal((h.root.innerHTML.match(/>未记录<\/summary>/g) || []).length, 2);
+  assert.ok(h.api.getSnapshot().bills.every(bill => bill.recordedAt === ''));
+  assert.equal(h.writes.length, 0);
+  assert.equal(h.prompts(), 0);
+});
+
+test('new Guangzhou bills record Beijing time and keep it when the bill is edited or reopened', async () => {
+  const h = harness();
+  const now = '2026-11-27T16:10:00.000Z';
+  h.context.Date = class extends Date { constructor(...args) { super(...(args.length ? args : [now])); } };
+  h.context.requestAnimationFrame = callback => callback();
+  await h.api.init({ root: h.root, config: {}, tripId: guangzhouTripId, fixedCurrency: 'CNY', repository: h.repository });
+  const form = {
+    dataset: { ledgerForm: 'bill' }, elements: {}, querySelector: () => null,
+    values: { originalAmount: '100', payerId: 'a', participantIds: ['a', 'b'], category: '餐饮', note: '晚餐' },
+    closest() { return this; }
+  };
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  const saved = h.api.getSnapshot().bills[0];
+  assert.equal(saved.recordedAt, now);
+  assert.match(h.root.innerHTML, />11\/28 00:10<\/summary>/);
+  assert.match(h.root.innerHTML, /type="date" name="recordedAtDate" value="2026-11-28"/);
+  assert.match(h.root.innerHTML, /type="time" name="recordedAtTime" value="00:10"/);
+  assert.doesNotMatch(h.root.innerHTML, /type="datetime-local"/);
+  const button = { dataset: { ledgerAction: 'edit-bill', ledgerId: saved.id }, closest: selector => selector === '[data-ledger-action]' ? button : null };
+  await h.handlers.click({ target: button, preventDefault() {} });
+  form.values.originalAmount = '120';
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(h.api.getSnapshot().bills[0].recordedAt, now);
+  const reopened = harness();
+  await reopened.api.init({ root: reopened.root, config: {}, tripId: guangzhouTripId, fixedCurrency: 'CNY', repository: h.repository });
+  assert.equal(reopened.api.getSnapshot().bills[0].recordedAt, now);
+  assert.match(reopened.root.innerHTML, />11\/28 00:10<\/summary>/);
+});
+
+test('editing a time uses the shared password and preserves amounts, notes and other bills', async () => {
+  const remote = JSON.parse(JSON.stringify(standaloneBundle.ledgerSeed));
+  const h = await loadShared(memoryStorage(), remote, ['team-password']);
+  const before = JSON.parse(JSON.stringify(h.api.getSnapshot().bills));
+  const { form, details, input } = billTimeForm(before[0].id, '2026-11-26T18:30');
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(h.prompts(), 1);
+  assert.equal(h.writes.length, 1);
+  const changed = h.api.getSnapshot().bills[0];
+  assert.equal(changed.recordedAt, '2026-11-26T10:30:00.000Z');
+  assert.equal(remote.bills.find(bill => bill.id === changed.id).recordedAt, changed.recordedAt);
+  for (const key of ['originalAmountCents', 'baseAmountCents', 'note', 'payerId', 'createdAt']) assert.equal(changed[key], before[0][key]);
+  assert.deepEqual(JSON.parse(JSON.stringify(h.api.getSnapshot().bills[1])), before[1]);
+  assert.match(details.outerHTML, />11\/26 18:30<\/summary>/);
+  assert.doesNotMatch(details.outerHTML, /<details[^>]* open/);
+  assert.equal(input.disabled, false);
+});
+
+test('cancelled or failed time edits leave the stored time unchanged and failed edits remain retryable', async () => {
+  const remote = JSON.parse(JSON.stringify(standaloneBundle.ledgerSeed));
+  const h = await loadShared(memoryStorage(), remote);
+  const before = JSON.stringify(h.api.getSnapshot());
+  const { form, details, input } = billTimeForm(h.api.getSnapshot().bills[0].id, '2026-11-26T18:30');
+  const cancel = {
+    dataset: { ledgerAction: 'cancel-time-edit' },
+    closest: selector => selector === '[data-ledger-action]' ? cancel : selector === '.ledger-bill-time' ? details : selector === 'form' ? form : null
+  };
+  await h.handlers.click({ target: cancel, preventDefault() {} });
+  assert.equal(details.open, false);
+  assert.equal(h.writes.length, 0);
+  assert.equal(JSON.stringify(h.api.getSnapshot()), before);
+  details.open = true;
+  form.values.recordedAtDate = '2026-11-26';
+  form.values.recordedAtTime = '18:30';
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(h.prompts(), 1);
+  assert.equal(h.writes.length, 0);
+  assert.equal(JSON.stringify(h.api.getSnapshot()), before);
+  assert.equal(details.open, true);
+  assert.equal(details.outerHTML, '');
+  assert.equal(form.values.recordedAtDate, '2026-11-26');
+  assert.equal(form.values.recordedAtTime, '18:30');
+  assert.equal(input.disabled, false);
+});
+
+test('separate order date and time save together and incomplete dates do not create bills', async () => {
+  const h = harness();
+  await h.api.init({ root: h.root, config: {}, tripId: guangzhouTripId, fixedCurrency: 'CNY', repository: h.repository });
+  const error = { textContent: '' };
+  const form = {
+    dataset: { ledgerForm: 'bill' }, elements: {}, querySelector: () => error,
+    values: { originalAmount: '100', payerId: 'a', participantIds: ['a', 'b'], category: '餐饮',
+      orderedAtDate: '2026-11-27', orderedAtTime: '' },
+    closest() { return this; }
+  };
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(h.api.getSnapshot().bills.length, 0);
+  assert.match(error.textContent, /填写完整/);
+  form.values.orderedAtTime = '14:30';
+  await h.handlers.submit({ target: form, preventDefault() {} });
+  assert.equal(h.api.getSnapshot().bills[0].orderedAt, '2026-11-27T14:30');
 });

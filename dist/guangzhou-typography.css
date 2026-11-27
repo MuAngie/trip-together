@@ -69,7 +69,7 @@
   .map-caption, .map-credit, .map-notes, .port-section-heading span, .port-links, .port-note),
 .guangzhou-ledger-main :is(.ledger-fold > summary small, .ledger-field-label small, .ledger-fieldset legend small,
   .ledger-section-kicker, .ledger-soft-count, .ledger-members-strip-heading span, .ledger-list-total span,
-  .ledger-bill-date, .ledger-bill-title-row p, .ledger-bill-amount span, .ledger-stats-overview > span,
+  .ledger-bill-date, .ledger-bill-time > summary, .ledger-bill-title-row p, .ledger-bill-amount span, .ledger-stats-overview > span,
   .ledger-transfer-person small, .ledger-member-net small, .ledger-member-metrics dt, .ledger-field-help,
   .ledger-empty-state, .ledger-onboarding, .ledger-dialog-empty) {
   font-size: var(--text-caption);

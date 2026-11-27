@@ -297,6 +297,9 @@
         category,
         note: typeof bill.note === "string" ? bill.note.trim().slice(0, 160) : "",
         orderedAt: typeof bill.orderedAt === "string" ? bill.orderedAt : "",
+        ...(ledgerTripId === "guangzhou-shunde-macao-2026" ? {
+          recordedAt: typeof bill.recordedAt === "string" ? bill.recordedAt : ""
+        } : {}),
         payerId,
         participantIds,
         createdAt: typeof bill.createdAt === "string" ? bill.createdAt : new Date().toISOString(),
@@ -637,6 +640,22 @@
     }).join("");
   }
 
+  function renderDateTimeInputs(name, value, required = false) {
+    const [date = "", time = ""] = value.split("T");
+    const label = name === "orderedAt" ? "下单" : "记账";
+    return `<div class="ledger-date-time-inputs">
+      <input class="ledger-input" type="date" name="${name}Date" value="${escapeAttribute(date)}" aria-label="${label}日期" ${required ? "required" : ""}>
+      <input class="ledger-input" type="time" name="${name}Time" value="${escapeAttribute(time)}" aria-label="${label}时间（北京时间）" ${required ? "required" : ""}>
+    </div>`;
+  }
+
+  function readDateTime(formData, name) {
+    if (ledgerTripId !== "guangzhou-shunde-macao-2026") return String(formData.get(name) || "");
+    const date = String(formData.get(`${name}Date`) || "");
+    const time = String(formData.get(`${name}Time`) || "");
+    return date || time ? `${date}T${time}` : "";
+  }
+
   function renderBillForm() {
     const editingBill = ledgerData.bills.find((bill) => bill.id === editingBillId) || null;
     const draft = editingBill ? null : billDraft;
@@ -696,10 +715,15 @@
               <input class="ledger-input" type="text" name="note" maxlength="160" autocomplete="off" placeholder="${fixedCurrency ? "例如：顺德晚餐" : "例如：米兰大教堂门票"}" value="${escapeAttribute(editingBill?.note || draft?.note || "")}">
             </label>
 
+            ${ledgerTripId === "guangzhou-shunde-macao-2026" ? `
+            <div class="ledger-field ledger-date-field">
+              <span class="ledger-field-label">下单时间 <small>选填</small></span>
+              ${renderDateTimeInputs("orderedAt", editingBill?.orderedAt || draft?.orderedAt || "")}
+            </div>` : `
             <label class="ledger-field ledger-date-field">
               <span class="ledger-field-label">下单时间 <small>选填</small></span>
               <input class="ledger-input" type="datetime-local" name="orderedAt" value="${escapeAttribute(editingBill?.orderedAt || draft?.orderedAt || "")}">
-            </label>
+            </label>`}
 
             <fieldset class="ledger-fieldset">
               <legend class="ledger-field-label">买单人 <small>单选</small></legend>
@@ -756,6 +780,27 @@
       <button class="ledger-bill-note-trigger" type="button" data-ledger-action="edit-bill-note" data-ledger-id="${escapeAttribute(bill.id)}" aria-label="编辑备注：${escapeAttribute(bill.note || "暂无")}">
         <span>备注：</span><span>${escapeHtml(bill.note || "暂无")}</span>
       </button>`;
+  }
+
+  function renderBillTimeControl(bill) {
+    const date = new Date(bill.recordedAt || NaN);
+    const known = !Number.isNaN(date.getTime());
+    const value = known ? new Date(date.getTime() + 8 * 60 * 60 * 1000).toISOString().slice(0, 16) : "";
+    const label = known ? new Intl.DateTimeFormat("zh-CN", {
+      timeZone: "Asia/Shanghai", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", hourCycle: "h23"
+    }).format(date) : "未记录";
+    return `
+      <details class="ledger-bill-time">
+        <summary aria-label="修改时间：${escapeAttribute(label)}">${escapeHtml(label)}</summary>
+        <form class="ledger-bill-time-form" data-ledger-form="bill-time" data-ledger-id="${escapeAttribute(bill.id)}">
+          ${renderDateTimeInputs("recordedAt", value, true)}
+          <div class="ledger-bill-time-actions">
+            <button class="ledger-text-button" type="submit" aria-label="保存时间">保存</button>
+            <button class="ledger-text-button" type="button" data-ledger-action="cancel-time-edit" aria-label="取消修改时间">取消</button>
+          </div>
+        </form>
+      </details>`;
   }
 
   function billRowById(id) {
@@ -850,13 +895,14 @@
             <div>
               <h3>${escapeHtml(bill.category)}</h3>
               ${renderBillNoteControl(bill)}
-              ${bill.orderedAt ? `<p class="ledger-bill-date">${escapeHtml(formatBillDate(bill.orderedAt))}</p>` : ""}
+              ${ledgerTripId !== "guangzhou-shunde-macao-2026" && bill.orderedAt ? `<p class="ledger-bill-date">${escapeHtml(formatBillDate(bill.orderedAt))}</p>` : ""}
             </div>
           </div>
           <div class="ledger-bill-amount">
             <strong>${escapeHtml(formatMoney(bill.originalAmountCents, bill.currency))}</strong>
             ${bill.currency !== baseCurrency ? `<span>折合 ${escapeHtml(formatMoney(bill.baseAmountCents, baseCurrency))}</span>` : ""}
           </div>
+          ${ledgerTripId === "guangzhou-shunde-macao-2026" ? renderBillTimeControl(bill) : ""}
         </div>
         <div class="ledger-bill-people">
           <div class="ledger-bill-payer">
@@ -1302,7 +1348,7 @@
       baseAmount: String(formData.get("baseAmount") || ""),
       category: String(formData.get("category") || "餐饮"),
       note: String(formData.get("note") || "").trim().slice(0, 160),
-      orderedAt: String(formData.get("orderedAt") || ""),
+      orderedAt: readDateTime(formData, "orderedAt"),
       payerId: String(formData.get("payerId") || ""),
       participantIds: formData.getAll("participantIds").map(String)
     };
@@ -1474,6 +1520,11 @@
       return;
     }
 
+    const orderedAt = readDateTime(formData, "orderedAt");
+    if (ledgerTripId === "guangzhou-shunde-macao-2026" && orderedAt && Number.isNaN(new Date(`${orderedAt}+08:00`).getTime())) {
+      setFormError(form, "请填写完整、有效的下单日期和时间。");
+      return;
+    }
     const now = new Date().toISOString();
     const fields = {
       originalAmountCents,
@@ -1481,7 +1532,7 @@
       currency,
       category,
       note: String(formData.get("note") || "").trim().slice(0, 160),
-      orderedAt: String(formData.get("orderedAt") || ""),
+      orderedAt,
       payerId,
       participantIds,
       updatedAt: now
@@ -1492,7 +1543,8 @@
         const index = next.bills.findIndex((bill) => bill.id === billBeingEdited.id);
         if (index >= 0) next.bills[index] = { ...next.bills[index], ...fields };
       } else {
-        next.bills.push({ id: makeId("bill"), ...fields, createdAt: now });
+        next.bills.push({ id: makeId("bill"), ...fields, createdAt: now,
+          ...(ledgerTripId === "guangzhou-shunde-macao-2026" ? { recordedAt: now } : {}) });
         next.settings.lastCurrency = currency;
       }
     }, {
@@ -1594,6 +1646,41 @@
       () => { if (pendingNoteSave === operation) pendingNoteSave = null; }
     );
     return operation;
+  }
+
+  async function submitBillTime(form) {
+    if (ledgerTripId !== "guangzhou-shunde-macao-2026" || form.dataset.saving === "true") return;
+    const value = readDateTime(new FormData(form), "recordedAt");
+    const date = new Date(`${value}+08:00`);
+    if (!value || Number.isNaN(date.getTime())) {
+      setNotice("请选择有效的时间。");
+      return;
+    }
+    form.dataset.saving = "true";
+    for (const control of form.elements) control.disabled = true;
+    try {
+      await enqueueMutation(async () => {
+        const next = deepClone(ledgerData);
+        const bill = next.bills.find((entry) => entry.id === form.dataset.ledgerId);
+        if (!bill) return;
+        bill.recordedAt = date.toISOString();
+        bill.updatedAt = next.updatedAt = new Date().toISOString();
+        await Promise.resolve(ledgerAdapter.save(next, { tripId: ledgerTripId }));
+        ledgerData = normalizeData(next);
+        form.closest(".ledger-bill-time").outerHTML = renderBillTimeControl(bill);
+        setNotice("时间已更新");
+        ledgerRoot.dispatchEvent(new CustomEvent("travel-ledger:changed", {
+          bubbles: true,
+          detail: { tripId: ledgerTripId, reason: "bill-time-updated", data: deepClone(ledgerData) }
+        }));
+      });
+    } catch (error) {
+      console.error("TravelLedger could not save time", error);
+      setNotice("时间保存失败，请重试。");
+    } finally {
+      delete form.dataset.saving;
+      for (const control of form.elements) control.disabled = false;
+    }
   }
 
   async function submitMemberEdit(form) {
@@ -1792,6 +1879,9 @@
       void openBillNoteEditor(button.dataset.ledgerId || "");
     } else if (action === "cancel-note-edit") {
       cancelBillNoteEditor();
+    } else if (action === "cancel-time-edit") {
+      button.closest("form").reset();
+      button.closest(".ledger-bill-time").open = false;
     } else if (action === "cancel-edit") {
       editingBillId = null;
       renderApp();
@@ -1851,12 +1941,20 @@
       return;
     }
     if (editingNoteBillId && !(await flushActiveBillNote())) return;
+    if (form.dataset.ledgerForm === "bill-time") await submitBillTime(form);
     if (form.dataset.ledgerForm === "bill") await submitBill(form);
     if (form.dataset.ledgerForm === "member-add") await submitMemberAdd(form);
     if (form.dataset.ledgerForm === "member-edit") await submitMemberEdit(form);
   }
 
   function handleRootKeydown(event) {
+    const timeForm = event.target.closest('[data-ledger-form="bill-time"]');
+    if (event.key === "Escape" && timeForm) {
+      event.preventDefault();
+      timeForm.reset();
+      timeForm.closest(".ledger-bill-time").open = false;
+      return;
+    }
     if (event.key === "Escape" && event.target.closest('[data-ledger-form="bill-note"]')) {
       event.preventDefault();
       cancelBillNoteEditor();
