@@ -783,16 +783,32 @@
   function renderBillNoteControl(bill, options = {}) {
     const editing = options.editing ?? editingNoteBillId === bill.id;
     const value = options.value ?? bill.note ?? "";
-    return editing ? `
+    if (editing) return `
       <form class="ledger-bill-note-form" data-ledger-form="bill-note" data-ledger-id="${escapeAttribute(bill.id)}">
         <span>备注：</span>
         <input name="note" maxlength="160" autocomplete="off" value="${escapeAttribute(value)}" placeholder="暂无">
         <button type="submit" aria-label="保存备注">✓</button>
         <button type="button" data-ledger-action="cancel-note-edit" aria-label="取消修改备注">×</button>
-      </form>` : `
+      </form>`;
+    const trigger = `
       <button class="ledger-bill-note-trigger" type="button" data-ledger-action="edit-bill-note" data-ledger-id="${escapeAttribute(bill.id)}" aria-label="编辑备注：${escapeAttribute(bill.note || "暂无")}">
         <span>备注：</span><span>${escapeHtml(bill.note || "暂无")}</span>
       </button>`;
+    if (ledgerTripId !== "guangzhou-shunde-macao-2026") return trigger;
+    return `<div class="ledger-bill-note-display">
+      ${trigger}
+      <button class="ledger-text-button ledger-note-toggle" type="button" data-ledger-action="toggle-bill-note" aria-label="展开完整备注" aria-expanded="false" hidden>＋</button>
+    </div>`;
+  }
+
+  function updateBillNoteOverflow() {
+    ledgerRoot?.querySelectorAll(".ledger-bill-note-display").forEach((control) => {
+      const text = control.querySelector(".ledger-bill-note-trigger > span:last-child");
+      const toggle = control.querySelector(".ledger-note-toggle");
+      const expanded = control.classList.contains("ledger-note-expanded");
+      const fullWidth = text.clientWidth + (toggle.hidden ? 0 : toggle.offsetWidth + 4);
+      toggle.hidden = !expanded && (!text.clientWidth || text.scrollWidth <= fullWidth + 1);
+    });
   }
 
   function renderBillTimeControl(bill) {
@@ -824,12 +840,13 @@
   function replaceBillNoteControl(id, editing, value) {
     const bill = ledgerData.bills.find((entry) => entry.id === id);
     const row = billRowById(id);
-    const current = row?.querySelector(".ledger-bill-note-trigger, .ledger-bill-note-form");
+    const current = row?.querySelector(".ledger-bill-note-display, .ledger-bill-note-trigger, .ledger-bill-note-form");
     if (!bill || !current) return null;
     const template = document.createElement("template");
     template.innerHTML = renderBillNoteControl(bill, { editing, value }).trim();
     const replacement = template.content.firstElementChild;
     current.replaceWith(replacement);
+    updateBillNoteOverflow();
     return replacement;
   }
 
@@ -1288,6 +1305,7 @@
       </div>`;
     syncSplitSummary();
     attachDialogBehavior();
+    updateBillNoteOverflow();
     if (openDialogName) {
       const dialog = ledgerRoot.querySelector(`[data-ledger-dialog="${openDialogName}"]`);
       if (dialog) {
@@ -1890,6 +1908,13 @@
       deleteBill(button.dataset.ledgerId || "");
     } else if (action === "edit-bill-note") {
       void openBillNoteEditor(button.dataset.ledgerId || "");
+    } else if (action === "toggle-bill-note") {
+      const control = button.closest(".ledger-bill-note-display");
+      const expanded = control.classList.toggle("ledger-note-expanded");
+      button.textContent = expanded ? "−" : "＋";
+      button.setAttribute("aria-expanded", String(expanded));
+      button.setAttribute("aria-label", expanded ? "收起备注" : "展开完整备注");
+      updateBillNoteOverflow();
     } else if (action === "cancel-note-edit") {
       cancelBillNoteEditor();
     } else if (action === "cancel-time-edit") {
@@ -2070,6 +2095,10 @@
     ledgerRoot.addEventListener("change", handleRootChange);
     ledgerRoot.addEventListener("submit", handleRootSubmit);
     ledgerRoot.addEventListener("keydown", handleRootKeydown);
+    if (ledgerTripId === "guangzhou-shunde-macao-2026") {
+      ledgerRoot.addEventListener("toggle", updateBillNoteOverflow, true);
+      window.addEventListener?.("resize", updateBillNoteOverflow);
+    }
     document.addEventListener("pointerdown", handleDocumentPointerDown);
     initialized = true;
     renderApp();

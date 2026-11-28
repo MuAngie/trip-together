@@ -39,6 +39,12 @@
 .guangzhou-ledger-main .ledger-clock-inputs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 6px; flex: 1 1 110px; min-width: 0; }
 .guangzhou-ledger-main .ledger-clock-inputs .ledger-input { text-align: center; }
 .guangzhou-ledger-main .ledger-bill-main { row-gap: 0; }
+.guangzhou-ledger-main .ledger-bill-people { flex-direction: column; align-items: flex-start; }
+.guangzhou-ledger-main .ledger-bill-note-display { display: flex; align-items: flex-start; gap: 4px; min-width: 0; }
+.guangzhou-ledger-main .ledger-bill-note-display .ledger-bill-note-trigger { flex: 1; margin-top: 0; }
+.guangzhou-ledger-main .ledger-note-toggle { flex: 0 0 28px; min-height: 34px; padding: 0; }
+.guangzhou-ledger-main .ledger-note-expanded .ledger-bill-note-trigger { align-items: flex-start; }
+.guangzhou-ledger-main .ledger-note-expanded .ledger-bill-note-trigger > span:last-child { white-space: normal; overflow-wrap: anywhere; }
 .guangzhou-ledger-main .ledger-bill-time { grid-column: 1 / -1; margin: 4px 0 0 15px; }
 .guangzhou-ledger-main .ledger-bill-time > summary { display: flex; align-items: center; width: fit-content; min-height: 28px; color: var(--collection-muted); cursor: pointer; list-style: none; }
 .guangzhou-ledger-main .ledger-bill-time > summary::-webkit-details-marker { display: none; }
